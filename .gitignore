@@ -1,0 +1,20 @@
+include/
+lib/
+local/
+pip-selfcheck.json
+activate
+activate.csh
+activate.fish
+activate_this.py
+django-admin.py
+django-admin.pyc
+easy_install
+easy_install-2.7
+pip
+pip2
+pip2.7
+python
+python2 -> python
+python2.7 -> python
+python-config
+wheel
