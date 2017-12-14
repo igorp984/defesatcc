@@ -14,7 +14,7 @@ pip
 pip2
 pip2.7
 python
-python2 -> python
-python2.7 -> python
+python2
+python2.7
 python-config
 wheel
