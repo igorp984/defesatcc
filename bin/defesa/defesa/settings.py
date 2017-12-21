@@ -39,6 +39,7 @@ INSTALLED_APPS = (
 
     'defesa.core',
     'defesa.trabalhos',
+    'defesa.accounts',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -87,3 +88,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Auth
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'core:home'
+LOGOUT_URL = 'accounts:logout'
+

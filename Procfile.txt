@@ -1,0 +1,3 @@
+web: gunicorn defesatccw.wsgi
+from whitenoise.django import DjangoWhiteNoise
+application = DjangoWhiteNoise(application)
