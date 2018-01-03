@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'defesa.core',
     'defesa.trabalhos',
     'defesa.accounts',
+    'bootstrap3',
 )
 
 MIDDLEWARE_CLASSES = (

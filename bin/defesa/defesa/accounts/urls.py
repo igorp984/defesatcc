@@ -6,4 +6,5 @@ urlpatterns = patterns('',
     url(r'^sair/$', 'django.contrib.auth.views.logout', {'next_page': 'accounts:login'}, name='logout'),
     url(r'^cadastro/$', 'defesa.accounts.views.cadastro', name='cadastro'),
     url(r'^editar/$', 'defesa.accounts.views.editar', name='editar'),
+    url(r'^editar-senha/$', 'defesa.accounts.views.editar_senha', name='editar_senha'),
 )
