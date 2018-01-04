@@ -1,1 +1,1 @@
-web: gunicorn defesa.wsgi --log-file - --error-logfile - --capture-output
+web: python manage.py runserver 0.0.0.0:$PORT 
