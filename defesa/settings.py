@@ -55,6 +55,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 )
 
 ROOT_URLCONF = 'defesa.urls'
@@ -65,14 +66,14 @@ WSGI_APPLICATION = 'defesa.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
-from .base import dj_database_url
+# import dj_database_url
 
-ENVIRONMENT = 'production'
-DEBUG = False
-ALLOWED_HOSTS = ['']
-DATABASES['default'] = dj_database_url.config(
-    default='DATABASE_URL_HERE'
-)
+# ENVIRONMENT = 'production'
+# DEBUG = False
+# ALLOWED_HOSTS = ['']
+# DATABASES['default'] = dj_database_url.config(
+#     default='DATABASE_URL_HERE'
+# )
 
 DATABASES = {
     'default': {
@@ -104,7 +105,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
