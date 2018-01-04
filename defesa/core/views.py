@@ -7,6 +7,5 @@ def home(request):
 	trabalhos = Trabalhos.objects.all()
 	template_name = 'home.html'
 	context = {"trabalhos": trabalhos}
-
-    	return render(request, template_name, context)
+	return render(request, template_name, context)
 
