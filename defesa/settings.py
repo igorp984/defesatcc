@@ -65,8 +65,7 @@ WSGI_APPLICATION = 'defesa.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
-from .base import 
-import dj_database_url
+from .base import dj_database_url
 
 ENVIRONMENT = 'production'
 DEBUG = False
