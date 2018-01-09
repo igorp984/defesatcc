@@ -6,7 +6,6 @@ from django.conf import settings
 def send_mail_template(subject, template_name, context, recipient_list, from_email=settings.DEFAULT_FROM_EMAIL, fail_silently=False):
 	
 	message_html = render_to_string(template_name, context)
-
 	message_txt = striptags(message_html)
 
 	email = EmailMultiAlternatives(
