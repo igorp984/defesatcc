@@ -112,9 +112,20 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #     os.path.join(BASE_DIR, 'static'),
 # )
 
+#E-MAIL
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'Nome <igorp984@gmail.com>'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'igorp984@gmail.com'
+EMAIL_HOST_PASSWORD = 'edwardelric'
+EMAIL_PORT = 587
 
 # Auth
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'core:home'
 LOGOUT_URL = 'accounts:logout'
+AUTH_USER_MODEL = 'accounts.Usuario'
 
+CONTACT_EMAIL = 'igor984@gmail.com'
