@@ -15,16 +15,15 @@ Usuario = get_user_model()
 
 def meu_login(request):
 	template_name = 'accounts/login.html'
-	if request.method == 'GET':
-		usuario = LoginForm(request.GET)
-		print usuario
-		user = authenticate(username=usuario.usuario, password=form.cleaned_data['password1'])
+	form = LoginForm()
+	context = {}
+	if request.method == 'POST':
+		user = authenticate(username=request.POST['username'], password=request.POST['password1'])
 		if user is not None:
-			if user.is_active:
-				login(request, user)
+			login(request, user)
 			return redirect('core:home')
 	else:
-		form = LoginForm()
+		context['insuccess'] = True
 	context = { 'form': form }
 	
 	return render(request, template_name, context)			

@@ -2,60 +2,73 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Defesas Ufba</title>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Defesas Ufba</title>
 
-    <link rel="stylesheet" type="text/css" href="{% static 'core/bootstrap/css/bootstrap.min.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'core/font-awesome/css/font-awesome.min.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'core/css/local.css' %}" />
-    <link rel="stylesheet" type="text/css" href="maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="{% static 'core/bootstrap/css/bootstrap.min.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'core/font-awesome/css/font-awesome.min.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'core/css/local.css' %}" />
+        <link rel="stylesheet" type="text/css" href="maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
 
-    <script type="text/javascript" src="{% static 'core/js/jquery-1.10.2.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'core/js/local.js' %}"></script>
-    <script type="text/javascript" src="{% static 'core/bootstrap/js/bootstrap.min.js' %}"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.js"></script>
-    <script type="text/javascript" src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="http://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+        <script type="text/javascript" src="{% static 'core/js/jquery-1.10.2.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'core/js/local.js' %}"></script>
+        <script type="text/javascript" src="{% static 'core/bootstrap/js/bootstrap.min.js' %}"></script>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.js"></script>
+        <script type="text/javascript" src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="http://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 
-    <!-- you need to include the shieldui css and js assets in order for the charts to work -->
-    <link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light-bootstrap/all.min.css" />
-    <link id="gridcss" rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/dark-bootstrap/all.min.css" />
+        <!-- you need to include the shieldui css and js assets in order for the charts to work -->
+        <link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light-bootstrap/all.min.css" />
+        <link id="gridcss" rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/dark-bootstrap/all.min.css" />
 
-    <script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
-    <script type="text/javascript" src="http://www.prepbootstrap.com/Content/js/gridData.js"></script>
-</head>
-<body>
-    <div>
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            
-        </nav>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-md-offset-4">
-                    <fieldset>
-                        <legend>Login:</legend>
-                        <form class="form-signin" method="post">
-                            {% csrf_token %}
-                            {{ form.non_field_errors }}
-                            {% for field in form %}
-                                {{ field.label_tag }}
-                                {{ field }}
-                                {{ field.errors}}
-                            {% endfor %}    
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-                            <label class="checkbox pull-left">
-                                <input type="checkbox" value="remember-me">
-                                Remember me
-                            </label>
-                        </form>
-                    </fieldset>
-                </div>
-            </div>            
+        <script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+        <script type="text/javascript" src="http://www.prepbootstrap.com/Content/js/gridData.js"></script>
+    </head>
+    <body>
+        <div>
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                
+            </nav>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                    <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Login</h3>
+                            </div>
+                            <div class="panel-body">
+                            {% if insuccess %}
+                                <p>Usuario ou senha incorretos</p>
+                            {% endif %}        
+                                <fieldset>
+                                    <form class="form-signin" method="post">
+                                        <div class="row">
+                                                {% csrf_token %}
+                                                {{ form.non_field_errors }}
+                                                {% for field in form %}
+                                                    {{ field.label_tag }}
+                                                    {{ field }}
+                                                    {{ field.errors}}
+                                                {% endfor %}
+                                        </div>
+                                        <div class="row">            
+                                                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                                            <label class="checkbox pull-left">
+                                                <input type="checkbox" value="remember-me">
+                                                Remember me
+                                            </label>
+                                        </div>    
+                                    </form>
+                                </fieldset>
+                            </div>
+                        </div>        
+                    </div>
+                </div>            
+            </div>
         </div>
-    </div>
-            <a href="{% url 'accounts:cadastro' %}" class="text-center new-account">Create an account </a>
-
-            
+                <a href="{% url 'accounts:cadastro' %}" class="text-center new-account">Create an account </a>
+    </body>
+</html>
