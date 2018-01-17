@@ -8,6 +8,7 @@ from django.conf import settings
 
 class Usuario(AbstractBaseUser, PermissionsMixin):
 
+
 	username = models.CharField(
 		'Nome do Usuário', max_length=30, unique=True,
 		validators=[validators.RegexValidator(re.compile('^[\w.@+-]+$'),
