@@ -6,12 +6,30 @@ from django.conf import settings
 
 from defesa.core.utils import generate_hash_key
 
-from .forms import CadastroForm, EditaCadastroForm, ResetSenhaForm
+from .forms import CadastroForm, LoginForm, EditaCadastroForm, ResetSenhaForm
 from .models import NovaSenha
 
 Usuario = get_user_model()
 
 # Create your views here.
+
+def meu_login(request):
+	template_name = 'accounts/login.html'
+	if request.method == 'GET':
+		usuario = LoginForm(request.GET)
+		print usuario
+		user = authenticate(username=usuario.usuario, password=form.cleaned_data['password1'])
+		if user is not None:
+			if user.is_active:
+				login(request, user)
+			return redirect('core:home')
+	else:
+		form = LoginForm()
+	context = { 'form': form }
+	
+	return render(request, template_name, context)			
+
+
 
 def cadastro(request):
 	template_name = 'accounts/cadastro.html'

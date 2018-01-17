@@ -11,10 +11,20 @@ from .models import NovaSenha
 
 Usuario = get_user_model()
 
+
+class LoginForm(forms.ModelForm):
+	username = forms.CharField(label='Usuário', widget=forms.TextInput(attrs={'class':'form-control'}))
+	password1 = forms.CharField(label='Senha', widget=forms.PasswordInput(attrs={'class':'form-control'}))
+
+	class Meta:
+		model = Usuario
+		fields = ['username', 'password1']
+
 class CadastroForm(forms.ModelForm):
 
 	username = forms.CharField(label='Usuário', widget=forms.TextInput(attrs={'class':'form-control'}))
 	name = forms.CharField(label='Nome', widget=forms.TextInput(attrs={'class':'form-control'}))
+	
 	email = forms.EmailField(label='E-mail', widget=forms.TextInput(attrs={'class':'form-control'}))
 	password1 = forms.CharField(label='Senha', widget=forms.PasswordInput(attrs={'class':'form-control'}))
 	password2 = forms.CharField(label='Confirmação de Senha', widget=forms.PasswordInput(attrs={'class':'form-control'}))
@@ -61,7 +71,7 @@ class EditaCadastroForm(forms.ModelForm):
 
 class ResetSenhaForm(forms.Form):
 
-	email = forms.EmailField(label='E-mail')
+	email = forms.EmailField(label='E-mail', widget=forms.EmailInput(attrs={'class':'form-control'}))
 
 	def clean_email(self):
 		email = self.cleaned_data['email']
