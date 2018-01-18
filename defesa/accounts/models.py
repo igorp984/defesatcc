@@ -6,6 +6,15 @@ from django.contrib.auth.models import (AbstractBaseUser, PermissionsMixin, User
 from django.conf import settings
 # Create your models here.
 
+
+class Titulo(models.Model):
+
+	descricao = models.CharField('Descrição', max_length=100, unique=True)
+
+	class Meta:
+		verbose_name = 'Titulo'
+		verbose_name_plural = 'Titulos'
+
 class Usuario(AbstractBaseUser, PermissionsMixin):
 
 
@@ -14,7 +23,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 		validators=[validators.RegexValidator(re.compile('^[\w.@+-]+$'),
 			'o nome de usuário só pode conter letras, digitos os os seguintes caracteres @ . + - _', 'invalid')]
 		)
-	titulacao = models.ForeignKey('Titulacao', verbose_name='Titulação')
+	titulo = models.ForeignKey('Titulo', verbose_name='Titulação', related_name='titulo')
 	email = models.EmailField('E-mail', unique=True)
 	name = models.CharField('Nome', max_length=200)
 	is_active = models.BooleanField('Está ativo?', blank=True, default=True)
@@ -53,7 +62,3 @@ class NovaSenha(models.Model):
 		verbose_name = 'Nova Senha'
 		verbose_name_plural = 'Novas Senhas'
 		ordering = ['-created_at']
-
-class Titulacao(models.Model):
-
-	descricao = models.CharField('Descrição', max_length=100, unique=True)

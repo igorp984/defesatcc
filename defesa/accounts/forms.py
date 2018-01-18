@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 from defesa.core.mail import send_mail_template
 from defesa.core.utils import generate_hash_key
 
-from .models import NovaSenha
+from .models import NovaSenha, Titulo
 
 Usuario = get_user_model()
 
@@ -21,10 +21,11 @@ class LoginForm(forms.ModelForm):
 		fields = ['username', 'password1']
 
 class CadastroForm(forms.ModelForm):
+	
 
 	username = forms.CharField(label='Usuário', widget=forms.TextInput(attrs={'class':'form-control'}))
 	name = forms.CharField(label='Nome', widget=forms.TextInput(attrs={'class':'form-control'}))
-	
+	titulo = forms.ChoiceField(label='Titulação', widget=forms.Select(attrs={'class': 'form-control'}))
 	email = forms.EmailField(label='E-mail', widget=forms.TextInput(attrs={'class':'form-control'}))
 	password1 = forms.CharField(label='Senha', widget=forms.PasswordInput(attrs={'class':'form-control'}))
 	password2 = forms.CharField(label='Confirmação de Senha', widget=forms.PasswordInput(attrs={'class':'form-control'}))
@@ -33,6 +34,20 @@ class CadastroForm(forms.ModelForm):
 	# 	if User.objects.filter(email=email).exists():
 	# 		raise forms.ValidationError('Já existe usuario com este E-mail')
 	# 	return email
+	global get_my_choices
+
+	def get_my_choices():
+		titulos = Titulo.objects.all()
+		for titulo in titulos:
+			CHOICES_TITULOS = (
+					(titulo.pk, titulo.descricao)
+			)	
+		return CHOICES_TITULOS
+
+	def __init__(self, *args, **kwargs):
+		super(CadastroForm, self).__init__(*args, **kwargs)
+		self.fields['titulo'] = forms.ChoiceField(choices=get_my_choices())
+
 
 	def clean_password2(self):
 		password1 = self.cleaned_data.get("password1")
@@ -88,3 +103,5 @@ class ResetSenhaForm(forms.Form):
 		subject = 'Criar nova Senha no Defesas Ufba'
 		context = { 'reset': reset }
 		send_mail_template(subject, template_name, context, [user.email])
+
+
