@@ -1,13 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, SetPasswordForm
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.views.generic import CreateView
+from defesa.accounts.decorators import acesso, valida_perfil
 
 from defesa.core.utils import generate_hash_key
 
-from .forms import CadastroForm, LoginForm, EditaCadastroForm, ResetSenhaForm
-from .models import NovaSenha
+from .forms import CadastroForm, LoginForm, EditaCadastroForm, ResetSenhaForm, PerfilForm
+from .models import NovaSenha, Perfil
 
 Usuario = get_user_model()
 
@@ -29,9 +32,10 @@ def meu_login(request):
 	return render(request, template_name, context)			
 
 
-
+@acesso('Professor')
 def cadastro(request):
 	template_name = 'accounts/cadastro.html'
+
 	if request.method == 'POST':
 		form = CadastroForm(request.POST)
 		if form.is_valid():
@@ -101,4 +105,15 @@ def editar_senha(request):
 		form = PasswordChangeForm(user=request.user)
 
 	context['form'] = form
-	return render(request, template_name, context)		
+	return render(request, template_name, context)
+
+
+#@login_required
+
+class PerfilCreateView(CreateView):
+	template_name = 'accounts/novo_perfil.html'
+	model = Perfil
+	form_class = PerfilForm
+	success_url = reverse_lazy(
+		"accounts:lista_perfis"
+	)
