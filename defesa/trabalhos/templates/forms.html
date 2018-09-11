@@ -1,30 +1,65 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
+<div id="page-wrapper">
 
-{% block content %}
-       <div id="page-wrapper">
+    <div class="row">
+        <div class="col-md-6">
 
-            <div class="row">
-                <div class="col-md-6">
-
-                    <form method="post">
-                    {% csrf_token %}
-                    {% for field in form %}
-                        <div class="form-group">
-                            {{ field.label_tag }}
-                            {{ field }}
-                            {% if field.errors %}
-                                <ul class="errolist">
-                                    {% for error in field.errors %}
-                                        <li>{{ error }}</li>
-                                    {% endfor %}
-                                </ul>
-                            {% endif %}
-                        </div>
-                    {% endfor %}    
-                        <button type="submit" class="btn btn-success">Submit Button</button>
-                        <button class="btn btn-primary"><a href="index.html">Reset Button<a></button>
-                </div>
-                <div class="col-md-2"></div>
+            <form method="post">
+                {% csrf_token %}
             
-        
-{% endblock %}   
+                <div class="form-group">
+
+                    <div class="form-group">
+                        {{ form.titulo.errors }}
+                        <label for="id_titulo">Título:</label>
+                        <input class="form-control" id="id_titulo" maxlength="150" name="titulo" placeholder="Digite o Título do Trabalho" type="text">
+
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.keywords.errors }}
+                        <label for="id_keywords">Palavras Chaves:</label>
+                        <input class="form-control" id="id_keywords" maxlength="150" name="keywords" placeholder="Digite as palavras Chaves" type="text">
+
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.autor.errors }}
+                        <label for="id_autor">Autor:</label>
+                        <input class="form-control" id="id_autor" maxlength="150" name="autor" placeholder="Digite o nome do Autor" type="text">
+
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.orientador.errors }}
+                        <label for="id_orientador">Orientador:</label>
+                        <input class="form-control" id="id_orientador" maxlength="150" name="orientador" readonly type="text" value="{{ user.name }}">
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.co_orientador.errors }}
+                        <label for="id_co_orientador">Co-Orientador:</label>
+                        <input class="form-control" id="id_co_orientador" maxlength="150" name="co_orientador" placeholder="Digite o nome do Co-Orientador"
+                            type="text">
+
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.resumo.errors }}
+                        <label for="id_resumo">Resumo:</label>
+                        <textarea class="form-control" cols="40" id="id_resumo" name="resumo" placeholder="Digite o Resumo do Trabalho" rows="10"></textarea>
+
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Submit Button</button>
+                    <button class="btn btn-primary">
+                        <a href="index.html">Reset Button</a>
+                        <a></a>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -2,16 +2,8 @@
 
 {% block content %}
     <div id="page-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="alert alert-dismissable alert-success">
-                    <button data-dismiss="alert" class="close" type="button">&times;</button>
-                    Seja Bem Vindo.
-                </div>
-            </div>
-        </div>
         <div>
-            <div class="col-md-9">
+            <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Banca Pendente</h3>
@@ -25,6 +17,8 @@
                                             <th>Título</th>
                                             <th>Autor</th>
                                             <th>Orientador</th>
+                                            <th>Co-orientador</th>
+                                            <th>Ações</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -32,6 +26,8 @@
                                             <th>Título</th>
                                             <th>Autor</th>
                                             <th>Orientador</th>
+                                            <th>Co-orientador</th>
+                                            <th>Ações</th>
                                         </tr>
                                     </tfoot>
                                         <tbody>
@@ -40,6 +36,12 @@
                                             <td>{{ trabalho.titulo }}</td>
                                             <td>{{ trabalho.autor }}</td>
                                             <td>{{ trabalho.orientador }}</td>
+                                            <td>{{trabalho.co_orientador}}</td>
+                                            <td>
+                                                {% if user.id == trabalho.orientador.id %}
+                                                    <a href="{% url 'trabalhos:detalhe' trabalho.id %}"><span class="glyphicon glyphicon-pencil" style="color:black;"></span></a>
+                                                {% endif %}
+                                            </td>
                                         {% endfor %}
                                         </tr>
                                         </tbody>
