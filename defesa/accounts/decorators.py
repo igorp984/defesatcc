@@ -5,7 +5,7 @@ from .models import Perfil
 def acesso(tipo):
     def nivel(function):
         actual_decorator = user_passes_test(
-            valida_perfil,
+            valida_perfil(tipo),
             login_url='core:home',
             redirect_field_name=REDIRECT_FIELD_NAME
         )
@@ -15,10 +15,12 @@ def acesso(tipo):
     return nivel
 
 
-def valida_perfil(user):
-    p = Perfil()
-    if user.perfil == p.get_perfil(user.perfil):
-        return True
-    else:
-        return False
+def valida_perfil(tipo):
+    def valida(user):
+        p = Perfil()
+        if tipo == p.get_perfil(user.perfil):
+            return True
+        else:
+            return False
+    return valida
 
