@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, SetPasswordForm
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.conf import settings
 from django.views.generic import CreateView
 from defesa.accounts.decorators import acesso, valida_perfil
@@ -31,8 +32,8 @@ def meu_login(request):
 	
 	return render(request, template_name, context)			
 
-
-@acesso('Professor')
+@login_required
+@acesso('alto')
 def cadastro(request):
 	template_name = 'accounts/cadastro.html'
 
@@ -108,7 +109,6 @@ def editar_senha(request):
 	return render(request, template_name, context)
 
 
-#@login_required
 
 class PerfilCreateView(CreateView):
 	template_name = 'accounts/novo_perfil.html'
@@ -117,3 +117,7 @@ class PerfilCreateView(CreateView):
 	success_url = reverse_lazy(
 		"accounts:lista_perfis"
 	)
+	@method_decorator(login_required)
+	@method_decorator(acesso('alto'))
+	def dispatch(self, *args, **kwargs):
+		return super(PerfilCreateView, self).dispatch(*args, **kwargs)
