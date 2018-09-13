@@ -1,18 +1,18 @@
 
 <!DOCTYPE html>
 {% load static %}
+{% load widget_tweaks %}
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Defesas Ufba</title>
 
-    <link rel="stylesheet" type="text/css" href="{% static 'core/bootstrap/css/bootstrap.min.css' %}" />
+
     <link rel="stylesheet" type="text/css" href="{% static 'core/font-awesome/css/font-awesome.min.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/local.css' %}" />
-    <link rel="stylesheet" type="text/css" href="maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
-
+    
     <script type="text/javascript" src="{% static 'core/js/jquery-1.10.2.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'core/js/local.js' %}"></script>
     <script type="text/javascript" src="{% static 'core/bootstrap/js/bootstrap.min.js' %}"></script>
@@ -48,8 +48,10 @@
                     <!--<li><a href="register.html"><i class="fa fa-font"></i> Register</a></li>-->
                     <!--<li><a href="timeline.html"><i class="fa fa-font"></i> Timeline</a></li>-->
                     <li><a href="{% url 'trabalhos:cadastrar_trabalho' %}"><i class="fa fa-list-ol"></i> Cadastrar Trabalho</a></li>
-                    <li><a href="#"><i class="fa fa-list-ol"></i> Escolher Banca</a></li>
-                    <li><a href="#"><i class="fa fa-list-ol"></i> Agendar</a></li>
+                    {% if "Professor" == user.perfil.descricao %}
+                        <li><a href="#"><i class="fa fa-list-ol"></i> Escolher Banca</a></li>
+                        <li><a href="#"><i class="fa fa-list-ol"></i> Agendar</a></li>
+                    {% endif %}
                    <!-- <li><a href="typography.html"><i class="fa fa-font"></i> Typography</a></li>
                     <li><a href="bootstrap-elements.html"><i class="fa fa-list-ul"></i> Bootstrap Elements</a></li>
                     <li><a href="bootstrap-grid.html"><i class="fa fa-table"></i> Bootstrap Grid</a></li>-->
@@ -77,7 +79,7 @@
                         </ul>
                     </li>
                     <li class="dropdown user-dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{ user}} <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{user}} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="{% url 'accounts:editar' %}"><i class="fa fa-user"></i> Perfil</a></li>
                             <li><a href="#"><i class="fa fa-gear"></i> Configurações</a></li>
@@ -96,105 +98,8 @@
         </nav>
         {% block content %}
         {% endblock %}
-         <div class="col-md-3">
-                <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-rss"></i> Feed</h3>
-                        </div>
-                    <div class="panel-body feed">
-                        <section class="feed-item">
-                                <div class="icon pull-left">
-                                    <i class="fa fa-comment"></i>
-                                </div>
-                                <div class="feed-item-body">
-                                    <div class="text">
-                                        <a class = "feed-item-cor" href="#">John Doe</a> commented on <a class = "feed-item-cor" href="#">What Makes Good Code Good</a>.
-                                    </div>
-                                    <div class="time pull-left">
-                                        3 h
-                                    </div>
-                                </div>
-                        </section>
-                        <section class="feed-item">
-                                <div class="icon pull-left">
-                                    <i class="fa fa-check"></i>
-                                </div>
-                                <div class="feed-item-body">
-                                    <div class="text">
-                                        <a class = "feed-item-cor" href="#">Merge request #42</a> has been approved by <a class = "feed-item-cor" href="#">Jessica Lori</a>.
-                                    </div>
-                                    <div class="time pull-left">
-                                        10 h
-                                    </div>
-                                </div>
-                        </section>
-                        <section class="feed-item">
-                                <div class="icon pull-left">
-                                    <i class="fa fa-plus-square-o"></i>
-                                </div>
-                                <div class="feed-item-body">
-                                    <div class="text">
-                                        New user <a class = "feed-item-cor" href="#">Greg Wilson</a> registered.
-                                    </div>
-                                    <div class="time pull-left">
-                                        Today
-                                    </div>
-                                </div>
-                        </section>
-                        <section class="feed-item">
-                                <div class="icon pull-left">
-                                    <i class="fa fa-bolt"></i>
-                                </div>
-                                <div class="feed-item-body">
-                                    <div class="text">
-                                        Server fail level raises above normal. <a class = "feed-item-cor" href="#">See logs</a> for details.
-                                    </div>
-                                    <div class="time pull-left">
-                                        Yesterday
-                                    </div>
-                                </div>
-                        </section>
-                        <section class="feed-item">
-                                <div class="icon pull-left">
-                                    <i class="fa fa-archive"></i>
-                                </div>
-                                <div class="feed-item-body">
-                                    <div class="text">
-                                        <a class = "feed-item-cor" href="#">Database usage report</a> is ready.
-                                    </div>
-                                    <div class="time pull-left">
-                                        Yesterday
-                                    </div>
-                                </div>
-                        </section>
-                        <section class="feed-item">
-                                <div class="icon pull-left">
-                                    <i class="fa fa-shopping-cart"></i>
-                                </div>
-                                <div class="feed-item-body">
-                                    <div class="text">
-                                        <a class = "feed-item-cor" href="#">Order #233985</a> needs additional processing.
-                                    </div>
-                                    <div class="time pull-left">
-                                        Wednesday
-                                    </div>
-                                </div>
-                        </section>
-                        <section class="feed-item">
-                                <div class="icon pull-left">
-                                    <i class="fa fa-arrow-down"></i>
-                                </div>
-                                <div class="feed-item-body">
-                                    <div class="text">
-                                        <a class = "feed-item-cor" href="#">Leia Mais...</a>
-                                    </div>
-                                </div>
-                        </section>
-                    </div>
-                </div>
-            </div>
     </div>
-    </div>
+</div>
 
     <!-- /#wrapper -->
 
