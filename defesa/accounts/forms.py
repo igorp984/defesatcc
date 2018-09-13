@@ -7,20 +7,39 @@ from django.contrib.auth import get_user_model
 from defesa.core.mail import send_mail_template
 from defesa.core.utils import generate_hash_key
 
-from .models import NovaSenha
+from .models import NovaSenha, Titulo, Perfil
 
 Usuario = get_user_model()
+
+
+class LoginForm(forms.ModelForm):
+	username = forms.CharField(label='Usuário', widget=forms.TextInput(attrs={'class':'form-control'}))
+	password1 = forms.CharField(label='Senha', widget=forms.PasswordInput(attrs={'class':'form-control'}))
+
+	class Meta:
+		model = Usuario
+		fields = ['username', 'password1']
 
 class CadastroForm(forms.ModelForm):
 
 	username = forms.CharField(label='Usuário', widget=forms.TextInput(attrs={'class':'form-control'}))
 	name = forms.CharField(label='Nome', widget=forms.TextInput(attrs={'class':'form-control'}))
+	titulo = forms.ModelChoiceField(
+		label='Titulação', 
+		queryset=Titulo.objects.order_by('descricao'), 
+		widget=forms.Select(attrs={'class':'form-control', 'placeholder':'Selecione'})
+	)
+	perfil = forms.ModelChoiceField(
+		label='Perfil', 
+		queryset=Perfil.objects.order_by('descricao'), 
+		widget=forms.Select(attrs={'class':'form-control', 'placeholder':'Selecione'})
+	)
 	email = forms.EmailField(label='E-mail', widget=forms.TextInput(attrs={'class':'form-control'}))
 	password1 = forms.CharField(label='Senha', widget=forms.PasswordInput(attrs={'class':'form-control'}))
 	password2 = forms.CharField(label='Confirmação de Senha', widget=forms.PasswordInput(attrs={'class':'form-control'}))
 	# def clean_email(self):
 	# 	email = self.cleaned_data['email']
-	# 	if User.objects.filter(email=email).exists():
+	# 	if User.objects.filter(email=email).exists():kk
 	# 		raise forms.ValidationError('Já existe usuario com este E-mail')
 	# 	return email
 
@@ -34,6 +53,8 @@ class CadastroForm(forms.ModelForm):
 	def save(self, commit=True):
 		user = super(CadastroForm, self).save(commit=False)
 		user.set_password(self.cleaned_data['password1'])
+		user.titulo = self.cleaned_data['titulo']
+		user.perfil = self.cleaned_data['perfil']
 		if commit:
 			user.save()
 		return user	
@@ -61,7 +82,7 @@ class EditaCadastroForm(forms.ModelForm):
 
 class ResetSenhaForm(forms.Form):
 
-	email = forms.EmailField(label='E-mail')
+	email = forms.EmailField(label='E-mail', widget=forms.EmailInput(attrs={'class':'form-control'}))
 
 	def clean_email(self):
 		email = self.cleaned_data['email']
@@ -78,3 +99,15 @@ class ResetSenhaForm(forms.Form):
 		subject = 'Criar nova Senha no Defesas Ufba'
 		context = { 'reset': reset }
 		send_mail_template(subject, template_name, context, [user.email])
+
+class PerfilForm(forms.ModelForm):
+	
+	class Meta:
+		model = Perfil
+		fields = [
+			'descricao',
+			'nivel_acesso',
+		]
+
+
+

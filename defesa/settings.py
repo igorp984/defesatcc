@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+from django.core.urlresolvers import reverse_lazy
+
 # Update database configuration with $DATABASE_URL.
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
@@ -46,6 +48,7 @@ INSTALLED_APPS = (
     'defesa.trabalhos',
     'defesa.accounts',
     'bootstrap3',
+    'widget_tweaks',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -79,7 +82,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'defesa_db',
-        'USER': 'defesa_user',
+        'USER': 'tcc_user',
         'PASSWORD': 'd3fes@',
         'HOST': 'localhost',
         'PORT': '5432',

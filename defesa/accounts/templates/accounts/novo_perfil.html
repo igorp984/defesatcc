@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-md-6">
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-addon" id="sizing-addon1">@</span>
+                    </div>
+                    {% render_field form.descricao type="text" class="form-control" %}
+                </div>
+                <button type="submit" class="btn btn-success">Submit Button</button>
+                <button class="btn btn-primary"><a href="index.html">Reset Button<a></button>
+            </form>
+        </div>
+    </div>
+</div>    	
+{% endblock %}
