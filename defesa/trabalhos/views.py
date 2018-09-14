@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from django.forms import modelformset_factory, formset_factory
+from django.views.generic.edit import UpdateView
+from django.core.urlresolvers import reverse, reverse_lazy
+from django.contrib import messages
 
 from .models import Trabalhos
 from .forms import TrabalhoForm
@@ -31,3 +33,22 @@ def detalhe(request, pk):
 	template_name = 'detalhe.html'
 
 	return render(request, template_name, context)
+
+
+class TrabalhoUpdateView(UpdateView):
+	template_name = 'editar.html'
+	model = Trabalhos
+	success_url = reverse_lazy(
+		"core:home"
+	)
+
+	fields = [
+		'titulo',
+		'keywords',
+		'autor',
+		'co_orientador',
+		'resumo'
+	]
+	def form_valid(self, form):
+		messages.success(self.request, ("Trabalho atualizado com sucesso!"))
+		return super(TrabalhoUpdateView, self).form_valid(form)

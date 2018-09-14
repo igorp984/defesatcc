@@ -49,6 +49,7 @@ INSTALLED_APPS = (
     'defesa.accounts',
     'bootstrap3',
     'widget_tweaks',
+    'material',
 )
 
 MIDDLEWARE_CLASSES = (

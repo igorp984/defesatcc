@@ -36,10 +36,10 @@
                                             <td>{{ trabalho.titulo }}</td>
                                             <td>{{ trabalho.autor }}</td>
                                             <td>{{ trabalho.orientador }}</td>
-                                            <td>{{trabalho.co_orientador}}</td>
+                                            <td>{{ trabalho.co_orientador }}</td>
                                             <td>
                                                 {% if user.id == trabalho.orientador.id %}
-                                                    <a href="{% url 'trabalhos:detalhe' trabalho.id %}"><span class="glyphicon glyphicon-pencil" style="color:black;"></span></a>
+                                                    <a href="{% url 'trabalhos:editar' trabalho.id %}"><span class="glyphicon glyphicon-pencil" style="color:black;"></span></a>
                                                 {% endif %}
                                             </td>
                                         {% endfor %}
@@ -50,6 +50,7 @@
                         </div>
                     </div>
                     </div>
+                    <a onclick="M.toast({html: 'I am a toast'})" class="btn">Toast!</a>
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Agendamento Pendente</h3>
