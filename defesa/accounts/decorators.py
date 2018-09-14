@@ -18,6 +18,7 @@ def acesso(tipo):
 def valida_perfil(tipo):
     def valida(user):
         p = Perfil()
+        print(tipo == p.get_perfil(user.perfil))
         if tipo == p.get_perfil(user.perfil):
             return True
         else:
