@@ -4,8 +4,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 
-from defesa.core.mail import send_mail_template
-from defesa.core.utils import generate_hash_key
+from core.mail import send_mail_template
+from core.utils import generate_hash_key
 
 from .models import NovaSenha, Titulo, Perfil
 

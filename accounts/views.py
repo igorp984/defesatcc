@@ -6,9 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.conf import settings
 from django.views.generic import CreateView
-from defesa.accounts.decorators import acesso, valida_perfil
+from accounts.decorators import acesso, valida_perfil
 
-from defesa.core.utils import generate_hash_key
+from core.utils import generate_hash_key
 
 from .forms import CadastroForm, LoginForm, EditaCadastroForm, ResetSenhaForm, PerfilForm
 from .models import NovaSenha, Perfil

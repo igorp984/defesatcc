@@ -51,7 +51,8 @@ class Perfil(models.Model):
 		return self.descricao
 
 	def get_perfil(self, descricao):
-		return Perfil.objects.filter(descricao=descricao).values('nivel_acesso')[0]['nivel_acesso']
+		nivel = Perfil.objects.filter(descricao=descricao).values('nivel_acesso')[0]['nivel_acesso']
+		return nivel.lower()
 
 	class Meta:
 		verbose_name = 'Perfil'
