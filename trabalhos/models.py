@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from defesa.accounts.models import Usuario
+from accounts.models import Usuario
 
 # Create your models here.
 

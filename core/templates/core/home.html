@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
 
 {% block content %}
     <div id="page-wrapper">
@@ -41,7 +41,7 @@
                                                 <a href="{% url 'trabalhos:detalhe' trabalho.id %}"><i class="material-icons" style="color:black;">visibility</i></a>
                                                 {% if user.id == trabalho.orientador.id %}
                                                     <a href="{% url 'trabalhos:editar' trabalho.id %}"><i class="material-icons" style="color:black;">create</i></a>
-                                                    <a href="#"><i class="material-icons" style="color:black;">clear</i></a>
+                                                    <a href="{% url 'trabalhos:deletar' trabalho.id %}" data-messages="trabalho deletado com sucesso" class=" delete-trabalho"><i class="material-icons" style="color:black;">delete</i></a>
                                                 {% endif %}
                                             </td>
                                         {% endfor %}

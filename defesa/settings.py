@@ -29,7 +29,6 @@ SECRET_KEY = 'p6=t8vrl#g(5t&azpuxf5nsssz0&g@4^5j-^ws2+h#in#rr66$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -37,6 +36,14 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = (
+    'core',
+    'trabalhos',
+    'accounts',
+    'bootstrap3',
+    'widget_tweaks',
+    'material',
+    'rest_framework',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,12 +51,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'defesa.core',
-    'defesa.trabalhos',
-    'defesa.accounts',
-    'bootstrap3',
-    'widget_tweaks',
-    'material',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -63,6 +64,22 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'defesa.urls'
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': ['templates'],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 WSGI_APPLICATION = 'defesa.wsgi.application'
 
@@ -133,3 +150,20 @@ LOGOUT_URL = 'accounts:logout'
 AUTH_USER_MODEL = 'accounts.Usuario'
 
 CONTACT_EMAIL = 'igor984@gmail.com'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+    'TEST_REQUEST_RENDERER_CLASSES': (
+        'rest_framework.renderers.MultiPartRenderer',
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.TemplateHTMLRenderer'
+    ),
+    'DATE_INPUT_FORMATS': ['iso-8601', '%m/%d/%Y', '%d/%m/%Y']
+}

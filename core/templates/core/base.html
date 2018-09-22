@@ -30,6 +30,7 @@
 
     <script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
     <script type="text/javascript" src="http://www.prepbootstrap.com/Content/js/gridData.js"></script>
+    {% csrf_token %}
 </head>
 <body>
     <div id="wrapper">
@@ -117,7 +118,33 @@
                         {% endfor %}
                     {% endif %}
                 });
+                $('.delete-trabalho').on('click', function(){
+                    deleteTrabalho(this);
+                    return false;
+                });
+
             })(jQuery);
+
+            function deleteTrabalho(element){
+                var url = $(element).attr('href');
+                var messages = $(element).data('messages');
+                var $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+                $.ajax({
+                    'url': url,
+                    'method': 'DELETE',
+                    'headers':{"X-CSRFToken": $crf_token},
+                    'success': function(data){
+                        $(element).parent().parent().remove();
+                        M.toast({html: messages});
+                    },
+                    'error': function(xhr, status, error){
+                        // console.log(xhr, xhr.responseText, status);
+                        loadErrors(xhr.responseJSON);
+                    }
+                });
+            }
+
+
     </script>
 
     <script type="text/javascript">

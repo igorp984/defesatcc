@@ -2,7 +2,7 @@
 from django import forms
 
 from .models import Trabalhos
-from defesa.accounts.models import Usuario
+from accounts.models import Usuario
 
 class TrabalhoForm(forms.ModelForm):
 

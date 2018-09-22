@@ -3,12 +3,16 @@ from django.http import HttpResponse
 from django.views.generic.edit import UpdateView
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib import messages
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
 
 from .models import Trabalhos
 from .forms import TrabalhoForm
 
 def cadastrar_trabalho(request):
-	template_name = 'forms.html'
+	template_name = 'trabalhos/forms.html'
 	context = {}
 	if request.method == 'POST':
 		request.POST._mutable = True
@@ -30,13 +34,13 @@ def detalhe(request, pk):
 		'trabalhos': trabalhos
 	}
 
-	template_name = 'detalhe.html'
+	template_name = 'trabalhos/detalhe.html'
 
 	return render(request, template_name, context)
 
 
 class TrabalhoUpdateView(UpdateView):
-	template_name = 'editar.html'
+	template_name = 'trabalhos/editar.html'
 	model = Trabalhos
 	success_url = reverse_lazy(
 		"core:home"
@@ -52,3 +56,16 @@ class TrabalhoUpdateView(UpdateView):
 	def form_valid(self, form):
 		messages.success(self.request, ("Trabalho atualizado com sucesso!"))
 		return super(TrabalhoUpdateView, self).form_valid(form)
+
+
+class TrabalhoDetail(APIView):
+	def get_object(self, pk):
+		try:
+			return Trabalhos.objects.get(pk=pk)
+		except Trabalhos.DoesNotExist:
+			raise Http404
+
+	def delete(self, request, pk, format=None):
+		trabalho = self.get_object(pk)
+		trabalho.delete()
+		return Response(status=status.HTTP_204_NO_CONTENT)
