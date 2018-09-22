@@ -7,3 +7,4 @@ whitenoise==3.3.1
 djangorestframework==3.6.3
 django-widget-tweaks
 django-material
+PyYAML==3.12
