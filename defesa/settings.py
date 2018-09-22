@@ -106,6 +106,7 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
 DATABASES['default'].update(db_from_env)
 
 # Internationalization

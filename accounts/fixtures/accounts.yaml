@@ -1,0 +1,47 @@
+-   model: accounts.titulo
+    pk: 1
+    fields: {descricao: Graduado}
+-   model: accounts.titulo
+    pk: 2
+    fields: {descricao: Mestre}
+-   model: accounts.perfil
+    pk: 1
+    fields: {descricao: Coodenador, nivel_acesso: Alto}
+-   model: accounts.perfil
+    pk: 2
+    fields: {descricao: Professor, nivel_acesso: medio}
+-   model: accounts.perfil
+    pk: 3
+    fields: {descricao: Avaliador, nivel_acesso: baixo}
+-   model: accounts.usuario
+    pk: 6
+    fields:
+        password: pbkdf2_sha256$36000$wv0t1Vi8LaGJ$uxStNy0s+H/gB4pUqUOT2COESjBoVBt+JzX2aaVnJcc=
+        last_login: 2018-09-22 04:25:41.344937+00:00
+        is_superuser: false
+        username: Red
+        titulo: 1
+        perfil: 1
+        email: 666.redfield@gmail.com
+        name: Igor Paim
+        is_active: true
+        is_staff: false
+        date_joined: 2018-08-06 22:39:55.221490+00:00
+        groups: []
+        user_permissions: []
+-   model: accounts.usuario
+    pk: 7
+    fields:
+        password: pbkdf2_sha256$20000$mYeZTdU6sg6W$uSHWEAeFiwSbocxzcTO0oPyBsVZuJNebmhawkuko0Eg=
+        last_login: 2018-08-29 01:45:32.166312+00:00
+        is_superuser: false
+        username: igorpaim
+        titulo: 2
+        perfil: 2
+        email: igorp984@gmail.com
+        name: Igor Paim
+        is_active: true
+        is_staff: false
+        date_joined: 2018-08-08 19:53:44.351669+00:00
+        groups: []
+        user_permissions: []
