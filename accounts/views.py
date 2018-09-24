@@ -6,7 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.conf import settings
 from django.views.generic import CreateView
+from django.views.generic.edit import UpdateView
 from accounts.decorators import acesso, valida_perfil
+from django.contrib import messages
 
 from core.utils import generate_hash_key
 
@@ -75,22 +77,22 @@ def reset_senha_confirm(request, key):
 	return render(request, template_name, context)	
 
 
-@login_required
-def editar(request):
-	template_name = 'accounts/editar.html'
-	context = {}
-	if request.method == 'POST':
-		form = EditaCadastroForm(request.POST, instance=request.user)
-		if form.is_valid():
-			form.save()
-			form = EditaCadastroForm(instance=request.user)
-			context['success'] = True
-	else:
-		form = EditaCadastroForm(instance=request.user)
 
-	context['form'] = form
-	
-	return render(request, template_name, context)
+class UsuarioUpdateView(UpdateView):
+	template_name = 'accounts/editar.html'
+	model = Usuario
+	success_url = reverse_lazy(
+		"accounts:editar"
+	)
+	fields = [
+		'name',
+		'titulo',
+		'email',
+	]
+
+	def form_valid(self, form):
+		messages.success(self.request, ("Perfil atualizado com sucesso"))
+		return super(UsuarioUpdateView, self).form_valid(form)
 
 @login_required
 def editar_senha(request):
@@ -109,7 +111,6 @@ def editar_senha(request):
 	return render(request, template_name, context)
 
 
-
 class PerfilCreateView(CreateView):
 	template_name = 'accounts/novo_perfil.html'
 	model = Perfil
@@ -117,6 +118,7 @@ class PerfilCreateView(CreateView):
 	success_url = reverse_lazy(
 		"accounts:lista_perfis"
 	)
+
 	@method_decorator(login_required)
 	@method_decorator(acesso('alto'))
 	def dispatch(self, *args, **kwargs):
