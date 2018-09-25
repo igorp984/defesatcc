@@ -66,9 +66,13 @@ class CadastroForm(forms.ModelForm):
 
 class EditaCadastroForm(forms.ModelForm):
 	
-	username = forms.CharField(label='Usuário', widget=forms.TextInput(attrs={'class':'form-control'}))
-	email = forms.EmailField(label='E-mail', widget=forms.EmailInput(attrs={'class':'form-control'}))
-
+	#username = forms.CharField(label='Usuário', widget=forms.TextInput(attrs={'class':'form-control'}))
+	#email = forms.EmailField(label='E-mail', widget=forms.EmailInput(attrs={'class':'form-control'}))
+	# titulo = forms.ModelChoiceField(
+	# 	label='Titulação',
+	# 	queryset=Titulo.objects.order_by('descricao'),
+	# 	widget=forms.Select(attrs={'class': 'select-wrapper', 'placeholder': 'Selecione'})
+	# )
 	# def clean_email(self):
 	# 	email = self.cleaned_data['email']
 	# 	queryset = User.objects.filter(email=email).exclude(pk=self.instance.pk)
@@ -78,7 +82,9 @@ class EditaCadastroForm(forms.ModelForm):
 
 	class Meta:
 		model = Usuario
-		fields = ['name', 'email']	
+		fields = ['titulo', 'name', 'email']
+		#widgets = { 'titulo' : forms.Select(attrs={'class':'select-wrapper','style': 'display:block'})}
+
 
 class ResetSenhaForm(forms.Form):
 

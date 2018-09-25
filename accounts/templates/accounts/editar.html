@@ -1,29 +1,15 @@
 {% extends 'core/base.html' %}
-
+{% load material_form %}
 {% block content %}
 
 <div id="page-wrapper">
-
-            <div class="row">
-                <div class="col-md-6">
-
-                    <form method="post">
-                    {% csrf_token %}
-                    {% for field in form %}
-                        <div class="form-group">
-                            {{ field.label_tag }}
-                            {{ field }}
-                            {% if field.errors %}
-                                <ul class="errolist">
-                                    {% for error in field.errors %}
-                                        <li>{{ error }}</li>
-                                    {% endfor %}
-                                </ul>
-                            {% endif %}
-                        </div>
-                    {% endfor %}    
-                        <button type="submit" class="btn btn-success">Submit Button</button>
-                        <button class="btn btn-primary"><a href="index.html">Reset Button<a></button>
-                </div>
-                <div class="col-md-2"></div>	
+        <div class="col-md-6">
+            <form method="post">
+                {% csrf_token %}
+                {% form form=form %}{% endform %}
+                <button type="submit" class="btn btn-success">Submit Button</button>
+                <button class="btn btn-primary"><a href="index.html">Reset Button<a></button>
+            </form>
+        </div>
+</div>
 {% endblock %}

@@ -81,14 +81,11 @@ def reset_senha_confirm(request, key):
 class UsuarioUpdateView(UpdateView):
 	template_name = 'accounts/editar.html'
 	model = Usuario
+	form_class = EditaCadastroForm
 	success_url = reverse_lazy(
 		"accounts:editar"
 	)
-	fields = [
-		'name',
-		'titulo',
-		'email',
-	]
+
 
 	def form_valid(self, form):
 		messages.success(self.request, ("Perfil atualizado com sucesso"))
