@@ -46,6 +46,7 @@
                                 <fieldset>
                                     <form class="form-signin" method="post">
                                         <div class="row">
+                                            <div class="col-md-6">
                                                 {% csrf_token %}
                                                 {{ form.non_field_errors }}
                                                 {% for field in form %}
@@ -53,6 +54,7 @@
                                                     {{ field }}
                                                     {{ field.errors}}
                                                 {% endfor %}
+                                            </div>    
                                         </div>
                                         <div class="row">            
                                                 <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
