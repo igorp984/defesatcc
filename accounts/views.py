@@ -6,7 +6,16 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.conf import settings
 from django.views.generic import CreateView
+from django.views.generic.edit import UpdateView
 from accounts.decorators import acesso, valida_perfil
+from django.contrib import messages
+
+from .serializers import UsuarioSerializer
+from django.http import Http404
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework import generics
 
 from core.utils import generate_hash_key
 
@@ -75,22 +84,25 @@ def reset_senha_confirm(request, key):
 	return render(request, template_name, context)	
 
 
-@login_required
-def editar(request):
-	template_name = 'accounts/editar.html'
-	context = {}
-	if request.method == 'POST':
-		form = EditaCadastroForm(request.POST, instance=request.user)
-		if form.is_valid():
-			form.save()
-			form = EditaCadastroForm(instance=request.user)
-			context['success'] = True
-	else:
-		form = EditaCadastroForm(instance=request.user)
 
-	context['form'] = form
-	
-	return render(request, template_name, context)
+class UsuarioUpdateView(UpdateView):
+	template_name = 'accounts/editar.html'
+	model = Usuario
+	form_class = EditaCadastroForm
+
+
+	def form_valid(self, form):
+		messages.success(self.request, ("Perfil atualizado com sucesso"))
+		return super(UsuarioUpdateView, self).form_valid(form)
+
+	def get_success_url(self):
+		return reverse("accounts:editar", kwargs={'pk': self.get_object().id})
+
+
+class UsuarioUpdateApiView(generics.RetrieveUpdateDestroyAPIView):
+	queryset = Usuario.objects.all()
+	serializer_class = UsuarioSerializer
+
 
 @login_required
 def editar_senha(request):
@@ -109,7 +121,6 @@ def editar_senha(request):
 	return render(request, template_name, context)
 
 
-
 class PerfilCreateView(CreateView):
 	template_name = 'accounts/novo_perfil.html'
 	model = Perfil
@@ -117,6 +128,7 @@ class PerfilCreateView(CreateView):
 	success_url = reverse_lazy(
 		"accounts:lista_perfis"
 	)
+
 	@method_decorator(login_required)
 	@method_decorator(acesso('alto'))
 	def dispatch(self, *args, **kwargs):

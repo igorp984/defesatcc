@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+from django.utils.encoding import python_2_unicode_compatible
 import re
 from django.db import models
 from django.core import validators
@@ -6,7 +8,7 @@ from django.contrib.auth.models import (AbstractBaseUser, PermissionsMixin, User
 from django.conf import settings
 # Create your models here.
 
-
+@python_2_unicode_compatible
 class Titulo(models.Model):
 
 	descricao = models.CharField('Descrição', max_length=100, unique=True)
@@ -18,6 +20,8 @@ class Titulo(models.Model):
 		verbose_name = 'Titulo'
 		verbose_name_plural = 'Titulos'
 
+
+@python_2_unicode_compatible
 class Perfil(models.Model):
 	
 	#só da acesso ao usuário para visualizar informações de trabalhos cadastrados,
@@ -48,7 +52,7 @@ class Perfil(models.Model):
     )
 
 	def __str__(self):
-		return self.descricao
+		return "%s" % self.descricao
 
 	def get_perfil(self, descricao):
 		nivel = Perfil.objects.filter(descricao=descricao).values('nivel_acesso')[0]['nivel_acesso']

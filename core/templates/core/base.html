@@ -1,7 +1,9 @@
 
 <!DOCTYPE html>
+
 {% load static %}
 {% load widget_tweaks %}
+
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -9,32 +11,35 @@
     <title>Defesas Ufba</title>
 
 
-    <link rel="stylesheet" type="text/css" href="{% static 'core/font-awesome/css/font-awesome.min.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'core/css/local.css' %}" />
-    
+
     {% include 'material/includes/material_css.html' %}
-    {% include 'material/includes/material_js.html' %}
-    <script src="{% static 'material/js/jquery.js' %}"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css">
+
+       <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css">
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.material.min.css">
-   
-             
+    <link rel="stylesheet" type="text/css" href="{% static 'core/font-awesome/css/font-awesome.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/local2.css' %}" />
+
+
+
     <script type="text/javascript" src="{% static 'core/js/jquery-1.10.2.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'core/js/local.js' %}"></script>
     <script type="text/javascript" src="{% static 'core/bootstrap/js/bootstrap.min.js' %}"></script>
-
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-
+    <script src="{% static 'material/js/jquery.js' %}"></script>
+    {% include 'material/includes/material_js.html' %}
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.material.min.js"></script>
-    
-    <!-- you need to include the shieldui css and js assets in order for the charts to work -->
-    <link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light-bootstrap/all.min.css" />
-    <link id="gridcss" rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/dark-bootstrap/all.min.css" />
+
+
+
 
     <script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
     <script type="text/javascript" src="http://www.prepbootstrap.com/Content/js/gridData.js"></script>
+
+
     {% csrf_token %}
+
 </head>
 <body>
     <div id="wrapper">
@@ -90,7 +95,7 @@
                     <li class="dropdown user-dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{user.name}} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{% url 'accounts:editar' %}"><i class="fa fa-user"></i> Perfil</a></li>
+                            <li><a href="{% url 'accounts:editar' user.id %}"><i class="fa fa-user"></i> Perfil</a></li>
                             <li><a href="#"><i class="fa fa-gear"></i> Configurações</a></li>
                             <li class="divider"></li>
                             <li><a href="{% url 'accounts:logout' %}"><i class="fa fa-power-off"></i> Log Out</a></li>                          
@@ -122,31 +127,9 @@
                         {% endfor %}
                     {% endif %}
                 });
-                $('.delete-trabalho').on('click', function(){
-                    deleteTrabalho(this);
-                    return false;
-                });
+
 
             })(jQuery);
-
-            function deleteTrabalho(element){
-                var url = $(element).attr('href');
-                var messages = $(element).data('messages');
-                var $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
-                $.ajax({
-                    'url': url,
-                    'method': 'DELETE',
-                    'headers':{"X-CSRFToken": $crf_token},
-                    'success': function(data){
-                        $(element).parent().parent().remove();
-                        M.toast({html: messages});
-                    },
-                    'error': function(xhr, status, error){
-                        // console.log(xhr, xhr.responseText, status);
-                        loadErrors(xhr.responseJSON);
-                    }
-                });
-            }
 
 
     </script>
@@ -218,12 +201,12 @@
                 paging: false,
                 columns: [
                 { field: "Source", width: "170px", title: "Source" },
-                { field: "Amount", title: "Amount" },                
+                { field: "Amount", title: "Amount" },
                 { field: "Percent", title: "Percent", format: "{0} %" },
                 { field: "Target", title: "Target" },
                 ]
-            });            
-        });        
+            });
+        });
     </script>
 </body>
 </html>
