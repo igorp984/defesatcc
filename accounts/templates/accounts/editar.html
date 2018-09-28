@@ -4,7 +4,7 @@
 
 <div id="page-wrapper">
         <div class="col-md-6">
-            <form method="post">
+            <form action="{% url 'accounts:editar_api' user.id %}" id="edit-form-usuario" method="put">
                 {% csrf_token %}
                 {% form form=form %}{% endform %}
                 <button type="submit" class="btn btn-success">Submit Button</button>

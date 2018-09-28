@@ -10,6 +10,13 @@ from django.views.generic.edit import UpdateView
 from accounts.decorators import acesso, valida_perfil
 from django.contrib import messages
 
+from .serializers import UsuarioSerializer
+from django.http import Http404
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework import generics
+
 from core.utils import generate_hash_key
 
 from .forms import CadastroForm, LoginForm, EditaCadastroForm, ResetSenhaForm, PerfilForm
@@ -82,14 +89,20 @@ class UsuarioUpdateView(UpdateView):
 	template_name = 'accounts/editar.html'
 	model = Usuario
 	form_class = EditaCadastroForm
-	success_url = reverse_lazy(
-		"accounts:editar"
-	)
 
 
 	def form_valid(self, form):
 		messages.success(self.request, ("Perfil atualizado com sucesso"))
 		return super(UsuarioUpdateView, self).form_valid(form)
+
+	def get_success_url(self):
+		return reverse("accounts:editar", kwargs={'pk': self.get_object().id})
+
+
+class UsuarioUpdateApiView(generics.RetrieveUpdateDestroyAPIView):
+	queryset = Usuario.objects.all()
+	serializer_class = UsuarioSerializer
+
 
 @login_required
 def editar_senha(request):
