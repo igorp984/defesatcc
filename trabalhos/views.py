@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
+from django.core.urlresolvers import reverse, reverse_lazy
+from django.views.generic import CreateView
 from django.views.generic.edit import UpdateView
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib import messages
@@ -8,8 +10,8 @@ from rest_framework.response import Response
 from rest_framework import status
 
 
-from .models import Trabalhos
-from .forms import TrabalhoForm
+from .models import Trabalhos, DefesaTrabalho
+from .forms import TrabalhoForm, DefesaTrabalhoForm
 
 def cadastrar_trabalho(request):
 	template_name = 'trabalhos/forms.html'
@@ -69,3 +71,18 @@ class TrabalhoDetail(APIView):
 		trabalho = self.get_object(pk)
 		trabalho.delete()
 		return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class DefesaTrabablhoCreate(CreateView):
+	template_name = 'trabalhos/agendamento_cadastro.html'
+	model = DefesaTrabalho
+	form_class = DefesaTrabalhoForm
+	success_url = reverse_lazy(
+		"core:home"
+	)
+
+	def form_valid(self, form):
+		avaliador = form.cleaned_data['banca'][0]
+		print (avaliador.id)
+		messages.success(self.request, ("Agendamento realizado com sucesso"))
+		return super(DefesaTrabablhoCreate, self).form_valid(form)
