@@ -11,7 +11,8 @@ def home(request):
 		avaliadores = defesa.banca.all()
 		lista = []
 		for avaliador in avaliadores:
-			lista.append(avaliador.name)
+			lista.append({avaliador.name})
+
 		defesas_dic = {
 			'local': defesa.local,
 			'data': defesa.data,
@@ -19,8 +20,6 @@ def home(request):
 			'trabalho': defesa.trabalho.titulo,
 			'banca': {
 				'avaliador0': lista[0],
-				'avaliador1': lista[1],
-				'avaliador2': lista[2],
 
 			}
 		}
