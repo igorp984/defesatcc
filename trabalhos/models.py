@@ -36,12 +36,37 @@ class DefesaTrabalho(models.Model):
 	local = models.CharField('Local', max_length=250)
 	data = models.DateField('Data')
 	hora = models.TimeField('Horário')
-	trabalho = models.ForeignKey(Trabalhos, verbose_name='trabalho', related_name='trabalhos')
-	banca = models.ManyToManyField(Usuario)
+	trabalho = models.ForeignKey(Trabalhos, verbose_name='trabalho', related_name='bancatrabalhos')
+	banca = models.ManyToManyField(Usuario, through='BancaTrabalho')
 	status = models.CharField(
 		'Status', max_length=30,
 		choices=STATUS_CHOICES,
 		default=BANCA_AVALIADORA_PENDENTE)
+
+class BancaTrabalho(models.Model):
+
+	ACEITO_PELO_ORIENTADOR = 'aceito_pelo_orientador'
+	ACEITO_PELO_AVALIADOR = 'aceito_pelo_avaliador'
+	NEGADO_PELO_ORIENTADOR = 'negado_pelo_orientador'
+	NEGADO_PELO_AVALIADOR = 'negado_pelo_avaliador'
+	PENDENTE_DE_RESPOSTA = 'pendentes_de_resposta'
+
+	STATUS_CONVITE_CHOICES = (
+		(ACEITO_PELO_ORIENTADOR, 'aceito_pelo_orientador'),
+		(ACEITO_PELO_AVALIADOR,'aceito_pelo_avaliador'),
+		(NEGADO_PELO_ORIENTADOR,'negado_pelo_orientador'),
+		(NEGADO_PELO_AVALIADOR,'negado_pelo_avaliador'),
+		(PENDENTE_DE_RESPOSTA,'pendentes_de_resposta'),
+	)
+
+	usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+	defesa_trabalho = models.ForeignKey(DefesaTrabalho, on_delete=models.CASCADE)
+	status = models.CharField(
+		'Status', max_length=30,
+		choices=STATUS_CONVITE_CHOICES,
+		default=PENDENTE_DE_RESPOSTA
+	)
+
 
 
 

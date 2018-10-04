@@ -7,5 +7,5 @@ urlpatterns = [
     url(r'^detalhe/(?P<pk>\d+)/$', views.detalhe, name='detalhe'),
     url(r'^editar/(?P<pk>\d+)/$', views.TrabalhoUpdateView.as_view(), name='editar'),
     url(r'^(?P<pk>\d+)/$', views.TrabalhoDetail.as_view(), name='deletar'),
-    url(r'^agendamento/novo', views.DefesaTrabablhoCreate.as_view(), name='cadastrar_agendamento_defesa')
+    url(r'^agendamento/novo', views.defesatrabalho, name='cadastrar_agendamento_defesa')
 ]

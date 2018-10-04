@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 
-from .models import Trabalhos, DefesaTrabalho
+from .models import Trabalhos, DefesaTrabalho, BancaTrabalho
 from .forms import TrabalhoForm, DefesaTrabalhoForm
 
 def cadastrar_trabalho(request):
@@ -83,6 +83,28 @@ class DefesaTrabablhoCreate(CreateView):
 
 	def form_valid(self, form):
 		avaliador = form.cleaned_data['banca'][0]
-		print (avaliador.id)
+		self.object = form.save(commit=False)
+		self.object.save()
+		for user in form.cleaned_data['banca']:
+			banca = BancaTrabalho.objects.create(usuario = user,defesa_trabalho = self.object)
 		messages.success(self.request, ("Agendamento realizado com sucesso"))
 		return super(DefesaTrabablhoCreate, self).form_valid(form)
+
+
+def defesatrabalho(request):
+
+	template_name = 'trabalhos/agendamento_cadastro.html'
+	context = {}
+	if request.method == 'POST':
+		form = DefesaTrabalhoForm(request.POST)
+		if form.is_valid():
+			defesa = form.save(commit=False)
+			defesa.save()
+			for user in form.cleaned_data['banca']:
+				banca = BancaTrabalho.objects.create(usuario = user, defesa_trabalho = defesa)
+			context['is_valid'] = True
+			return redirect('core:home')
+	else:
+		form = DefesaTrabalhoForm()
+	context['form'] = form
+	return render(request, template_name, context)
