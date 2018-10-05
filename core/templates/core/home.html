@@ -62,34 +62,37 @@
                                 <table id="agenda" class="table table-striped table-bordered" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
-                                            <th>Título</th>
-                                            <th>Autor</th>
-                                            <th>Orientador</th>
+                                            <th>Local</th>
+                                            <th>Data</th>
+                                            <th>Hora</th>
+                                            <th>Trabalho</th>
                                             <th>Banca</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                        <th>Título</th>
-                                            <th>Autor</th>
-                                            <th>Orientador</th>
+                                            <th>Local</th>
+                                            <th>Data</th>
+                                            <th>Hora</th>
+                                            <th>Trabalho</th>
                                             <th>Banca</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td>Ricardo Rios, Ivan Machado, Tatiane Rios</td>
-                                        </tr>
-                                         </tbody>
+                                        {% for defesa in defesas %}
+                                            <tr>
+                                                <td>{{ defesa.local }}</td>
+                                                <td>{{ defesa.data }}</td>
+                                                <td>{{ defesa.hora }}</td>
+                                                <td>{{ defesa.trabalho }}</td>
+                                                <td>
+                                                    {{ defesa.banca.avaliador0 }},
+                                                    {{ defesa.banca.avaliador1 }},
+                                                    {{ defesa.banca.avaliador2 }}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
                                 </table>
                             </div>
                         </div>

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-from .models import Trabalhos
+from .models import Trabalhos, DefesaTrabalho
 from accounts.models import Usuario
 
 class TrabalhoForm(forms.ModelForm):
@@ -16,3 +16,20 @@ class TrabalhoForm(forms.ModelForm):
 	class Meta:
 		model = Trabalhos
 		fields = ('titulo', 'keywords', 'autor', 'orientador', 'co_orientador', 'resumo')
+
+
+class DefesaTrabalhoForm(forms.ModelForm):
+
+	class Meta:
+		model = DefesaTrabalho
+		exclude = ('status',)
+
+	def clean(self):
+		cleaned_data = super(DefesaTrabalhoForm, self).clean()
+		banca = cleaned_data.get('banca')
+
+		if len(banca) !=3 :
+			self.add_error('banca',
+				forms.ValidationError(
+									  ("Banca não poder ter um numero de professores convidados diferente de 3")
+				))
