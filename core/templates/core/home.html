@@ -81,14 +81,14 @@
                                     <tbody>
                                         {% for defesa in defesas %}
                                             <tr>
-                                                <td>{{ defesa['local'] }}</td>
-                                                <td>{{ defesa['data'] }}</td>
-                                                <td>{{ defesa['hora'] }}</td>
-                                                <td>{{ defesa['trabalho'] }}</td>
+                                                <td>{{ defesa.local }}</td>
+                                                <td>{{ defesa.data }}</td>
+                                                <td>{{ defesa.hora }}</td>
+                                                <td>{{ defesa.trabalho }}</td>
                                                 <td>
-                                                    {{ defesa['banca']['avaliador0'],
-                                                    defesa['banca']['avaliador1'],
-                                                    defesa['banca']['avaliador2'] }}
+                                                    {{ defesa.banca.avaliador0 }},
+                                                    {{ defesa.banca.avaliador1 }},
+                                                    {{ defesa.banca.avaliador2 }}
                                                 </td>
                                             </tr>
                                         {% endfor %}

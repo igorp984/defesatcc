@@ -103,6 +103,7 @@ def defesatrabalho(request):
 			for user in form.cleaned_data['banca']:
 				banca = BancaTrabalho.objects.create(usuario = user, defesa_trabalho = defesa)
 			context['is_valid'] = True
+			messages.success('agendamento cadastrado com sucesso e convite enviado para os avaliadores')
 			return redirect('core:home')
 	else:
 		form = DefesaTrabalhoForm()
