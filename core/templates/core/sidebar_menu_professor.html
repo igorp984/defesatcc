@@ -1,0 +1,10 @@
+{% load staticfiles %}
+
+<a class=" mdl-navigation__link mdl-color-text--blue-grey master-menu" href="#">Trabalhos
+    <i class="grey-text material-icons">arrow_drop_down</i>
+</a>
+<ul class="child-menu">
+    <a class="mdl-navigation__link mdl-color-text--blue-grey" href="{% url 'trabalhos:cadastrar_trabalho'%}">
+        <i class="mdl-color-text--blue-grey-400 material-icons">playlist_add</i>Novo
+    </a>
+</ul>

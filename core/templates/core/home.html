@@ -11,7 +11,7 @@
                         <div>
                         <div class="panel-body">
                             <div >
-                                  <table id="banca" class="mdl-data-table" cellspacing="0" width="100%">
+                                  <table id="banca" class="highlight responsive-table" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
                                             <th>Título</th>
@@ -21,15 +21,15 @@
                                             <th>Ações</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Título</th>
-                                            <th>Autor</th>
-                                            <th>Orientador</th>
-                                            <th>Co-orientador</th>
-                                            <th>Ações</th>
-                                        </tr>
-                                    </tfoot>
+                                    <!--<tfoot>-->
+                                        <!--<tr>-->
+                                            <!--<th>Título</th>-->
+                                            <!--<th>Autor</th>-->
+                                            <!--<th>Orientador</th>-->
+                                            <!--<th>Co-orientador</th>-->
+                                            <!--&lt;!&ndash;<th>Ações</th>&ndash;&gt;-->
+                                        <!--</tr>-->
+                                    <!--</tfoot>-->
                                         <tbody>
                                         {% for trabalho in trabalhos %}
                                             <tr>
@@ -38,10 +38,21 @@
                                             <td>{{ trabalho.orientador }}</td>
                                             <td>{{ trabalho.co_orientador }}</td>
                                             <td>
-                                                <a href="{% url 'trabalhos:detalhe' trabalho.id %}"><i class="material-icons" style="color:black;">visibility</i></a>
+                                                <a href="{% url 'trabalhos:detalhe' trabalho.id %}">
+                                                    <i class="material-icons" style="color:black;">visibility</i>
+                                                </a>
                                                 {% if user.id == trabalho.orientador.id %}
-                                                    <a href="{% url 'trabalhos:editar' trabalho.id %}"><i class="material-icons" style="color:black;">create</i></a>
-                                                    <a href="{% url 'trabalhos:deletar' trabalho.id %}" data-messages="trabalho deletado com sucesso" class=" delete-trabalho"><i class="material-icons" style="color:black;">delete</i></a>
+                                                    <a href="{% url 'trabalhos:editar' trabalho.id %}">
+                                                        <i class="material-icons" style="color:black;">create</i>
+                                                    </a>
+                                                    <a href="{% url 'trabalhos:cadastrar_agendamento_defesa' %}">
+                                                        <i class="material-icons" >event_note</i>
+                                                    </a>
+                                                    <a href="{% url 'trabalhos:deletar' trabalho.id %}"
+                                                       data-messages="trabalho deletado com sucesso"
+                                                       class=" delete-trabalho">
+                                                        <i class="material-icons" style="color:black;">delete</i>
+                                                    </a>
                                                 {% endif %}
                                             </td>
                                         {% endfor %}

@@ -1,5 +1,7 @@
 {% extends 'core/base.html' %}
 {% load widget_tweaks %}
+{% load material_form %}
+
 {% block content %}
 
 <div id="page-wrapper">
@@ -8,12 +10,7 @@
 
             <form method="post">
                 {% csrf_token %}
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-addon" id="sizing-addon1">@</span>
-                    </div>
-                    {% render_field form.descricao type="text" class="form-control" %}
-                </div>
+                {% form form=form %}{% endform %}
                 <button type="submit" class="btn btn-success">Submit Button</button>
                 <button class="btn btn-primary"><a href="index.html">Reset Button<a></button>
             </form>

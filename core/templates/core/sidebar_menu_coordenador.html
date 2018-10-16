@@ -1,0 +1,26 @@
+{% load staticfiles %}
+
+<a class=" mdl-navigation__link mdl-color-text--blue-grey master-menu" href="#">Usuários
+    <i class="grey-text material-icons">arrow_drop_down</i>
+</a>
+<ul class="child-menu">
+    <a class="mdl-navigation__link mdl-color-text--blue-grey" href="{% url 'accounts:cadastro'%}">
+        <i class="mdl-color-text--blue-grey-400 material-icons">person_add</i>Novo
+    </a>
+</ul>
+<a class=" mdl-navigation__link mdl-color-text--blue-grey master-menu" href="#">Perfis
+    <i class="grey-text material-icons">arrow_drop_down</i>
+</a>
+<ul class="child-menu">
+    <a class="mdl-navigation__link mdl-color-text--blue-grey" href="{% url 'accounts:novo_perfil'%}">
+        <i class="mdl-color-text--blue-grey-400 material-icons">group_add</i>Novo
+    </a>
+</ul>
+<a class=" mdl-navigation__link mdl-color-text--blue-grey master-menu" href="#">Relatórios
+    <i class="grey-text material-icons">arrow_drop_down</i>
+</a>
+<ul class="child-menu">
+    <a class="mdl-navigation__link mdl-color-text--blue-grey" href="#">
+        <i class="mdl-color-text--blue-grey-400 material-icons">list</i>???
+    </a>
+</ul>
