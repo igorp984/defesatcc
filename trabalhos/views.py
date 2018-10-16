@@ -91,7 +91,7 @@ class DefesaTrabablhoCreate(CreateView):
 		return super(DefesaTrabablhoCreate, self).form_valid(form)
 
 
-def defesatrabalho(request):
+def defesatrabalho(request, pk):
 
 	template_name = 'trabalhos/agendamento_cadastro.html'
 	context = {}
@@ -103,10 +103,10 @@ def defesatrabalho(request):
 			for user in form.cleaned_data['banca']:
 				banca = BancaTrabalho.objects.create(usuario = user, defesa_trabalho = defesa)
 			context['is_valid'] = True
-			messages.success('agendamento cadastrado com sucesso e convite enviado para os avaliadores')
+			messages.success(request,'agendamento cadastrado com sucesso e convite enviado para os avaliadores')
 			return redirect('core:home')
 	else:
-		form = DefesaTrabalhoForm(initial={'trabalho': '1'})
+		form = DefesaTrabalhoForm(initial={'trabalho': pk})
 		print (form)
 	context['form'] = form
 	return render(request, template_name, context)
