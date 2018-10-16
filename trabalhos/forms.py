@@ -23,6 +23,9 @@ class DefesaTrabalhoForm(forms.ModelForm):
 	class Meta:
 		model = DefesaTrabalho
 		exclude = ('status',)
+		widgets = {
+			'trabalho': ''
+		}
 
 	def clean(self):
 		cleaned_data = super(DefesaTrabalhoForm, self).clean()
