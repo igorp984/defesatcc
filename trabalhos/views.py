@@ -106,6 +106,7 @@ def defesatrabalho(request):
 			messages.success('agendamento cadastrado com sucesso e convite enviado para os avaliadores')
 			return redirect('core:home')
 	else:
-		form = DefesaTrabalhoForm()
+		form = DefesaTrabalhoForm(initial={'trabalho': '1'})
+		print (form)
 	context['form'] = form
 	return render(request, template_name, context)

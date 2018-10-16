@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, SetPasswordForm
@@ -50,8 +51,7 @@ def cadastro(request):
 		form = CadastroForm(request.POST)
 		if form.is_valid():
 			user = form.save()
-			user = authenticate(username=user.username, password=form.cleaned_data['password1'])
-			login(request, user)
+			messages.success(request,'Usuário cadastrado com sucesso')
 			return redirect('core:home')
 	else:
 		form = CadastroForm()		

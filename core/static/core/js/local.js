@@ -3,6 +3,7 @@ $(document).ready(function(){
 	$('#banca').DataTable();
     $('#agenda').DataTable();
     $('#confirmadas').DataTable();
+    $(".dropdown-trigger").dropdown();
 
     $('.delete-trabalho').on('click', function(){
        deleteTrabalho(this);
@@ -15,6 +16,10 @@ $(document).ready(function(){
         formId = $(this).attr('id');
         editUsuario(url, method, formId);
         return false;
+    });
+    $('.master-menu').click(function(e){
+        $(this).next('ul').slideToggle('slow');
+        $('.child-menu').not($(this).next()).slideUp('slow');
     });
 
 });
