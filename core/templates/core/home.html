@@ -45,7 +45,7 @@
                                                     <a href="{% url 'trabalhos:editar' trabalho.id %}">
                                                         <i class="material-icons" style="color:black;">create</i>
                                                     </a>
-                                                    <a href="{% url 'trabalhos:cadastrar_agendamento_defesa' %}">
+                                                    <a href="{% url 'trabalhos:cadastrar_agendamento_defesa' trabalho.id %}">
                                                         <i class="material-icons" >event_note</i>
                                                     </a>
                                                     <a href="{% url 'trabalhos:deletar' trabalho.id %}"

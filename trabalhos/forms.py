@@ -34,5 +34,5 @@ class DefesaTrabalhoForm(forms.ModelForm):
 		if len(banca) !=3 :
 			self.add_error('banca',
 				forms.ValidationError(
-									  ("Banca não poder ter um numero de professores convidados diferente de 3")
+									  ("A banca não poder ter um número de professores convidados diferente de 3")
 				))
