@@ -36,9 +36,10 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = (
-    'core',
-    'trabalhos',
     'accounts',
+    'core',
+    'mensagem',
+    'trabalhos',
     'bootstrap3',
     'widget_tweaks',
     'material',
@@ -141,7 +142,7 @@ DEFAULT_FROM_EMAIL = 'Nome <igorp984@gmail.com>'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'igorp984@gmail.com'
-EMAIL_HOST_PASSWORD = 'edwardelric'
+EMAIL_HOST_PASSWORD = 'Edward3lric'
 EMAIL_PORT = 587
 
 # Auth
