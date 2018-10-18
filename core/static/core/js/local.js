@@ -4,10 +4,16 @@ $(document).ready(function(){
     $('#agenda').DataTable();
     $('#confirmadas').DataTable();
     $(".dropdown-trigger").dropdown();
+    $('.tooltipped').tooltip();
 
     $('.delete-trabalho').on('click', function(){
        deleteTrabalho(this);
        return false;
+     });
+
+     $('.email-participacao-banca').on('click', function(){
+        emailParticipacaoBanca(this);
+        return false;
      });
 
       $('#edit-form-usuario').on('submit', function(){
@@ -34,6 +40,24 @@ function deleteTrabalho(element){
         'headers':{"X-CSRFToken": $crf_token},
         'success': function(data){
             $(element).parent().parent().remove();
+            M.toast({html: messages});
+        },
+        'error': function(xhr, status, error){
+            // console.log(xhr, xhr.responseText, status);
+            loadErrors(xhr.responseJSON);
+        }
+    });
+}
+
+function emailParticipacaoBanca(element){
+    var url = $(element).attr('href');
+    var messages = $(element).data('messages');
+    var $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+    $.ajax({
+        'url': url,
+        'method': 'POST',
+        'headers':{"X-CSRFToken": $crf_token},
+        'success': function(data){
             M.toast({html: messages});
         },
         'error': function(xhr, status, error){
