@@ -1,0 +1,11 @@
+<h3></h3>
+<p>
+    {{ defesa.trabalho.orientador.name }} o convida para participar da banca avaliadora do trabalho
+    {{defesa.trabalho.titulo }} , que sera realizada no {{defesa.local}}, no dia e hora {{defesa.data}}
+    as {{ defesa.hora}}
+
+</p>
+<p>para aceitar ao convite click no link a baixo:</p>
+<a href="{{ base_url }}{% url 'mensagem:confirma_participacao_banca' key %}">Aceitar a solicitação</a>
+<p>para recusar o convite click no link a baixo:</p>
+<a href="{{ base_url }}{% url 'mensagem:confirma_participacao_banca' key %}">Rejeita a solicitação</a>

@@ -27,12 +27,12 @@ class DefesaTrabalhoForm(forms.ModelForm):
 			'trabalho': ''
 		}
 
-	def clean(self):
-		cleaned_data = super(DefesaTrabalhoForm, self).clean()
-		banca = cleaned_data.get('banca')
-
-		if len(banca) !=3 :
-			self.add_error('banca',
-				forms.ValidationError(
-									  ("A banca não poder ter um número de professores convidados diferente de 3")
-				))
+	# def clean(self):
+	# 	cleaned_data = super(DefesaTrabalhoForm, self).clean()
+	# 	banca = cleaned_data.get('banca')
+	#
+	# 	if len(banca) !=3 :
+	# 		self.add_error('banca',
+	# 			forms.ValidationError(
+	# 								  ("A banca não poder ter um número de professores convidados diferente de 3")
+	# 			))

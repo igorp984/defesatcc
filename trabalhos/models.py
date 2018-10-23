@@ -36,7 +36,7 @@ class DefesaTrabalho(models.Model):
 	local = models.CharField('Local', max_length=250)
 	data = models.DateField('Data')
 	hora = models.TimeField('Horário')
-	trabalho = models.ForeignKey(Trabalhos, verbose_name='trabalho', related_name='bancatrabalhos')
+	trabalho = models.OneToOneField(Trabalhos, on_delete=models.CASCADE, verbose_name='trabalho', related_name='bancatrabalhos')
 	banca = models.ManyToManyField(Usuario, through='BancaTrabalho')
 	status = models.CharField(
 		'Status', max_length=30,

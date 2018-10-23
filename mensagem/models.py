@@ -15,6 +15,6 @@ class EmailParticipacaoBanca(models.Model):
     destinatario = models.ForeignKey(Usuario,verbose_name='Usuario', related_name='usuario')
     trabalho = models.ForeignKey(Trabalhos, verbose_name='Trabalhos', related_name='trabalhos')
     key = models.CharField('Chave', max_length=100, unique=True)
-    visualizada = models.CharField('Visualizada', max_length=3)
+    visualizada = models.DateField('Visualizada em', null=True, blank=True)
     tipo = models.CharField('Tipo', max_length=30)
 

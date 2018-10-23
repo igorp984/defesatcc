@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse, reverse_lazy
@@ -9,10 +11,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from core.mail import send_mail_template
-
+from core.utils import  generate_hash_key
 
 from .models import Trabalhos, DefesaTrabalho, BancaTrabalho
 from .forms import TrabalhoForm, DefesaTrabalhoForm
+
+from mensagem.models import EmailParticipacaoBanca
 
 def cadastrar_trabalho(request):
 	template_name = 'trabalhos/forms.html'
@@ -94,6 +98,25 @@ class DefesaTrabablhoCreate(CreateView):
 
 def defesatrabalho(request, pk):
 
+	def envia_email(defesa, user):
+
+		key = generate_hash_key(user.name)
+		email_participacao_banca = EmailParticipacaoBanca(
+			remetente=request.user,
+			destinatario=user,
+			key=key,
+			trabalho=defesa.trabalho,
+			tipo='convite de participação'
+		)
+		email_participacao_banca.save()
+
+		base_url = request.scheme + "://" + request.get_host()
+		template_name = 'mensagem/banca/convite_participacao_banca.html'
+		subject = 'Convite para compor a banca do trabalho ' + str(defesa.trabalho.titulo)
+		context = {'defesa': defesa, 'base_url': base_url, 'key': key}
+		send_mail_template(subject, template_name, context, [user.email], request.user.email)
+
+
 	template_name = 'trabalhos/agendamento_cadastro.html'
 	context = {}
 	if request.method == 'POST':
@@ -103,11 +126,11 @@ def defesatrabalho(request, pk):
 			defesa.save()
 			for user in form.cleaned_data['banca']:
 				banca = BancaTrabalho.objects.create(usuario = user, defesa_trabalho = defesa)
-			context['is_valid'] = True
+				envia_email(defesa, user)
 			messages.success(request,'agendamento cadastrado com sucesso e convite enviado para os avaliadores')
 			return redirect('core:home')
 	else:
-		form = DefesaTrabalhoForm(initial={'trabalho': pk})
+		form = DefesaTrabalhoForm(initial={'trabalho': pk, 'banca': request.user})
 		print (form)
 	context['form'] = form
 	return render(request, template_name, context)
