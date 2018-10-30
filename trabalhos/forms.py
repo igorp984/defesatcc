@@ -18,14 +18,20 @@ class TrabalhoForm(forms.ModelForm):
 		fields = ('titulo', 'keywords', 'autor', 'orientador', 'co_orientador', 'resumo')
 
 
+class TrabalhoBancaForm(forms.ModelForm):
+	class Meta:
+		model = Trabalhos
+		fields = ('banca',)
+
+
 class DefesaTrabalhoForm(forms.ModelForm):
 
 	class Meta:
 		model = DefesaTrabalho
 		exclude = ('status',)
-		widgets = {
-			'trabalho': ''
-		}
+		# widgets = {
+		# 	'trabalho': ''
+		# }
 
 	# def clean(self):
 	# 	cleaned_data = super(DefesaTrabalhoForm, self).clean()

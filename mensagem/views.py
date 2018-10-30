@@ -46,23 +46,39 @@ def confirma_participacao_banca(request, key):
             messages.error(request, 'Esta mensagem já foi respondida')
             return redirect('core:home')
         else:
-            defesa_trabalho = DefesaTrabalho.objects.get(trabalho=participacao_banca.trabalho_id)
             if participacao_banca.tipo == 'pedido de participação':
                 banca = BancaTrabalho(
                     usuario=participacao_banca.remetente,
-                    defesa_trabalho=defesa_trabalho,
+                    trabalho=participacao_banca.trabalho,
                 )
                 banca.status = 'aceito_pelo_orientador'
+                template_name = 'mensagem/banca/solicitacao_participacao_aceita.html'
+                subject = 'Solitação aceita para compor a banca do trabalho ' + str(participacao_banca.trabalho.titulo)
             else:
-                banca = defesa_trabalho.bancatrabalho_set.get(usuario=participacao_banca.destinatario)
+                banca = BancaTrabalho.objects.get(trabalho=participacao_banca.trabalho, usuario=participacao_banca.destinatario)
                 banca.status = 'aceito_pelo_avaliador'
+                template_name = 'mensagem/banca/convite_participacao_aceita.html'
+                subject = 'Convite aceito para compor a banca do trabalho ' + str(participacao_banca.trabalho.titulo)
+
             banca.save()
+
+            #dispara email de resposta
+            context = {'trabalho': participacao_banca.trabalho, 'usuario' : participacao_banca.remetente}
+            send_mail_template(
+                subject,
+                template_name,
+                context,
+                [participacao_banca.remetente.email],
+                participacao_banca.destinatario.email
+            )
             participacao_banca.visualizada = date.today()
             participacao_banca.save()
-            agendado = BancaTrabalho.objects.filter(status__contains='aceito').count()
-            if agendado == defesa_trabalho.bancatrabalho_set.all().count():
-                defesa_trabalho.status = 'agendado'
-                defesa_trabalho.save()
+            avaliadores = BancaTrabalho.objects.filter(trabalho=participacao_banca.trabalho)
+            defesa = DefesaTrabalho.objects.filter(trabalho=participacao_banca.trabalho)
+            if avaliadores.filter(status__contains='aceito').count == avaliadores.count() and defesa:
+                defesa.status = 'agendado'
+                defesa.save()
+
 
             messages.success(request,'Confirmação realizada com sucesso')
             return redirect('core:home')

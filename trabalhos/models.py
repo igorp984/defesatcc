@@ -16,6 +16,7 @@ class Trabalhos(models.Model):
 	orientador = models.ForeignKey(Usuario, verbose_name='orientador', related_name='orientador')
 	co_orientador = models.CharField('Co Orientador', max_length=250, blank=True)
 	resumo = models.TextField('Resumo', blank=True)
+	banca = models.ManyToManyField(Usuario, through='BancaTrabalho', related_name='bancas')
 	created_at = models.DateTimeField('Criado em', auto_now_add=True)
 	updated_at = models.DateTimeField('Atualizado em', auto_now=True)
 
@@ -37,7 +38,7 @@ class DefesaTrabalho(models.Model):
 	data = models.DateField('Data')
 	hora = models.TimeField('Horário')
 	trabalho = models.OneToOneField(Trabalhos, on_delete=models.CASCADE, verbose_name='trabalho', related_name='bancatrabalhos')
-	banca = models.ManyToManyField(Usuario, through='BancaTrabalho')
+
 	status = models.CharField(
 		'Status', max_length=30,
 		choices=STATUS_CHOICES,
@@ -60,7 +61,7 @@ class BancaTrabalho(models.Model):
 	)
 
 	usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-	defesa_trabalho = models.ForeignKey(DefesaTrabalho, on_delete=models.CASCADE)
+	trabalho = models.ForeignKey(Trabalhos, on_delete=models.CASCADE)
 	status = models.CharField(
 		'Status', max_length=30,
 		choices=STATUS_CONVITE_CHOICES,

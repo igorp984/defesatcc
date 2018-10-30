@@ -14,7 +14,7 @@ from core.mail import send_mail_template
 from core.utils import  generate_hash_key
 
 from .models import Trabalhos, DefesaTrabalho, BancaTrabalho
-from .forms import TrabalhoForm, DefesaTrabalhoForm
+from .forms import TrabalhoForm, DefesaTrabalhoForm, TrabalhoBancaForm
 
 from mensagem.models import EmailParticipacaoBanca
 
@@ -118,7 +118,6 @@ def defesatrabalho(request, pk):
 
 
 	template_name = 'trabalhos/agendamento_cadastro.html'
-	context = {}
 	if request.method == 'POST':
 		form = DefesaTrabalhoForm(request.POST)
 		if form.is_valid():
@@ -130,7 +129,8 @@ def defesatrabalho(request, pk):
 			messages.success(request,'agendamento cadastrado com sucesso e convite enviado para os avaliadores')
 			return redirect('core:home')
 	else:
-		form = DefesaTrabalhoForm(initial={'trabalho': pk, 'banca': request.user})
-		print (form)
-	context['form'] = form
+		form_defesa = DefesaTrabalhoForm(initial={'trabalho': pk})
+	trabalho = Trabalhos.objects.get(pk=pk)
+	form = TrabalhoBancaForm(initial={'banca': trabalho.banca.all()})
+	context = {'form': form, 'trabalho': form_defesa, 'titulo': trabalho.titulo}
 	return render(request, template_name, context)

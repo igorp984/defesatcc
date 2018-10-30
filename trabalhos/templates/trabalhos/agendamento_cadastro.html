@@ -1,18 +1,56 @@
 {% extends 'core/base.html' %}
-
 {% load material_form %}
-{% block content %}
 
+{% block content %}
 <div id="page-wrapper">
+
+    <div class="row">
         <div class="col-md-6">
-                <form method="post">
-                    <fieldset>
-                        {% csrf_token %}
-                        {% form form=form %}{% endform %}
-                        <button type="submit" class="btn btn-success">Submit Button</button>
-                        <button class="btn btn-primary"><a href="index.html">Reset Button<a></button>
-                    </fieldset>
-                </form>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="form-group">
+
+                    <div class="form-group">
+                        {{ form.local.errors }}
+                        <label for="id_local">Local:</label>
+                        <input class="form-control" id="id_local" maxlength="150" name="titulo" placeholder="Digite o Título do Trabalho" type="text">
+
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.data.errors }}
+                        <label for="id_data">Data:</label>
+                        <input class="datepicker form-control" id="id_data" name="data" placeholder="Informe a data" type="text">
+
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.hora.errors }}
+                        <label for="id_hora">Hora:</label>
+                        <input class="timepicker form-control" id="id_hora" name="hora" placeholder="Informe a hora" type="text" >
+
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.trabalho.errors }}
+                        <label for="id_trabalho">Trabalho:</label>
+                        <input class="form-control" id="id_trabalho" maxlength="150" name="trabalho" disabled type="text" value="{{ titulo }}">
+                    </div>
+
+                    <div class="form-group">
+                       {% form form=form %}{% endform %}
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Submit Button</button>
+                    <button class="btn btn-primary">
+                        <a href="{% url 'core:home' %} ">Voltar</a>
+                        <a></a>
+                    </button>
+                </div>
+            </form>
         </div>
-</div>
+    </div>
+
 {% endblock %}

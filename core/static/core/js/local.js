@@ -5,6 +5,8 @@ $(document).ready(function(){
     $('#confirmadas').DataTable();
     $(".dropdown-trigger").dropdown();
     $('.tooltipped').tooltip();
+    $('.timepicker').timepicker();
+    $('.datepicker').datepicker();
 
     $('.delete-trabalho').on('click', function(){
        deleteTrabalho(this);
