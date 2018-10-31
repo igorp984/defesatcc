@@ -130,7 +130,7 @@ def defesatrabalho(request, pk):
 			return redirect('core:home')
 	else:
 		form_defesa = DefesaTrabalhoForm(initial={'trabalho': pk})
-	trabalho = Trabalhos.objects.get(pk=pk)
-	form = TrabalhoBancaForm(initial={'banca': trabalho.banca.all()})
-	context = {'form': form, 'trabalho': form_defesa, 'titulo': trabalho.titulo}
+	banca = BancaTrabalho.objects.filter(trabalho_id=pk)
+	form = TrabalhoBancaForm(initial={'banca': banca.filter(status__contains='aceito').values_list('usuario', flat=True)})
+	context = {'form': form, 'trabalho': form_defesa, 'titulo': banca[0].trabalho.titulo}
 	return render(request, template_name, context)
