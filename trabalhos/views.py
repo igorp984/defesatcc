@@ -119,18 +119,22 @@ def defesatrabalho(request, pk):
 
 	template_name = 'trabalhos/agendamento_cadastro.html'
 	if request.method == 'POST':
-		form = DefesaTrabalhoForm(request.POST)
-		if form.is_valid():
-			defesa = form.save(commit=False)
+		form_defesa = DefesaTrabalhoForm(request.POST, prefix='defesa')
+		form_banca = TrabalhoBancaForm(request.POST, prefix='banca')
+
+		if form_defesa.is_valid() and form_banca.is_valid():
+			defesa = form_defesa.save(commit=False)
 			defesa.save()
-			for user in form.cleaned_data['banca']:
-				banca = BancaTrabalho.objects.create(usuario = user, defesa_trabalho = defesa)
-				envia_email(defesa, user)
+			for user in form_banca.cleaned_data['banca']:
+				banca = BancaTrabalho.objects.filter(usuario = user, trabalho = defesa.trabalho)
+				if not banca:
+					banca = BancaTrabalho.objects.create(usuario = user, trabalho = defesa.trabalho)
+					banca.save()
+					envia_email(defesa, user)
 			messages.success(request,'agendamento cadastrado com sucesso e convite enviado para os avaliadores')
 			return redirect('core:home')
-	else:
-		form_defesa = DefesaTrabalhoForm(initial={'trabalho': pk})
+	form_defesa = DefesaTrabalhoForm(initial={'trabalho': pk}, prefix='defesa')
 	banca = BancaTrabalho.objects.filter(trabalho_id=pk)
-	form = TrabalhoBancaForm(initial={'banca': banca.filter(status__contains='aceito').values_list('usuario', flat=True)})
-	context = {'form': form, 'trabalho': form_defesa, 'titulo': banca[0].trabalho.titulo}
+	form = TrabalhoBancaForm(initial={'banca': banca.filter(status__contains='aceito').values_list('usuario', flat=True)}, prefix='banca')
+	context = {'form': form, 'form_defesa': form_defesa, 'titulo': banca[0].trabalho.titulo}
 	return render(request, template_name, context)

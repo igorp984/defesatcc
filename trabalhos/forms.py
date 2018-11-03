@@ -29,9 +29,10 @@ class DefesaTrabalhoForm(forms.ModelForm):
 	class Meta:
 		model = DefesaTrabalho
 		exclude = ('status',)
-		# widgets = {
-		# 	'trabalho': ''
-		# }
+		widgets = {
+		 	'data': forms.TextInput(attrs={'class': 'datepicker'}),
+			'hora': forms.TextInput(attrs={'class': 'timepicker'})
+		}
 
 	# def clean(self):
 	# 	cleaned_data = super(DefesaTrabalhoForm, self).clean()
