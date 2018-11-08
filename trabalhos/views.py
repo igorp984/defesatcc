@@ -112,7 +112,7 @@ def defesatrabalho(request, pk):
 
 		base_url = request.scheme + "://" + request.get_host()
 		template_name = 'mensagem/banca/convite_participacao_banca.html'
-		subject = 'Convite para compor a banca do trabalho ' + str(defesa.trabalho.titulo)
+		subject = 'Convite para compor a banca avaliadora do trabalho ' + str(defesa.trabalho.titulo)
 		context = {'defesa': defesa, 'base_url': base_url, 'key': key}
 		send_mail_template(subject, template_name, context, [user.email], request.user.email)
 
@@ -137,4 +137,67 @@ def defesatrabalho(request, pk):
 	banca = BancaTrabalho.objects.filter(trabalho_id=pk)
 	form = TrabalhoBancaForm(initial={'banca': banca.filter(status__contains='aceito').values_list('usuario', flat=True)}, prefix='banca')
 	context = {'form': form, 'form_defesa': form_defesa, 'titulo': banca[0].trabalho.titulo}
+	return render(request, template_name, context)
+
+
+def banca_trabalho(request, pk):
+
+	def envia_email(trabalho, user, template_name, subject):
+
+		key = generate_hash_key(user.name)
+		email_participacao_banca = EmailParticipacaoBanca(
+			remetente=request.user,
+			destinatario=user,
+			key=key,
+			trabalho=trabalho,
+			tipo='convite de participação'
+		)
+		email_participacao_banca.save()
+
+		base_url = request.scheme + "://" + request.get_host()
+		context = {'trabalho': trabalho, 'usuario': user, 'base_url': base_url, 'key': key}
+		send_mail_template(subject, template_name, context, [user.email])
+
+	banca = BancaTrabalho.objects.filter(trabalho_id=pk).exclude(status__contains='negado')
+	trabalho = Trabalhos.objects.get(pk=pk)
+	template_name = 'trabalhos/banca/banca_trabalho.html'
+
+	if request.method == 'POST':
+		usuario_nao_cadastrado = request.POST['tags'].split(',')
+		form = TrabalhoBancaForm(request.POST, prefix='banca')
+		if form.is_valid():
+			banca_avaliador_excluido = banca
+			for user in form.cleaned_data['banca']:
+				banca_avaliador_excluido = banca_avaliador_excluido.exclude(usuario=user)
+				banca_novo_avaliador = BancaTrabalho.objects.filter(usuario = user, trabalho = trabalho)
+				if not banca_novo_avaliador:
+					banca_novo_avaliador = BancaTrabalho.objects.create(usuario = user, trabalho = trabalho)
+					banca_novo_avaliador.save()
+					template_name_email = 'trabalhos/banca/convite_participacao_banca.html'
+					subject = 'Convite para compor a banca avaliadora do trabalho ' + str(trabalho.titulo)
+					envia_email(trabalho, user, template_name_email, subject)
+
+
+			for avaliador_negado in banca_avaliador_excluido:
+				avaliador_negado.status = 'negado_pelo_orientador'
+				avaliador_negado.save()
+				template_name_email = 'trabalhos/banca/convite_rejeitado.html'
+				subject = 'Convite rejeitado para compor a banca avaliadora do trabalho ' + str(trabalho.titulo)
+				envia_email(trabalho, avaliador_negado.usuario,template_name_email,subject)
+
+		if usuario_nao_cadastrado:
+			template_name = 'trabalhos/banca/convite_usuario_nao_cadastrado.html'
+			subject = 'Convite para compor a banca avaliadora do trabalho ' + str(trabalho.titulo)
+			base_url = request.scheme + "://" + request.get_host()
+			context = {'trabalho': trabalho, 'base_url': base_url}
+			send_mail_template(subject, template_name, context, [usuario_nao_cadastrado[0]])
+
+		messages.success(request,'O convite foi enviado com sucesso')
+		return redirect('core:home')
+	if banca:
+		form = TrabalhoBancaForm(initial={'banca': banca.filter(status__contains='aceito').values_list('usuario', flat=True)},prefix='banca')
+	else:
+		form = TrabalhoBancaForm(prefix='banca')
+
+	context = {'form': form, 'titulo': trabalho.titulo}
 	return render(request, template_name, context)

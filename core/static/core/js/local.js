@@ -8,6 +8,13 @@ $(document).ready(function(){
     $('.timepicker').timepicker({
         twelveHour: false,
     });
+    $('#tags').tagsInput({
+       'height':'70px',
+       'min-height': '70px',
+       'width':'700px',
+       'defaultText':'Digite email e aperte enter',
+       'placeholderColor' : '#666666'
+    });
     $('.datepicker').datepicker({
         i18n: {
             months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
@@ -34,20 +41,21 @@ $(document).ready(function(){
     $('.delete-trabalho').on('click', function(){
        deleteTrabalho(this);
        return false;
-     });
+    });
 
-     $('.email-participacao-banca').on('click', function(){
+    $('.email-participacao-banca').on('click', function(){
         emailParticipacaoBanca(this);
         return false;
-     });
+    });
 
-      $('#edit-form-usuario').on('submit', function(){
+    $('#edit-form-usuario').on('submit', function(){
         url = $(this).attr('action');
         method = $(this).attr('method');
         formId = $(this).attr('id');
         editUsuario(url, method, formId);
         return false;
     });
+
     $('.master-menu').click(function(e){
         $(this).next('ul').slideToggle('slow');
         $('.child-menu').not($(this).next()).slideUp('slow');

@@ -1,5 +1,7 @@
 <h3>Solicito participar da banca avaliadora do trabalho {{ trabalho.descricao }}</h3>
+
 <p>para aceitar a solicição click no link a baixo:</p>
-<a href="{{ base_url }}{% url 'mensagem:confirma_participacao_banca' key %}">Aceitar a solicitação</a>
+<a href="{{ base_url }}{% url 'mensagem:confirmada_participacao_banca' key %}">Aceitar a solicitação</a>
+
 <p>para recusar a solicitação click no link a baixo:</p>
-<a href="{{ base_url }}{% url 'mensagem:confirma_participacao_banca' key %}">Rejeita a solicitação</a>
+<a href="{{ base_url }}{% url 'mensagem:rejeitada_participacao_banca' key %}">Rejeita a solicitação</a>

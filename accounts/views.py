@@ -22,6 +22,8 @@ from core.utils import generate_hash_key
 
 from .forms import CadastroForm, LoginForm, EditaCadastroForm, ResetSenhaForm, PerfilForm
 from .models import NovaSenha, Perfil
+from mensagem.models import  EmailParticipacaoBanca
+from trabalhos.models import  Trabalhos, DefesaTrabalho, BancaTrabalho
 
 Usuario = get_user_model()
 
@@ -42,15 +44,26 @@ def meu_login(request):
 	
 	return render(request, template_name, context)			
 
-@login_required
-@acesso('alto')
-def cadastro(request):
+
+def cadastro(request, trabalho_id=None):
 	template_name = 'accounts/cadastro.html'
 
 	if request.method == 'POST':
 		form = CadastroForm(request.POST)
 		if form.is_valid():
 			user = form.save()
+			if trabalho_id:
+				trabalho = Trabalhos.objects.get(pk=trabalho_id)
+				key = generate_hash_key(user.name)
+				email_participacao_banca = EmailParticipacaoBanca(
+					remetente=trabalho.orientador,
+					destinatario=user,
+					key=key,
+					trabalho=trabalho,
+					tipo='convite de participação'
+				)
+				email_participacao_banca.save()
+
 			messages.success(request,'Usuário cadastrado com sucesso')
 			return redirect('core:home')
 	else:

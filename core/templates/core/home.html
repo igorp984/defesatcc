@@ -61,6 +61,12 @@
                                                            data-tooltip="editar trabalho"
                                                            style="color:black;">create</i>
                                                     </a>
+                                                    <a href="{% url 'trabalhos:banca_trabalho' trabalho.id %}">
+                                                        <i class="material-icons tooltipped"
+                                                           data-position="top"
+                                                           data-tooltip="convidar banca avaliadora" >
+                                                            people</i>
+                                                    </a>
                                                     <a href="{% url 'trabalhos:cadastrar_agendamento_defesa' trabalho.id %}">
                                                         <i class="material-icons tooltipped"
                                                            data-position="top"

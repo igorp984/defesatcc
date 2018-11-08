@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/local.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/jquery.tagsinput.css' %}" />
 
 
     {% csrf_token %}
@@ -67,6 +68,7 @@
 {% include 'material/includes/material_js.html' %}
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.material.min.js"></script>
+<script type="text/javascript" src="{% static 'core/js/jquery.tagsinput.js' %}"></script>
     <script>
             (function($){
                 $(".dropdown-trigger").dropdown();

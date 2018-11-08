@@ -8,7 +8,7 @@ def home(request):
 	defesas = DefesaTrabalho.objects.all()
 	list = []
 	for defesa in defesas:
-		avaliadores = defesa.banca.all()
+		avaliadores = defesa.trabalho.banca.all()
 		lista = []
 		for avaliador in avaliadores:
 			lista.append(avaliador.name)

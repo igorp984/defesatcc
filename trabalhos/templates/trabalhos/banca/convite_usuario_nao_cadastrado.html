@@ -1,0 +1,11 @@
+<h3>Prezada(o)</h3>
+
+<p>
+    Olá você foi convidado por {{ trabalho.orientador }} a participar da banca avaliadora
+    do trabalho {{ trabalho.titulo }}.
+</p>
+<p>
+    Para aceitar o convite, por favor clique no link abaixo e cadastre-se no nosso sistema
+    de gerenciamento de tccs:
+</p>
+ <a href="{{ base_url }}{% url 'accounts:cadastro' trabalho.id %}">Cadastre-se</a>

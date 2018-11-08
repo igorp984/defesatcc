@@ -30,7 +30,7 @@ class DefesaTrabalho(models.Model):
 	AGENDADO = 'agendado'
 
 	STATUS_CHOICES = (
-		(BANCA_AVALIADORA_PENDENTE, 'Aguardando reposta ao convite para banca'),
+		(BANCA_AVALIADORA_PENDENTE, 'Aguardando reposta confirmação dos avaliadores'),
 		(AGENDADO, 'Agendado'),
 	)
 
