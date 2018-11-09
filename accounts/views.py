@@ -10,6 +10,7 @@ from django.views.generic import CreateView
 from django.views.generic.edit import UpdateView
 from accounts.decorators import acesso, valida_perfil
 from django.contrib import messages
+from datetime import date
 
 from .serializers import UsuarioSerializer
 from django.http import Http404
@@ -23,6 +24,7 @@ from core.utils import generate_hash_key
 from .forms import CadastroForm, LoginForm, EditaCadastroForm, ResetSenhaForm, PerfilForm
 from .models import NovaSenha, Perfil
 from mensagem.models import  EmailParticipacaoBanca
+from mensagem.views import confirmada_participacao_banca
 from trabalhos.models import  Trabalhos, DefesaTrabalho, BancaTrabalho
 
 Usuario = get_user_model()
@@ -45,24 +47,19 @@ def meu_login(request):
 	return render(request, template_name, context)			
 
 
-def cadastro(request, trabalho_id=None):
+def cadastro(request, key=None):
 	template_name = 'accounts/cadastro.html'
 
 	if request.method == 'POST':
 		form = CadastroForm(request.POST)
 		if form.is_valid():
 			user = form.save()
-			if trabalho_id:
-				trabalho = Trabalhos.objects.get(pk=trabalho_id)
-				key = generate_hash_key(user.name)
-				email_participacao_banca = EmailParticipacaoBanca(
-					remetente=trabalho.orientador,
-					destinatario=user,
-					key=key,
-					trabalho=trabalho,
-					tipo='convite de participação'
-				)
-				email_participacao_banca.save()
+			if key:
+				participacao_banca = get_object_or_404(EmailParticipacaoBanca, key=key)
+				participacao_banca.destinatario = user
+				participacao_banca.save()
+
+				confirmada_participacao_banca(request, key)
 
 			messages.success(request,'Usuário cadastrado com sucesso')
 			return redirect('core:home')

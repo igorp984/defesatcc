@@ -6,7 +6,8 @@ from . import views
 urlpatterns = [
     url(r'^entrar/$', views.meu_login, name='login'),
     url(r'^sair/$', auth_views.logout, {'next_page': 'accounts:login'}, name='logout'),
-    url(r'^cadastro/?(?P<trabalho_id>\d*)/$', views.cadastro, name='cadastro'),
+    url(r'^cadastro/$', views.cadastro, name='cadastro'),
+    url(r'^cadastro/(?P<key>\w*)/$', views.cadastro, name='cadastro'),
     url(r'^cadastro/novo-perfil/$', views.PerfilCreateView.as_view(), name='novo_perfil'),
     url(r'^editar/(?P<pk>\d+)/$', views.UsuarioUpdateView.as_view(), name='editar'),
     url(r'^(?P<pk>\d+)/$', views.UsuarioUpdateApiView.as_view(), name='editar_api'),
