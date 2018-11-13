@@ -5,6 +5,11 @@
     margin: 15px auto;
 }
 
+#enviar-email-banca{
+    width: 25px;
+    margin-bottom: 12px;
+}
+
 #info-perfil{
     padding: 30px 10px;
 }

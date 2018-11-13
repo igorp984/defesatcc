@@ -36,9 +36,10 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = (
-    'core',
-    'trabalhos',
     'accounts',
+    'core',
+    'mensagem',
+    'trabalhos',
     'bootstrap3',
     'widget_tweaks',
     'material',
@@ -137,11 +138,11 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #E-MAIL
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'Nome <igorp984@gmail.com>'
+DEFAULT_FROM_EMAIL = 'Nome <defesatccdcc@gmail.com>'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'igorp984@gmail.com'
-EMAIL_HOST_PASSWORD = 'edwardelric'
+EMAIL_HOST_USER = 'defesatccdcc@gmail.com'
+EMAIL_HOST_PASSWORD = 'Tccd3fes@'
 EMAIL_PORT = 587
 
 # Auth
@@ -168,3 +169,6 @@ REST_FRAMEWORK = {
     ),
     'DATE_INPUT_FORMATS': ['iso-8601', '%m/%d/%Y', '%d/%m/%Y']
 }
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'defesatcc', 'media')
+MEDIA_URL = '/media/'

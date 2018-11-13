@@ -1,0 +1,16 @@
+<h3>Prezados,</h3>
+
+<p>A defesa do trabalho {{ trabalho.titulo }} foi confirmada e abaixo segue as informações</p>
+<p>Título: {{ trabalho.titulo }}</p>
+<p>Autor: {{ trabalho.autor }}</p>
+<p>Orientador: {{ trabalho.orientador }}</p>
+<p>Local: {{ defesa.local }}</p>
+<p>Data: {{ defesa.data }}</p>
+<p>Hora: {{ defesa.hora }}</p>
+<p>Banca Avaliadora:
+    <ul>
+        {% for avaliador in avaliadores %}
+            <li>{{ avaliador.usuario.name }} </li>
+        {% endfor %}
+    </ul>
+</p>

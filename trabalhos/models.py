@@ -16,6 +16,8 @@ class Trabalhos(models.Model):
 	orientador = models.ForeignKey(Usuario, verbose_name='orientador', related_name='orientador')
 	co_orientador = models.CharField('Co Orientador', max_length=250, blank=True)
 	resumo = models.TextField('Resumo', blank=True)
+	banca = models.ManyToManyField(Usuario, through='BancaTrabalho', related_name='bancas')
+	pdf_trabalho = models.FileField(upload_to='trabalhos/media', null=True, blank=True)
 	created_at = models.DateTimeField('Criado em', auto_now_add=True)
 	updated_at = models.DateTimeField('Atualizado em', auto_now=True)
 
@@ -29,15 +31,15 @@ class DefesaTrabalho(models.Model):
 	AGENDADO = 'agendado'
 
 	STATUS_CHOICES = (
-		(BANCA_AVALIADORA_PENDENTE, 'Aguardando reposta ao convite para banca'),
+		(BANCA_AVALIADORA_PENDENTE, 'Aguardando reposta confirmação dos avaliadores'),
 		(AGENDADO, 'Agendado'),
 	)
 
 	local = models.CharField('Local', max_length=250)
 	data = models.DateField('Data')
 	hora = models.TimeField('Horário')
-	trabalho = models.ForeignKey(Trabalhos, verbose_name='trabalho', related_name='bancatrabalhos')
-	banca = models.ManyToManyField(Usuario, through='BancaTrabalho')
+	trabalho = models.OneToOneField(Trabalhos, on_delete=models.CASCADE, verbose_name='trabalho')
+
 	status = models.CharField(
 		'Status', max_length=30,
 		choices=STATUS_CHOICES,
@@ -60,7 +62,7 @@ class BancaTrabalho(models.Model):
 	)
 
 	usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-	defesa_trabalho = models.ForeignKey(DefesaTrabalho, on_delete=models.CASCADE)
+	trabalho = models.ForeignKey(Trabalhos, on_delete=models.CASCADE)
 	status = models.CharField(
 		'Status', max_length=30,
 		choices=STATUS_CONVITE_CHOICES,

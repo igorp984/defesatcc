@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-6">
 
-            <form method="post">
+            <form enctype="multipart/form-data" method="post">
                 {% csrf_token %}
             
                 <div class="form-group">
@@ -49,6 +49,17 @@
                         {{ form.resumo.errors }}
                         <label for="id_resumo">Resumo:</label>
                         <textarea class="form-control" cols="40" id="id_resumo" name="resumo" placeholder="Digite o Resumo do Trabalho" rows="10"></textarea>
+
+                    </div>
+
+                    <div class="input-field file-field col s12" id="id_pdf_trabalho_container">
+                        <div class="btn">
+                            <span>Arquivo</span>
+                            <input type="file" name="pdf_trabalho">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path form-control" id="id_pdf_trabalho" placeholder="Filer" type="text">
+                        </div>
 
                     </div>
 
