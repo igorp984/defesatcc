@@ -24,7 +24,7 @@ def cadastrar_trabalho(request):
     if request.method == 'POST':
         request.POST._mutable = True
         request.POST['orientador'] = request.user.id
-        form = TrabalhoForm(request.POST)
+        form = TrabalhoForm(request.POST, request.FILES)
         if form.is_valid():
             context['is_valid'] = True
             form.save()
@@ -189,23 +189,23 @@ def banca_trabalho(request, pk):
                     envia_email(trabalho, avaliador_negado.usuario,template_name_email,subject)
 
             for usuario_email in usuario_nao_cadastrado:
+                if usuario_email:
+                    key = generate_hash_key(usuario_email)
+                    email_participacao_banca = EmailParticipacaoBanca(
+                        remetente=trabalho.orientador,
+                        destinatario=trabalho.orientador,
+                        key=key,
+                        trabalho=trabalho,
+                        tipo='convite de participação'
+                    )
+                    email_participacao_banca.save()
 
-                key = generate_hash_key(usuario_email)
-                email_participacao_banca = EmailParticipacaoBanca(
-                    remetente=trabalho.orientador,
-                    destinatario=trabalho.orientador,
-                    key=key,
-                    trabalho=trabalho,
-                    tipo='convite de participação'
-                )
-                email_participacao_banca.save()
+                    template_name = 'trabalhos/banca/convite_usuario_nao_cadastrado.html'
+                    subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(trabalho.titulo)
+                    base_url = request.scheme + "://" + request.get_host()
+                    context = {'trabalho': trabalho, 'base_url': base_url, 'key': key}
 
-                template_name = 'trabalhos/banca/convite_usuario_nao_cadastrado.html'
-                subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(trabalho.titulo)
-                base_url = request.scheme + "://" + request.get_host()
-                context = {'trabalho': trabalho, 'base_url': base_url, 'key': key}
-
-                send_mail_template(subject, template_name, context, [usuario_email])
+                    send_mail_template(subject, template_name, context, [usuario_email])
 
             messages.success(request,'O convite foi enviado com sucesso')
             return redirect('core:home')

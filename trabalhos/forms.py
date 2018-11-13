@@ -12,10 +12,10 @@ class TrabalhoForm(forms.ModelForm):
 	orientador = forms.ModelChoiceField(label='Orientador',queryset=Usuario.objects.order_by('name'), widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
 	co_orientador = forms.CharField(label='Co-Orientador', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite o nome do Co-Orientador'}), max_length=150, required=False)
 	resumo = forms.CharField(label='Resumo', widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Digite o Resumo do Trabalho'}), required=False)
-
+	pdf_trabalho = forms.FileField(label='Filer', widget=forms.FileInput(attrs={'class': 'form-control'}), required=False)
 	class Meta:
 		model = Trabalhos
-		fields = ('titulo', 'keywords', 'autor', 'orientador', 'co_orientador', 'resumo')
+		fields = ('titulo', 'keywords', 'autor', 'orientador', 'co_orientador', 'resumo', 'pdf_trabalho')
 
 
 class TrabalhoBancaForm(forms.ModelForm):

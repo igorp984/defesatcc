@@ -169,3 +169,6 @@ REST_FRAMEWORK = {
     ),
     'DATE_INPUT_FORMATS': ['iso-8601', '%m/%d/%Y', '%d/%m/%Y']
 }
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'defesatcc', 'media')
+MEDIA_URL = '/media/'

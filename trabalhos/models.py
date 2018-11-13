@@ -17,6 +17,7 @@ class Trabalhos(models.Model):
 	co_orientador = models.CharField('Co Orientador', max_length=250, blank=True)
 	resumo = models.TextField('Resumo', blank=True)
 	banca = models.ManyToManyField(Usuario, through='BancaTrabalho', related_name='bancas')
+	pdf_trabalho = models.FileField(upload_to='trabalhos/media', null=True, blank=True)
 	created_at = models.DateTimeField('Criado em', auto_now_add=True)
 	updated_at = models.DateTimeField('Atualizado em', auto_now=True)
 
