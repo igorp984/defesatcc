@@ -7,6 +7,8 @@ from django.views.generic import CreateView
 from django.views.generic.edit import UpdateView
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib import messages
+from wsgiref.util import FileWrapper
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -218,3 +220,4 @@ def banca_trabalho(request, pk):
         return render(request, template_name, context)
     else:
         return redirect('core:home')
+

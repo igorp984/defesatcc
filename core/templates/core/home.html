@@ -44,16 +44,18 @@
                                                            data-tooltip="visualizar trabalho"
                                                        style="color:black;">visibility</i>
                                                 </a>
-                                                <a href="{% url 'mensagem:email_participacao_banca' trabalho.id %}"
-                                                   data-messages="Sua solicitação para compor a banca avaliadora foi
-                                                                  enviada com sucesso"
-                                                   class="email-participacao-banca">
-                                                    <img class="circle cyan lighten-2 tooltipped"
-                                                         data-position="top"
-                                                         data-tooltip="candidata-se a banca"
-                                                         id="enviar-email-banca"
-                                                         src="../static/images/icon red.png">
-                                                </a>
+                                                {% if user.id != trabalho.orientador.id %}
+                                                    <a href="{% url 'mensagem:email_participacao_banca' trabalho.id %}"
+                                                       data-messages="Sua solicitação para compor a banca avaliadora foi
+                                                                      enviada com sucesso"
+                                                       class="email-participacao-banca">
+                                                        <img class="circle cyan lighten-2 tooltipped"
+                                                             data-position="top"
+                                                             data-tooltip="candidata-se a banca"
+                                                             id="enviar-email-banca"
+                                                             src="../static/images/icon red.png">
+                                                    </a>
+                                                {% endif %}
                                                 {% if user.id == trabalho.orientador.id %}
                                                     <a href="{% url 'trabalhos:editar' trabalho.id %}">
                                                         <i class="material-icons tooltipped"
@@ -81,6 +83,11 @@
                                                            data-tooltip="excluir trabalho"
                                                            style="color:black;">delete</i>
                                                     </a>
+                                                    {% if trabalho.pdf_trabalho.url %}
+                                                        <a href="{{ trabalho.pdf_trabalho.url }}" target="_blank">
+                                                            <i class="material-icons">picture_as_pdf</i>
+                                                        </a>
+                                                    {% endif %}
                                                 {% endif %}
                                             </td>
                                         {% endfor %}
