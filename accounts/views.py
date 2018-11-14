@@ -11,6 +11,7 @@ from django.views.generic.edit import UpdateView
 from accounts.decorators import acesso, valida_perfil
 from django.contrib import messages
 from datetime import date
+from easy_pdf.views import PDFTemplateView
 
 from .serializers import UsuarioSerializer
 from django.http import Http404
@@ -143,3 +144,18 @@ class PerfilCreateView(CreateView):
 	@method_decorator(acesso('alto'))
 	def dispatch(self, *args, **kwargs):
 		return super(PerfilCreateView, self).dispatch(*args, **kwargs)
+
+
+
+
+class HelloPDFView(PDFTemplateView):
+	template_name = 'accounts/certificado_banca.html'
+	base_url = 'file://' + settings.STATIC_ROOT
+	download_filename = 'certificado.pdf'
+
+	def get_context_data(self, **kwargs):
+		return super(HelloPDFView, self).get_context_data(
+			pagesize='A4',
+			title='Hi there!',
+			**kwargs
+		)

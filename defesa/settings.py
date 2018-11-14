@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'widget_tweaks',
     'material',
     'rest_framework',
+    'easy_pdf',
 
     'django.contrib.admin',
     'django.contrib.auth',

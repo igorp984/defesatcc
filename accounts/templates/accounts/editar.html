@@ -4,13 +4,18 @@
 {% block content %}
 
 <div id="page-wrapper">
-        <div class="col-md-6">
-            <form action="{% url 'accounts:editar_api' user.id %}" id="edit-form-usuario" method="put">
-                {% csrf_token %}
-                {% form form=form %}{% endform %}
-                <button type="submit" class="btn btn-success">Submit Button</button>
-                <button class="btn btn-primary"><a href="index.html">Reset Button<a></button>
-            </form>
+        <h4>Editar Perfil</h4>
+        <div class="col s12 m2 z-depth-4">
+            <div class="container">
+                <form action="{% url 'accounts:editar_api' user.id %}" id="edit-form-usuario" method="put">
+                    {% csrf_token %}
+                    {% form form=form %}{% endform %}
+                    <div class="row">
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                        <button class="btn btn-primary"><a href="{% url 'core:home' %}">Voltar</button>
+                    </div>
+                </form>
+            </div>
         </div>
 </div>
 {% endblock %}
