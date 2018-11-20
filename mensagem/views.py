@@ -83,13 +83,13 @@ def confirmada_participacao_banca(request, key):
             )
             participacao_banca.visualizada = date.today()
             participacao_banca.save()
-            avaliadores = BancaTrabalho.objects.filter(trabalho=participacao_banca.trabalho, status__contains='aceito')
+            avaliadores = BancaTrabalho.objects.filter(trabalho=participacao_banca.trabalho).exclude(status__contains='negado')
             defesa = DefesaTrabalho.objects.filter(trabalho=participacao_banca.trabalho)
-            if avaliadores.count() >= 2 and defesa and defesa.status == 'pendente_banca_avaliadora':
+            if defesa and defesa[0].status == 'pendente_banca_avaliadora' and avaliadores.count() == avaliadores.filter(status__contains='aceito'):
                 defesa.update(status='agendado')
-                subject = 'Confirmada a defesa de ' + unicode(defesa.trabalho.titulo)
+                subject = 'Confirmada a defesa de ' + unicode(defesa[0].trabalho.titulo)
                 template_name = 'mensagem/banca/confirmado_agendamento_defesa.html'
-                context = {'trabalho': defesa.trabalho, 'defesa': defesa, 'avaliadores': avaliadores}
+                context = {'trabalho': defesa[0].trabalho, 'defesa': defesa[0], 'avaliadores': avaliadores}
                 for avaliador in avaliadores:
                     send_mail_template(
                         subject,
@@ -130,7 +130,7 @@ def rejeitada_participacao_banca(request, key):
         base_url = request.scheme + "://" + request.get_host()
         # dispara email de resposta ao orientador ou ao professor/aluno informando que o pedido/convite foi rejeitado
         context = {'trabalho': participacao_banca.trabalho,
-                   'usuario': participacao_banca.remetente,
+                   'usuario': participacao_banca.destinatario,
                    'base_url': base_url}
         send_mail_template(
             subject,
