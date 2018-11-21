@@ -4,7 +4,7 @@
     <div id="page-wrapper">
         <div>
             <div class="col-md-12">
-                    <div class="panel panel-primary">
+                    <div class="col s12 m2 z-depth-3 grid">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Banca Pendente</h3>
                         </div>
@@ -42,7 +42,7 @@
                                                     <i class="material-icons tooltipped"
                                                            data-position="top"
                                                            data-tooltip="visualizar trabalho"
-                                                       style="color:black;">visibility</i>
+                                                       >visibility</i>
                                                 </a>
                                                 {% if user.id != trabalho.orientador.id %}
                                                     <a href="{% url 'mensagem:email_participacao_banca' trabalho.id %}"
@@ -61,7 +61,12 @@
                                                         <i class="material-icons tooltipped"
                                                            data-position="top"
                                                            data-tooltip="editar trabalho"
-                                                           style="color:black;">create</i>
+                                                           >create</i>
+                                                    </a>
+                                                    <a href="{% url 'trabalhos:deletar' trabalho.id %}"
+                                                       data-messages="trabalho deletado com sucesso"
+                                                       class=" delete-trabalho">
+                                                        <i class="material-icons">delete</i>
                                                     </a>
                                                     <a href="{% url 'trabalhos:banca_trabalho' trabalho.id %}">
                                                         <i class="material-icons tooltipped"
@@ -75,19 +80,13 @@
                                                            data-tooltip="agendar defesa" >
                                                             event_note</i>
                                                     </a>
-                                                    <a href="{% url 'trabalhos:deletar' trabalho.id %}"
-                                                       data-messages="trabalho deletado com sucesso"
-                                                       class=" delete-trabalho">
+                                                {% endif %}
+                                                {% if trabalho.pdf_trabalho.url %}
+                                                    <a href="{{ trabalho.pdf_trabalho.url }}" target="_blank">
                                                         <i class="material-icons tooltipped"
                                                            data-position="top"
-                                                           data-tooltip="excluir trabalho"
-                                                           style="color:black;">delete</i>
+                                                           data-tooltip="trabalho completo">picture_as_pdf</i>
                                                     </a>
-                                                    {% if trabalho.pdf_trabalho.url %}
-                                                        <a href="{{ trabalho.pdf_trabalho.url }}" target="_blank">
-                                                            <i class="material-icons">picture_as_pdf</i>
-                                                        </a>
-                                                    {% endif %}
                                                 {% endif %}
                                             </td>
                                         {% endfor %}
@@ -99,7 +98,7 @@
                     </div>
                     </div>
 
-                    <div class="panel panel-primary">
+                    <div class="col s12 m2 z-depth-3 grid grid-2">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Agendamento Pendente</h3>
                         </div>
@@ -113,28 +112,43 @@
                                             <th>Hora</th>
                                             <th>Trabalho</th>
                                             <th>Banca</th>
+                                            <th>Ações</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Local</th>
-                                            <th>Data</th>
-                                            <th>Hora</th>
-                                            <th>Trabalho</th>
-                                            <th>Banca</th>
-                                        </tr>
-                                    </tfoot>
                                     <tbody>
                                         {% for defesa in defesas %}
                                             <tr>
                                                 <td>{{ defesa.local }}</td>
                                                 <td>{{ defesa.data }}</td>
                                                 <td>{{ defesa.hora }}</td>
-                                                <td>{{ defesa.trabalho }}</td>
+                                                <td>{{ defesa.trabalho.titulo }}</td>
                                                 <td>
-                                                    {{ defesa.banca.avaliador0 }},
-                                                    {{ defesa.banca.avaliador1 }},
-                                                    {{ defesa.banca.avaliador2 }}
+                                                    {% for banca in defesa.banca %}
+                                                        <li>{{ banca }}</li>
+                                                    {% endfor %}
+                                                </td>
+                                                <td>
+                                                    {% if user.id == defesa.trabalho.orientador.id %}
+                                                        <a href="{% url 'trabalhos:cadastrar_agendamento_defesa' defesa.trabalho.id %}">
+                                                            <i class="material-icons tooltipped"
+                                                               data-position="top"
+                                                               data-tooltip="editar agendamento"
+                                                            >create</i>
+                                                        </a>
+
+                                                        <a href="{% url 'trabalhos:deletar_agendamento' defesa.id %}"
+                                                           data-messages="trabalho deletado com sucesso"
+                                                           class="delete-agendamento">
+                                                            <i class="material-icons">delete</i>
+                                                        </a>
+                                                    {% endif %}
+                                                    {% if defesa.trabalho.pdf_trabalho.url %}
+                                                        <a href="{{ trabalho.pdf_trabalho.url }}" target="_blank">
+                                                            <i class="material-icons tooltipped"
+                                                               data-position="top"
+                                                               data-tooltip="trabalho completo">picture_as_pdf</i>
+                                                        </a>
+                                                    {% endif %}
                                                 </td>
                                             </tr>
                                         {% endfor %}

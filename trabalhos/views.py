@@ -79,6 +79,28 @@ class TrabalhoDetail(APIView):
         trabalho.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class AgendamentoDetail(APIView):
+    def get_object(self, pk):
+        try:
+            return DefesaTrabalho.objects.get(pk=pk)
+        except DefesaTrabalho.DoesNotExist:
+            raise Http404
+
+    def delete(self, request, pk, format=None):
+        defesa = self.get_object(pk)
+        defesa.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def get(self,request, pk, format=None):
+        defesa = self.get_object(pk)
+        banca = defesa.trabalho.banca.all().exclude(bancatrabalho__status__contains='negado').values_list('usuario', flat=True)
+        context = {
+            'defesa': defesa,
+            'banca': banca
+        }
+        template_name = 'trabalhos/detalhe_agendamento.html'
+        return  render(request, template_name, context)
+
 
 class DefesaTrabablhoCreate(CreateView):
     template_name = 'trabalhos/agendamento_cadastro.html'
@@ -119,26 +141,75 @@ def defesatrabalho(request, pk):
         send_mail_template(subject, template_name, context, [user.email], request.user.email)
 
 
-    template_name = 'trabalhos/agendamento_cadastro.html'
+
     if request.method == 'POST':
-        form_defesa = DefesaTrabalhoForm(request.POST, prefix='defesa')
+        request.POST._mutable = True
+        request.POST['defesa-trabalho'] = pk
+        defesa = DefesaTrabalho.objects.filter(trabalho_id=pk)
+        if defesa:
+            form_defesa = DefesaTrabalhoForm(request.POST, instance=defesa.get(trabalho_id=pk), prefix='defesa')
+        else:
+            form_defesa = DefesaTrabalhoForm(request.POST, prefix='defesa')
         form_banca = TrabalhoBancaForm(request.POST, prefix='banca')
+        usuario_nao_cadastrado = request.POST['tags'].split(',')
 
         if form_defesa.is_valid() and form_banca.is_valid():
             defesa = form_defesa.save(commit=False)
-            defesa.save()
+
+            for usuario_email in usuario_nao_cadastrado:
+                if usuario_email:
+                    key = generate_hash_key(usuario_email)
+                    email_participacao_banca = EmailParticipacaoBanca(
+                        remetente=defesa.trabalho.orientador,
+                        destinatario=defesa.trabalho.orientador,
+                        key=key,
+                        trabalho=defesa.trabalho,
+                        tipo='convite de participação'
+                    )
+                    email_participacao_banca.save()
+
+                    template_name = 'trabalhos/banca/convite_usuario_nao_cadastrado.html'
+                    subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(defesa.trabalho.titulo)
+                    base_url = request.scheme + "://" + request.get_host()
+                    context = {'trabalho': defesa.trabalho, 'base_url': base_url, 'key': key}
+
+                    send_mail_template(subject, template_name, context, [usuario_email])
+
             for user in form_banca.cleaned_data['banca']:
                 banca = BancaTrabalho.objects.filter(usuario = user, trabalho = defesa.trabalho)
                 if not banca:
                     banca = BancaTrabalho.objects.create(usuario = user, trabalho = defesa.trabalho)
                     banca.save()
                     envia_email(defesa, user)
+
+            banca = BancaTrabalho.objects.filter(trabalho=pk).exclude(status__contains='negado')
+            if usuario_nao_cadastrado[0] == '' and banca.filter(status__contains='aceito').count() == banca.count():
+                defesa.status = 'agendado'
+
+            defesa.save()
             messages.success(request,'agendamento cadastrado com sucesso e convite enviado para os avaliadores')
             return redirect('core:home')
-    form_defesa = DefesaTrabalhoForm(initial={'trabalho': pk}, prefix='defesa')
+
+    template_name = 'trabalhos/agendamento_cadastro.html'
+    trabalho = Trabalhos.objects.get(pk=pk)
+    defesa = DefesaTrabalho.objects.filter(trabalho=trabalho)
+
+    if defesa:
+        form_defesa = DefesaTrabalhoForm(initial={'local': defesa[0].local,
+                                                    'data': defesa[0].data.strftime('%d/%m/%Y'),
+                                                    'hora': defesa[0].hora.strftime('%H:%M'),
+                                                    'trabalho': pk}, prefix='defesa')
+    else:
+        form_defesa = DefesaTrabalhoForm(initial={'trabalho': pk}, prefix='defesa')
+
     banca = BancaTrabalho.objects.filter(trabalho_id=pk)
-    form = TrabalhoBancaForm(initial={'banca': banca.filter(status__contains='aceito').values_list('usuario', flat=True)}, prefix='banca')
-    context = {'form': form, 'form_defesa': form_defesa, 'titulo': banca[0].trabalho.titulo}
+
+    if banca:
+        form = TrabalhoBancaForm(initial={'banca': banca.filter(status__contains='aceito').values_list('usuario', flat=True)}, prefix='banca')
+    else:
+        form = TrabalhoBancaForm(prefix='banca')
+
+    context = {'form': form, 'form_defesa': form_defesa, 'titulo': trabalho.titulo}
     return render(request, template_name, context)
 
 
@@ -166,7 +237,6 @@ def banca_trabalho(request, pk):
     template_name = 'trabalhos/banca/banca_trabalho.html'
     banca = BancaTrabalho.objects.filter(trabalho_id=pk).exclude(status__contains='negado')
     if trabalho.orientador == request.user:
-        print ('ok')
         if request.method == 'POST':
             usuario_nao_cadastrado = request.POST['tags'].split(',')
             form = TrabalhoBancaForm(request.POST, prefix='banca')

@@ -43,6 +43,11 @@ $(document).ready(function(){
        return false;
     });
 
+    $('.delete-agendamento').on('click', function(){
+        deleteAgendamento(this);
+        return false;
+    });
+
     $('.email-participacao-banca').on('click', function(){
         emailParticipacaoBanca(this);
         return false;
@@ -80,6 +85,25 @@ function deleteTrabalho(element){
             loadErrors(xhr.responseJSON);
         }
     });
+}
+
+function deleteAgendamento(element){
+    var url = $(element).attr('href');
+    var messages = $(element).data('messages');
+    var $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+    $.ajax({
+        'url': url,
+        'method': 'DELETE',
+        'headers':{"X-CSRFToken": $crf_token},
+        'success': function(data){
+            $(element).parent().parent().remove();
+            M.toast({html: messages});
+        },
+        'error': function(xhr, status, error){
+            // console.log(xhr, xhr.responseText, status);
+            loadErrors(xhr.responseJSON);
+        }
+    })
 }
 
 function emailParticipacaoBanca(element){
