@@ -147,6 +147,14 @@ body {
   }
 }
 
+.grid {
+    margin: 10px;
+}
+
+.grid-2 {
+    margin-top: 60px;
+}
+
 .demo-avatar {
   align: center;
   width: 48px;

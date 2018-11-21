@@ -79,6 +79,28 @@ class TrabalhoDetail(APIView):
         trabalho.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class AgendamentoDetail(APIView):
+    def get_object(self, pk):
+        try:
+            return DefesaTrabalho.objects.get(pk=pk)
+        except DefesaTrabalho.DoesNotExist:
+            raise Http404
+
+    def delete(self, request, pk, format=None):
+        defesa = self.get_object(pk)
+        defesa.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def get(self,request, pk, format=None):
+        defesa = self.get_object(pk)
+        banca = defesa.trabalho.banca.all().exclude(bancatrabalho__status__contains='negado').values_list('usuario', flat=True)
+        context = {
+            'defesa': defesa,
+            'banca': banca
+        }
+        template_name = 'trabalhos/detalhe_agendamento.html'
+        return  render(request, template_name, context)
+
 
 class DefesaTrabablhoCreate(CreateView):
     template_name = 'trabalhos/agendamento_cadastro.html'
@@ -123,10 +145,14 @@ def defesatrabalho(request, pk):
     if request.method == 'POST':
         request.POST._mutable = True
         request.POST['defesa-trabalho'] = pk
-        form_defesa = DefesaTrabalhoForm(request.POST, prefix='defesa')
+        defesa = DefesaTrabalho.objects.filter(trabalho_id=pk)
+        if defesa:
+            form_defesa = DefesaTrabalhoForm(request.POST, instance=defesa.get(trabalho_id=pk), prefix='defesa')
+        else:
+            form_defesa = DefesaTrabalhoForm(request.POST, prefix='defesa')
         form_banca = TrabalhoBancaForm(request.POST, prefix='banca')
         usuario_nao_cadastrado = request.POST['tags'].split(',')
-        print(usuario_nao_cadastrado[0] == '')
+
         if form_defesa.is_valid() and form_banca.is_valid():
             defesa = form_defesa.save(commit=False)
 
@@ -167,10 +193,15 @@ def defesatrabalho(request, pk):
     template_name = 'trabalhos/agendamento_cadastro.html'
     trabalho = Trabalhos.objects.get(pk=pk)
     defesa = DefesaTrabalho.objects.filter(trabalho=trabalho)
+
     if defesa:
-        form_defesa = DefesaTrabalhoForm(instance=defesa.get(trabalho=trabalho))
+        form_defesa = DefesaTrabalhoForm(initial={'local': defesa[0].local,
+                                                    'data': defesa[0].data.strftime('%d/%m/%Y'),
+                                                    'hora': defesa[0].hora.strftime('%H:%M'),
+                                                    'trabalho': pk}, prefix='defesa')
     else:
         form_defesa = DefesaTrabalhoForm(initial={'trabalho': pk}, prefix='defesa')
+
     banca = BancaTrabalho.objects.filter(trabalho_id=pk)
 
     if banca:
