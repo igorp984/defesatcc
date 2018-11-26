@@ -12,6 +12,7 @@ from accounts.decorators import acesso, valida_perfil
 from django.contrib import messages
 from datetime import date
 from easy_pdf.views import PDFTemplateView
+from core.mail import send_mail_template
 
 from .serializers import UsuarioSerializer
 from django.http import Http404
@@ -41,8 +42,8 @@ def meu_login(request):
 		if user is not None:
 			login(request, user)
 			return redirect('core:home')
-	else:
-		context['insuccess'] = True
+		else:
+			messages.error(request,'login ou senha incorretos')
 	context = { 'form': form }
 	
 	return render(request, template_name, context)			
@@ -73,12 +74,24 @@ def cadastro(request, key=None):
 	return render(request, template_name, context)
 
 def reset_senha(request):
-	template_name = 'accounts/reset_senha.html'
+
 	form = ResetSenhaForm(request.POST or None)
 	context = {}
 	if form.is_valid():
-		form.save()
+		user = Usuario.objects.get(email=form.cleaned_data['email'])
+		key = generate_hash_key(user.username)
+		reset = NovaSenha(key=key, user=user)
+		reset.save()
+		base_url = request.scheme + "://" + request.get_host()
+		template_name = 'accounts/reset_senha_mail.html'
+		subject = 'Criar nova Senha no Defesas Ufba'
+		context = { 'reset': reset, 'base_url': base_url}
+		send_mail_template(subject, template_name, context, [user.email])
 		context['success'] = True
+
+		return redirect('accounts:login')
+
+	template_name = 'accounts/reset_senha.html'
 	context['form'] = form
 	return render(request, template_name, context)
 
@@ -156,6 +169,6 @@ class HelloPDFView(PDFTemplateView):
 	def get_context_data(self, **kwargs):
 		return super(HelloPDFView, self).get_context_data(
 			pagesize='A4',
-			title='Hi there!',
+			title='Certificado',
 			**kwargs
 		)

@@ -97,9 +97,10 @@ class ResetSenhaForm(forms.Form):
 		key = generate_hash_key(user.username)
 		reset = NovaSenha(key=key, user=user)
 		reset.save()
+		base_url = self.scheme + "://" + self.get_host()
 		template_name = 'accounts/reset_senha_mail.html'
 		subject = 'Criar nova Senha no Defesas Ufba'
-		context = { 'reset': reset }
+		context = { 'reset': reset, 'base_url': base_url}
 		send_mail_template(subject, template_name, context, [user.email])
 
 class PerfilForm(forms.ModelForm):
