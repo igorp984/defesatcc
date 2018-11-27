@@ -60,8 +60,17 @@ class TrabalhoUpdateView(UpdateView):
         'keywords',
         'autor',
         'co_orientador',
-        'resumo'
+        'resumo',
+        'pdf_trabalho'
     ]
+
+    def form_invalid(self, form):
+        """
+        If the form is invalid, re-render the context data with the
+        data-filled form and errors.
+        """
+        return self.render_to_response(self.get_context_data(form=form))
+
     def form_valid(self, form):
         messages.success(self.request, ("Trabalho atualizado com sucesso!"))
         return super(TrabalhoUpdateView, self).form_valid(form)

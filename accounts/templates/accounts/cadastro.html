@@ -9,10 +9,10 @@
                     <fieldset>
                         {% csrf_token %}
                         {% form form=form %}{% endform %}
-                        <button class="btn btn-primary" name="action">Submit
-                            <i class="material-icons right">send</i>
+                        <button class="btn green btn-success" name="action">Salvar
                         </button>
-                        <button class="btn btn-danger"><a href="{% url 'core:home' %}">Cancelar</a></button>
+                        <button class="btn blue btn-primary">
+                            <a class="voltar" href="{% url 'core:home' %}">Voltar</a></button>
                     </fieldset>
                 </form>
         </div>

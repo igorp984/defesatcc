@@ -5,12 +5,14 @@
 
 <div id="page-wrapper">
         <div class="col-md-6">
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     <fieldset>
                         {% csrf_token %}
                         {% form form=form %}{% endform %}
-                        <button type="submit" class="btn btn-success">Submit Button</button>
-                        <button class="btn btn-primary"><a href="index.html">Reset Button<a></button>
+                        <button type="submit" class="btn green btn-success">Salvar</button>
+                        <button class="btn blue btn-primary">
+                            <a class="voltar" href="{% url 'core:home' %}">Voltar<a>
+                        </button>
                     </fieldset>
                 </form>
         </div>

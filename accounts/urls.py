@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^editar-senha/$', views.editar_senha, name='editar_senha'),
     url(r'^nova-senha/$', views.reset_senha, name='reset_senha'),
     url(r'^confirmar-nova-senha/(?P<key>\w+)/$', views.reset_senha_confirm, name='reset_senha_confirm'),
-    url(r'^teste/$', views.HelloPDFView.as_view(), name='teste'),
+    url(r'^certificado/$', views.HelloPDFView.as_view(), name='cerftificado'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

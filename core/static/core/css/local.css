@@ -155,6 +155,10 @@ body {
     margin-top: 60px;
 }
 
+.voltar{
+    color: white;
+}
+
 .demo-avatar {
   align: center;
   width: 48px;
