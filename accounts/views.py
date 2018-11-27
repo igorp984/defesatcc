@@ -13,6 +13,7 @@ from django.contrib import messages
 from datetime import date
 from easy_pdf.views import PDFTemplateView
 from core.mail import send_mail_template
+from datetime import  date
 
 from .serializers import UsuarioSerializer
 from django.http import Http404
@@ -161,14 +162,40 @@ class PerfilCreateView(CreateView):
 
 
 
-class HelloPDFView(PDFTemplateView):
-	template_name = 'accounts/certificado_banca.html'
+class CertificadoOrientadorPDFView(PDFTemplateView):
+	template_name = 'accounts/certificado_orientador.html'
 	base_url = 'file://' + settings.STATIC_ROOT
 	download_filename = 'certificado.pdf'
 
-	def get_context_data(self, **kwargs):
-		return super(HelloPDFView, self).get_context_data(
+	def get_context_data(self, pk, **kwargs):
+		trabalho = Trabalhos.objects.get(pk=pk)
+		defesa = DefesaTrabalho.objects.get(trabalho=trabalho)
+		return super(CertificadoOrientadorPDFView, self).get_context_data(
 			pagesize='A4',
 			title='Certificado',
+			trabalho=trabalho,
+			defesa=defesa,
+			data=date.today(),
 			**kwargs
 		)
+
+class CertificadoAvaliadorPDFView(PDFTemplateView):
+	template_name = 'accounts/certificado_avaliador.html'
+	base_url = 'file://' + settings.STATIC_ROOT
+	download_filename = 'certificado.pdf'
+
+	def get_context_data(self, pk, **kwargs):
+		trabalho = Trabalhos.objects.get(pk=pk)
+		defesa = DefesaTrabalho.objects.get(trabalho=trabalho)
+		return super(CertificadoAvaliadorPDFView, self).get_context_data(
+			pagesize='A4',
+			title='Certificado',
+			trabalho=trabalho,
+			defesa=defesa,
+			data=date.today(),
+			**kwargs
+		)
+
+def teste(request):
+	template_name = 'accounts/teste.html'
+	return  render(request, template_name)

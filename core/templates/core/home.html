@@ -117,6 +117,7 @@
                                     </thead>
                                     <tbody>
                                         {% for defesa in defesas %}
+                                            {% if defesa.status != 'agendado' %}
                                             <tr>
                                                 <td>{{ defesa.local }}</td>
                                                 <td>{{ defesa.data }}</td>
@@ -151,6 +152,7 @@
                                                     {% endif %}
                                                 </td>
                                             </tr>
+                                        {% endif %}
                                         {% endfor %}
                                     </tbody>
                                 </table>
@@ -169,62 +171,52 @@
                                             <th>Título</th>
                                             <th>Autor</th>
                                             <th>Orientador</th>
-                                            <th>Banca</th>
                                             <th>Data/Hora</th>
                                             <th>Local</th>
+                                            <th>Banca</th>
+                                            <th>Ações</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                        <th>Título</th>
-                                            <th>Autor</th>
-                                            <th>Orientador</th>
-                                            <th>Banca</th>
-                                            <th>Data/Hora</th>
-                                            <th>Local</th>
-                                        </tr>
-                                    </tfoot>
                                     <tbody>
+                                    {% for defesa in defesas %}
+                                        {% if defesa.status == 'agendado' %}
                                         <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Ricardo Rios, Ivan Machado, Tatiane Rios</td>
-                                            <td>30/01/18 as 14:00</td>
-                                            <td></td>
+                                            <td>{{ defesa.trabalho.titulo }}</td>
+                                            <td>{{ defesa.trabalho.autor }}</td>
+                                            <td>{{ defesa.trabalho.orientador }}</td>
+                                            <td>{{ defesa.data }}</td>
+                                            <td>{{ defesa.local }}</td>
+                                            <td>
+                                                {% for banca in defesa.banca %}
+                                                        <li>{{ banca }}</li>
+                                                {% endfor %}
+                                            </td>
+                                            <td>
+                                                 {% if defesa.trabalho.pdf_trabalho %}
+                                                    <a href="{{ defesa.trabalho.pdf_trabalho.url }}" target="_blank">
+                                                        <i class="material-icons tooltipped"
+                                                           data-position="top"
+                                                           data-tooltip="trabalho completo">picture_as_pdf</i>
+                                                    </a>
+                                                {% endif %}
+                                                {% if user.id == defesa.trabalho.orientador.id %}
+                                                    <a href="{% url 'accounts:certificado_orientador' defesa.trabalho.id %}" target="_blank">
+                                                        <i class="material-icons tooltipped"
+                                                           data-position="top"
+                                                           data-tooltip="certificado de orientador"
+                                                           >insert_drive_file</i>
+                                                    </a>
+                                                {% else %}
+                                                    <a href="{% url 'accounts:certificado_avaliador' defesa.trabalho.id %}" target="_blank">
+                                                        <i class="material-icons tooltipped"
+                                                           data-position="top"
+                                                           data-tooltip="certificado de avaliador">insert_drive_file</i>
+                                                    </a>
+                                                {% endif %}
+                                            </td>
                                         </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ashton Cox</td>
-                                            <td>Junior Technical Author</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cedric Kelly</td>
-                                            <td>Senior Javascript Developer</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Airi Satou</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
+                                        {% endif %}
+                                    {% endfor %}
                                          </tbody>
                                 </table>
                             </div>

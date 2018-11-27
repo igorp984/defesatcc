@@ -20,6 +20,7 @@ def home(request):
 			'hora': defesa.hora,
 			'trabalho': defesa.trabalho,
 			'banca': lista,
+			'status': defesa.status,
 		}
 		list.append(defesas_dic)
 	template_name = 'core/home.html'
