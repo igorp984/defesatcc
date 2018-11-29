@@ -14,6 +14,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from core.mail import send_mail_template
 from core.utils import  generate_hash_key
+from django.conf import settings
 
 from .models import Trabalhos, DefesaTrabalho, BancaTrabalho
 from .forms import TrabalhoForm, DefesaTrabalhoForm, TrabalhoBancaForm
@@ -145,7 +146,10 @@ def defesatrabalho(request, pk):
 
         base_url = request.scheme + "://" + request.get_host()
         template_name = 'mensagem/banca/convite_participacao_banca.html'
-        subject = 'Convite para compor a banca avaliadora do trabalho ' + str(defesa.trabalho.titulo)
+        if(settings.DEBUG):
+            subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(defesa.trabalho.titulo)
+        else:
+            subject = 'Convite para compor a banca avaliadora do trabalho ' + defesa.trabalho.titulo
         context = {'defesa': defesa, 'base_url': base_url, 'key': key}
         send_mail_template(subject, template_name, context, [user.email], request.user.email)
 
@@ -178,7 +182,11 @@ def defesatrabalho(request, pk):
                     email_participacao_banca.save()
 
                     template_name = 'trabalhos/banca/convite_usuario_nao_cadastrado.html'
-                    subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(defesa.trabalho.titulo)
+                    if (settings.DEBUG):
+                        subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(
+                            defesa.trabalho.titulo)
+                    else:
+                        subject = 'Convite para compor a banca avaliadora do trabalho ' + defesa.trabalho.titulo
                     base_url = request.scheme + "://" + request.get_host()
                     context = {'trabalho': defesa.trabalho, 'base_url': base_url, 'key': key}
 
@@ -195,7 +203,10 @@ def defesatrabalho(request, pk):
             if usuario_nao_cadastrado[0] == '' and banca.filter(status__contains='aceito').count() == banca.count():
                 defesa.status = 'agendado'
                 banca = banca.filter(status__contains='aceito')
-                subject = 'Confirmada a defesa de ' + unicode(defesa[0].trabalho.titulo)
+                if (settings.DEBUG):
+                    subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(defesa.trabalho.titulo)
+                else:
+                    subject = 'Convite para compor a banca avaliadora do trabalho ' + defesa.trabalho.titulo
                 template_name = 'mensagem/banca/confirmado_agendamento_defesa.html'
                 context = {'trabalho': defesa.trabalho, 'defesa': defesa, 'avaliadores': banca}
                 for avaliador in form_banca.cleaned_data['banca']:
@@ -269,7 +280,11 @@ def banca_trabalho(request, pk):
                         banca_novo_avaliador = BancaTrabalho.objects.create(usuario = user, trabalho = trabalho)
                         banca_novo_avaliador.save()
                         template_name_email = 'trabalhos/banca/convite_participacao_banca.html'
-                        subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(trabalho.titulo)
+                        if (settings.DEBUG):
+                            subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(
+                                trabalho.titulo)
+                        else:
+                            subject = 'Convite para compor a banca avaliadora do trabalho ' + trabalho.titulo
                         envia_email(trabalho, user, template_name_email, subject)
 
 
@@ -277,7 +292,11 @@ def banca_trabalho(request, pk):
                     avaliador_negado.status = 'negado_pelo_orientador'
                     avaliador_negado.save()
                     template_name_email = 'trabalhos/banca/convite_rejeitado.html'
-                    subject = 'Convite rejeitado para compor a banca avaliadora do trabalho ' + unicode(trabalho.titulo)
+                    if (settings.DEBUG):
+                        subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(
+                            trabalho.titulo)
+                    else:
+                        subject = 'Convite para compor a banca avaliadora do trabalho ' + trabalho.titulo
                     envia_email(trabalho, avaliador_negado.usuario,template_name_email,subject)
 
             for usuario_email in usuario_nao_cadastrado:
@@ -293,7 +312,11 @@ def banca_trabalho(request, pk):
                     email_participacao_banca.save()
 
                     template_name = 'trabalhos/banca/convite_usuario_nao_cadastrado.html'
-                    subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(trabalho.titulo)
+                    if (settings.DEBUG):
+                        subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(
+                            trabalho.titulo)
+                    else:
+                        subject = 'Convite para compor a banca avaliadora do trabalho ' + trabalho.titulo
                     base_url = request.scheme + "://" + request.get_host()
                     context = {'trabalho': trabalho, 'base_url': base_url, 'key': key}
 
