@@ -11,6 +11,7 @@ from .models import EmailParticipacaoBanca
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from datetime import date
+from django.conf import  settings
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -33,7 +34,10 @@ class EnviaEmailParticipacaoBanca(APIView):
         base_url = request.scheme + "://" + request.get_host()
         email_participacao_banca.save()
         template_name = 'mensagem/banca/pedido_participacao_banca.html'
-        subject = 'Solitação para compor a banca do trabalho ' + unicode(trabalho.titulo)
+        if (settings.DEBUG):
+            subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(trabalho.titulo)
+        else:
+            subject = 'Convite para compor a banca avaliadora do trabalho ' + trabalho.titulo
         context = {'trabalho': trabalho, 'base_url': base_url, 'key': key, 'avaliador': request.user}
         send_mail_template(subject, template_name, context, [trabalho.orientador.email], request.user.email)
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -53,7 +57,10 @@ def confirmada_participacao_banca(request, key):
                     status='aceito_pelo_orientador'
                 )
                 template_name = 'mensagem/banca/solicitacao_aceita.html'
-                subject = 'Solitação aceita para compor a banca do trabalho ' + unicode(participacao_banca.trabalho.titulo)
+                if (settings.DEBUG):
+                    subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(participacao_banca.trabalho.titulo)
+                else:
+                    subject = 'Convite para compor a banca avaliadora do trabalho ' + participacao_banca.trabalho.titulo
                 usuario = participacao_banca.remetente
             else:
                 banca = BancaTrabalho.objects.filter(trabalho=participacao_banca.trabalho, usuario=participacao_banca.destinatario)
@@ -66,7 +73,10 @@ def confirmada_participacao_banca(request, key):
                 else:
                     banca.update(status='aceito_pelo_avaliador')
                 template_name = 'mensagem/banca/convite_aceito.html'
-                subject = 'Convite aceito para compor a banca do trabalho ' + unicode(participacao_banca.trabalho.titulo)
+                if (settings.DEBUG):
+                    subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(participacao_banca.trabalho.titulo)
+                else:
+                    subject = 'Convite para compor a banca avaliadora do trabalho ' + participacao_banca.trabalho.titulo
                 usuario = participacao_banca.destinatario
 
             base_url = request.scheme + "://" + request.get_host()
@@ -87,7 +97,10 @@ def confirmada_participacao_banca(request, key):
             defesa = DefesaTrabalho.objects.filter(trabalho=participacao_banca.trabalho)
             if defesa and defesa[0].status == 'pendente_banca_avaliadora' and avaliadores.count() == avaliadores.filter(status__contains='aceito'):
                 defesa.update(status='agendado')
-                subject = 'Confirmada a defesa de ' + unicode(defesa[0].trabalho.titulo)
+                if (settings.DEBUG):
+                    subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(defesa[0].trabalho.titulo)
+                else:
+                    subject = 'Convite para compor a banca avaliadora do trabalho ' + defesa[0].trabalho.titulo
                 template_name = 'mensagem/banca/confirmado_agendamento_defesa.html'
                 context = {'trabalho': defesa[0].trabalho, 'defesa': defesa[0], 'avaliadores': avaliadores}
                 for avaliador in avaliadores:
@@ -118,13 +131,19 @@ def rejeitada_participacao_banca(request, key):
             )
             banca.status = 'negado_pelo_orientador'
             template_name = 'mensagem/banca/solicitacao_rejeitado.html'
-            subject = 'Solitação rejeitada para compor a banca de avaliação do trabalho ' + unicode(participacao_banca.trabalho.titulo)
+            if (settings.DEBUG):
+                subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(participacao_banca.trabalho.titulo)
+            else:
+                subject = 'Convite para compor a banca avaliadora do trabalho ' + participacao_banca.trabalho.titulo
         else:
             banca = BancaTrabalho.objects.get(trabalho=participacao_banca.trabalho,
                                               usuario=participacao_banca.destinatario)
             banca.status = 'negado_pelo_avaliador'
             template_name = 'mensagem/banca/convite_rejeitado.html'
-            subject = 'Convite rejeitado para compor a banca de avaliação do trabalho ' + unicode(participacao_banca.trabalho.titulo)
+            if (settings.DEBUG):
+                subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(participacao_banca.trabalho.titulo)
+            else:
+                subject = 'Convite para compor a banca avaliadora do trabalho ' + participacao_banca.trabalho.titulo
 
         banca.save()
         base_url = request.scheme + "://" + request.get_host()
