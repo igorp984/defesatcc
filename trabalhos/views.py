@@ -194,6 +194,17 @@ def defesatrabalho(request, pk):
             banca = BancaTrabalho.objects.filter(trabalho=pk).exclude(status__contains='negado')
             if usuario_nao_cadastrado[0] == '' and banca.filter(status__contains='aceito').count() == banca.count():
                 defesa.status = 'agendado'
+                banca = banca.filter(status__contains='aceito')
+                subject = 'Confirmada a defesa de ' + unicode(defesa[0].trabalho.titulo)
+                template_name = 'mensagem/banca/confirmado_agendamento_defesa.html'
+                context = {'trabalho': defesa.trabalho, 'defesa': defesa, 'avaliadores': bancagi}
+                for avaliador in form_banca.cleaned_data['banca']:
+                    send_mail_template(
+                        subject,
+                        template_name,
+                        context,
+                        [avaliador.usuario.email]
+                    )
 
             defesa.save()
             messages.success(request,'agendamento cadastrado com sucesso e convite enviado para os avaliadores')

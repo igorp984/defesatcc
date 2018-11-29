@@ -207,11 +207,15 @@
                                                            >insert_drive_file</i>
                                                     </a>
                                                 {% else %}
-                                                    <a href="{% url 'accounts:certificado_avaliador' defesa.trabalho.id %}" target="_blank">
+                                                    {% for banca in defesa.banca %}
+                                                    {% if banca == user.name %}
+                                                    <a href="{% url 'accounts:certificado_avaliador' defesa.trabalho.id user.id %}" target="_blank">
                                                         <i class="material-icons tooltipped"
                                                            data-position="top"
                                                            data-tooltip="certificado de avaliador">insert_drive_file</i>
                                                     </a>
+                                                    {% endif %}
+                                                {% endfor %}
                                                 {% endif %}
                                             </td>
                                         </tr>

@@ -184,8 +184,9 @@ class CertificadoAvaliadorPDFView(PDFTemplateView):
 	base_url = 'file://' + settings.STATIC_ROOT
 	download_filename = 'certificado.pdf'
 
-	def get_context_data(self, pk, **kwargs):
+	def get_context_data(self, pk, user_id, **kwargs):
 		trabalho = Trabalhos.objects.get(pk=pk)
+		avaliador = BancaTrabalho.objects.get(trabalho=trabalho, usuario_id=user_id)
 		defesa = DefesaTrabalho.objects.get(trabalho=trabalho)
 		return super(CertificadoAvaliadorPDFView, self).get_context_data(
 			pagesize='A4',
@@ -193,6 +194,7 @@ class CertificadoAvaliadorPDFView(PDFTemplateView):
 			trabalho=trabalho,
 			defesa=defesa,
 			data=date.today(),
+			avaliador=avaliador,
 			**kwargs
 		)
 
