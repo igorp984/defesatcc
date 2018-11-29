@@ -197,7 +197,7 @@ def defesatrabalho(request, pk):
                 banca = banca.filter(status__contains='aceito')
                 subject = 'Confirmada a defesa de ' + unicode(defesa[0].trabalho.titulo)
                 template_name = 'mensagem/banca/confirmado_agendamento_defesa.html'
-                context = {'trabalho': defesa.trabalho, 'defesa': defesa, 'avaliadores': bancagi}
+                context = {'trabalho': defesa.trabalho, 'defesa': defesa, 'avaliadores': banca}
                 for avaliador in form_banca.cleaned_data['banca']:
                     send_mail_template(
                         subject,
