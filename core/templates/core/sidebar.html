@@ -6,15 +6,6 @@
         <img src="../static/images/demolidor.png" class="center circle" id="foto-perfil-sidebar">
         <div class="white-text center">
             <span>{{ user.name }}</span>
-            <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-                <i class="material-icons" role="presentation">arrow_drop_down</i>
-                <span class="visuallyhidden">Accounts</span>
-            </button>
-            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
-                <li class="mdl-menu__item"><a href="{% url 'accounts:editar' user.id %}"> Editar Perfil</a></li>
-                <li class="mdl-menu__item">info@example.com</li>
-                <li class="mdl-menu__item"><i class="material-icons">add</i>Add another account...</li>
-            </ul>
         </div>
     </header>
     <nav class="demo-navigation indent mdl-color--grey-100 mdl-color-text--grey-600">
@@ -24,8 +15,12 @@
         {% if user.perfil.descricao == 'Professor'%}
             {% include 'core/sidebar_menu_professor.html' %}
         {% endif %}
+        <a class="mdl-navigation__link mdl-color-text--blue-grey" href="{% url 'accounts:editar' user.id %}">
+            <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation"></i>Editar Perfil</a>
+        <a class="mdl-navigation__link mdl-color-text--blue-grey" href="{% url 'accounts:editar_senha' %}">
+            <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation"></i> Alterar Senha</a>
         <a class="mdl-navigation__link mdl-color-text--blue-grey" href="{% url 'accounts:logout' %}">
-            <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Sair
+            <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation"></i>Sair
         </a>
     </nav>
 </div>

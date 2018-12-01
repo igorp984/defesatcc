@@ -1,29 +1,23 @@
 {% extends 'core/base.html' %}
+{% load material_form %}
 
 {% block content %}
 
 <div id="page-wrapper">
-
-            <div class="row">
-                <div class="col-md-6">
-
-                    <form method="POST">
-                    {% csrf_token %}
-                    {% for field in form %}
-                        <div class="form-group">
-                            {{ field.label_tag }}
-                            {{ field }}
-                            {% if field.errors %}
-                                <ul class="errolist">
-                                    {% for error in field.errors %}
-                                        <li>{{ error }}</li>
-                                    {% endfor %}
-                                </ul>
-                            {% endif %}
-                        </div>
-                    {% endfor %}    
-                        <button type="submit" class="btn green btn-success">Salvar</button>
-                        <button class="btn blue btn-primary"><a class="voltar" href="{% url 'core:home' %}">Voltar<a></button>
+    <h3 class="titulo-box">Alterar Senha</h3>
+    <div class="col s12 m2 z-depth-2">
+        <div class="container">
+            <form method="POST">
+                {% csrf_token %}
+                {% form form=form %}{% endform %}
+                <div class="bt-box">
+                    <button type="submit" class="btn green btn-success">Salvar</button>
+                    <button class="btn blue btn-primary">
+                        <a class="voltar" href="{% url 'core:home' %}">Voltar</a>
+                    </button>
                 </div>
-                <div class="col-md-2"></div>	
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

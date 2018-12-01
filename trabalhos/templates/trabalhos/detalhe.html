@@ -2,9 +2,35 @@
 
 {% block content %}
 
-<p>{{ trabalhos.titulo}} </p>
-<p>{{ trabalhos.autor}}</p>
-<p>{{ trabalhos.keywords}}</p>
-<p>{{trabalhos.resumo}}</p>
+<h3 class="titulo-box">Detalhe TCC</h3>
+<div class="col s12 m2 z-depth-2">
+    <div class="container">
+        <div class="row">
+            <div class="row">
+                 <span style="font-size: 18px;"><b>Título:</b></span>
+                 <span style="font-size: 20px;">{{ trabalhos.titulo}} </span>
+             </div>
+             <div class="row">
+                 <span style="font-size: 18px;"><b>Autor:</b></span>
+                 <span style="font-size: 20px;">{{ trabalhos.autor}} </span>
+             </div>
+             <div class="row">
+                 <span style="font-size: 18px;"><b>Orientador:</b></span>
+                 <span style="font-size: 20px;">{{ trabalhos.orientador}} </span>
+             </div>
+            <div class="row">
+                 <span style="font-size: 18px;"><b>Palavras Chaves:</b></span>
+                 <span style="font-size: 20px;">{{ trabalhos.keywords}} </span>
+             </div>
+            <div class="row">
+                 <span style="font-size: 18px;"><b>Resumo:</b></span>
+                 <span style="font-size: 15px;">{{ trabalhos.resumo}} </span>
+             </div>
+            <div class="row">
+                 <span style="font-size: 18px;"><b>Trabalho Completo:</b></span>
+                <a href="{{ trabalhos.pdf_trabalho.url }}" target="_blank" style="font-size: 15px;">Clique Aqui</a>
+             </div>
+    </div>
+</div>
 
 {% endblock %}

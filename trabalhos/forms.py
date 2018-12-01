@@ -4,6 +4,7 @@ from django import forms
 from .models import Trabalhos, DefesaTrabalho
 from accounts.models import Usuario
 
+
 class TrabalhoForm(forms.ModelForm):
 
 	titulo = forms.CharField(label='Título', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite o Título do Trabalho'}),max_length=150)

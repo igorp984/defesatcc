@@ -159,6 +159,15 @@ body {
     color: white;
 }
 
+.bt-box {
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+.titulo-box{
+    color: rgb(64,196,255);
+}
+
 .demo-avatar {
   align: center;
   width: 48px;

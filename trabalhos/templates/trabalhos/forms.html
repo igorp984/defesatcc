@@ -1,10 +1,9 @@
 {% extends 'core/base.html' %}
 {% block content %}
 <div id="page-wrapper">
-
-    <div class="row">
-        <div class="col-md-6">
-
+    <h3 class="titulo-box">Cadastro de TCC</h3>
+    <div class="col s12 m2 z-depth-2">
+        <div class="container">
             <form enctype="multipart/form-data" method="post">
                 {% csrf_token %}
             
@@ -62,16 +61,17 @@
                         </div>
 
                     </div>
-
-                    <button type="submit" class="btn green btn-success">Salvar</button>
-                    <button class="btn blue btn-primary">
-                        <a class="voltar" href="{% url 'core:home' %}">Voltar</a>
-                        <a></a>
-                    </button>
+                    <div class="bt-box">
+                        <button type="submit" class="btn green btn-success">Salvar</button>
+                        <button class="btn blue btn-primary">
+                            <a class="voltar" href="{% url 'core:home' %}">Voltar</a>
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
+</div>
 
 
 {% endblock %}

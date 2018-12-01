@@ -4,6 +4,7 @@ $(document).ready(function(){
     $('#agenda').DataTable();
     $('#confirmadas').DataTable();
     $(".dropdown-trigger").dropdown();
+    $('.js-example-basic-multiple').select2();
     $('.tooltipped').tooltip();
     $('.timepicker').timepicker({
         twelveHour: false,
@@ -11,7 +12,7 @@ $(document).ready(function(){
     $('#tags').tagsInput({
        'height':'70px',
        'min-height': '70px',
-       'width':'700px',
+       'width':'600px',
        'defaultText':'Digite email e aperte enter',
        'placeholderColor' : '#666666'
     });
