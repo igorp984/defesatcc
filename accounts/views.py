@@ -125,8 +125,8 @@ class UsuarioUpdateView(UpdateView):
 
 
 class UsuarioUpdateApiView(generics.RetrieveUpdateDestroyAPIView):
-	queryset = Usuario.objects.all()
-	serializer_class = UsuarioSerializer
+    queryset = Usuario.objects.all()
+    serializer_class = UsuarioSerializer
 
 
 @login_required
@@ -134,8 +134,9 @@ def editar_senha(request):
 	template_name = 'accounts/editar_senha.html'
 	context = {}
 
-	if request.POST == 'POST':
+	if request.method == 'POST':
 		form = PasswordChangeForm(data=request.POST, user=request.user)
+
 		if form.is_valid():
 			form.save()
 			context['success'] = True

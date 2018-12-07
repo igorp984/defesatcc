@@ -26,10 +26,12 @@
                  <span style="font-size: 18px;"><b>Resumo:</b></span>
                  <span style="font-size: 15px;">{{ trabalhos.resumo}} </span>
              </div>
+            {% if trabalhos.pdf_trabalho %}
             <div class="row">
                  <span style="font-size: 18px;"><b>Trabalho Completo:</b></span>
                 <a href="{{ trabalhos.pdf_trabalho.url }}" target="_blank" style="font-size: 15px;">Clique Aqui</a>
              </div>
+            {% endif %}
     </div>
 </div>
 

@@ -31,23 +31,16 @@
                     <div class="center">
                         <img src="{% static 'accounts/images/Brasão_da_UFBA.png' %}" style="width: 120px;" alt="My image">
                     </div>
-                    <h2 class="titulo-box">Cadastro de Usuário:</h2>
-                    <div class="col s12 m2 z-depth-2">
-                        <div class="container">
-                            <form method="post">
-                                {% csrf_token %}
-                                {% form form=form %}{% endform %}
-                                <div class="bt-box">
-                                    <button type="submit" class="btn green btn-success">Enviar</button>
-                                    <button class="btn blue btn-primary"><a class="voltar" href="{% url 'accounts:login' %}">Voltar</button>
-                                </div>
-                            </form>
+                    <div class="container">
+                        <div class="col s12 m2 z-depth-2 grid">
+                            <div class="center">
+                                <h2>A sua resposta foi enviada ao orientador</h2>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </main>
-
         <!-- /#wrapper -->
         <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
         <script type="text/javascript" src="{% static 'core/js/jquery-1.10.2.min.js' %}"></script>
@@ -58,21 +51,6 @@
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.material.min.js"></script>
         <script type="text/javascript" src="{% static 'core/js/jquery.tagsinput.js' %}"></script>
-        <script>
-                    (function($){
-                        $(".dropdown-trigger").dropdown();
-                        $(function() {
-                            {% block js %}
-                            {% endblock %}
-                            {% if messages %}
-                                {% for message in messages %}
-                                    M.toast({html: '{{ message }}'});
-                                {% endfor %}
-                            {% endif %}
-                        });
-
-                    })(jQuery);
-         </script>
     </body>
 </html>
 

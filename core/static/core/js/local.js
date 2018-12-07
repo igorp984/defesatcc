@@ -145,8 +145,8 @@ function editUsuario(url, method, formId){
             M.toast({html: 'Seu perfil foi atualizado com sucesso'});
         },
         'error': function(xhr, status, error){
-            // console.log(xhr, xhr.responseText, status);
-            loadErrors(xhr.responseJSON);
+            console.log();
+            M.toast({html: xhr.responseJSON["email"] + ", digite outro email" });
         }
     });
 }

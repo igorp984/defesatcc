@@ -72,6 +72,7 @@ class EditaCadastroForm(forms.ModelForm):
 	# 		raise forms.ValidationError('Já existe usuario com este E-mail')
 	# 	return email
 
+
 	class Meta:
 		model = Usuario
 		fields = ['titulo', 'name', 'email']
