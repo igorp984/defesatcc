@@ -34,7 +34,7 @@ def cadastrar_trabalho(request):
             messages.success(request, 'Tcc cadastrado com sucesso')
             return redirect('core:home')
     else:
-        form = TrabalhoForm()
+        form = TrabalhoForm(initial={'orientador': request.user.id})
     context['form'] = form
     return render(request, template_name, context)
 

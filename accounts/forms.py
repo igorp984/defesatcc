@@ -29,6 +29,11 @@ class CadastroForm(forms.ModelForm):
 		queryset=Titulo.objects.order_by('descricao'), 
 		widget=forms.Select(attrs={'class':'form-control', 'placeholder':'Selecione'})
 	)
+	perfil = forms.ModelChoiceField(
+		label='Perfil',
+		queryset=Perfil.objects.order_by('descricao'),
+		widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Selecione'})
+	)
 	email = forms.EmailField(label='E-mail', widget=forms.TextInput(attrs={'class':'form-control'}))
 	password1 = forms.CharField(label='Senha', widget=forms.PasswordInput(attrs={'class':'form-control'}))
 	password2 = forms.CharField(label='Confirmação de Senha', widget=forms.PasswordInput(attrs={'class':'form-control'}))
