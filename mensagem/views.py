@@ -57,6 +57,7 @@ def confirmada_participacao_banca(request, key):
                     status='aceito_pelo_orientador'
                 )
                 template_name = 'mensagem/banca/solicitacao_aceita.html'
+                template_name_render = 'mensagem/banca/resposta_solicitacao.html'
                 if (settings.DEBUG):
                     subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(participacao_banca.trabalho.titulo)
                 else:
@@ -73,6 +74,7 @@ def confirmada_participacao_banca(request, key):
                 else:
                     banca.update(status='aceito_pelo_avaliador')
                 template_name = 'mensagem/banca/convite_aceito.html'
+                template_name_render = 'mensagem/banca/resposta_convite.html'
                 if (settings.DEBUG):
                     subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(participacao_banca.trabalho.titulo)
                 else:
@@ -111,7 +113,7 @@ def confirmada_participacao_banca(request, key):
                         [avaliador.usuario.email]
                     )
 
-            return redirect('core:home')
+            return render(request, template_name_render)
 
 def rejeitada_participacao_banca(request, key):
 
@@ -120,7 +122,7 @@ def rejeitada_participacao_banca(request, key):
     #verifica se a mensagem já foi visualizada
     if participacao_banca.visualizada:
         messages.error(request, 'Esta mensagem já foi respondida')
-        return redirect('core:home')
+        return render(request,'mensagem/banca/resposta_lida')
     else:
         #verifica se foi uma solicitação feita por algum professor ou aluno para participar da banca ou se foi
         # um convite do orientador a algum professou ou aluno para compor a banca
@@ -131,6 +133,7 @@ def rejeitada_participacao_banca(request, key):
             )
             banca.status = 'negado_pelo_orientador'
             template_name = 'mensagem/banca/solicitacao_rejeitado.html'
+            template_name_render = 'mensagem/banca/resposta_solicitacao.html'
             if (settings.DEBUG):
                 subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(participacao_banca.trabalho.titulo)
             else:
@@ -140,6 +143,7 @@ def rejeitada_participacao_banca(request, key):
                                               usuario=participacao_banca.destinatario)
             banca.status = 'negado_pelo_avaliador'
             template_name = 'mensagem/banca/convite_rejeitado.html'
+            template_name_render = 'mensagem/banca/resposta_convite.html'
             if (settings.DEBUG):
                 subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(participacao_banca.trabalho.titulo)
             else:
@@ -159,4 +163,4 @@ def rejeitada_participacao_banca(request, key):
         )
         participacao_banca.visualizada = date.today()
         participacao_banca.save()
-        return redirect('core:home')
+        return render(request, template_name_render)

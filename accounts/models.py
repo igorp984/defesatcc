@@ -64,6 +64,7 @@ class Perfil(models.Model):
 
 	
 
+@python_2_unicode_compatible
 class Usuario(AbstractBaseUser, PermissionsMixin):
 
 	username = models.CharField(
@@ -85,13 +86,8 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 	REQUIRED_FIELDS = ['email']
 
 	def __str__(self):
-		return self.name or self.username
+		return self.name
 
-	def get_short_name(self):
-		return self.username
-
-	def get_full_name(self):
-		return str(self)
 
 	class Meta:
 		verbose_name = 'Usuário'

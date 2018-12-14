@@ -3,10 +3,9 @@
 
 {% block content %}
 <div id="page-wrapper">
-
-    <div class="row">
-        <div class="col-md-6">
-
+    <h3 class="titulo-box">Cadastrar Defesa</h3>
+    <div class="col s12 m2 z-depth-2">
+        <div class="container">
             <form method="post">
                 {% csrf_token %}
 
@@ -22,6 +21,7 @@
                         <label class="active" for="tags">Emails não Cadastrados</label>
                     </div>
                 </div>
+                <div class="bt-box">
                     <button type="submit" class="btn green btn-success">Salvar</button>
                     <button class="btn btn-primary blue">
                         <a class="voltar" href="{% url 'core:home' %} ">Voltar</a>
@@ -30,5 +30,6 @@
             </form>
         </div>
     </div>
+</div>
 
 {% endblock %}

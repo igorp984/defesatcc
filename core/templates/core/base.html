@@ -10,7 +10,7 @@
 
     <title>Defesas Ufba</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
+    {{ form.media.css }}
 
     {% include 'material/includes/material_css.html' %}
 
@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/local.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/jquery.tagsinput.css' %}" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
 
 
     {% csrf_token %}
@@ -51,16 +53,17 @@
 </div>
 
 
-<!-- /#wrapper -->
-<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-<script type="text/javascript" src="{% static 'core/js/jquery-1.10.2.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'core/js/local.js' %}"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script src="{% static 'material/js/jquery.js' %}"></script>
-{% include 'material/includes/material_js.html' %}
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.material.min.js"></script>
-<script type="text/javascript" src="{% static 'core/js/jquery.tagsinput.js' %}"></script>
+    <!-- /#wrapper -->
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script type="text/javascript" src="{% static 'core/js/jquery-1.10.2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'core/js/local.js' %}"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="{% static 'material/js/jquery.js' %}"></script>
+    {% include 'material/includes/material_js.html' %}
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.material.min.js"></script>
+    <script type="text/javascript" src="{% static 'core/js/jquery.tagsinput.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script>
             (function($){
                 $(".dropdown-trigger").dropdown();
@@ -76,5 +79,6 @@
 
             })(jQuery);
     </script>
+{{ form.media.js }}
 </body>
 </html>

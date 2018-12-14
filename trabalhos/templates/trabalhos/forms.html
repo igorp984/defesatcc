@@ -1,77 +1,23 @@
 {% extends 'core/base.html' %}
+{% load material_form %}
 {% block content %}
 <div id="page-wrapper">
-
-    <div class="row">
-        <div class="col-md-6">
-
+    <h3 class="titulo-box">Cadastro de TCC</h3>
+    <div class="col s12 m2 z-depth-2">
+        <div class="container">
             <form enctype="multipart/form-data" method="post">
                 {% csrf_token %}
-            
-                <div class="form-group">
-
-                    <div class="form-group">
-                        {{ form.titulo.errors }}
-                        <label for="id_titulo">Título:</label>
-                        <input class="form-control" id="id_titulo" maxlength="150" name="titulo" placeholder="Digite o Título do Trabalho" type="text">
-
-                    </div>
-
-                    <div class="form-group">
-                        {{ form.keywords.errors }}
-                        <label for="id_keywords">Palavras Chaves:</label>
-                        <input class="form-control" id="id_keywords" maxlength="150" name="keywords" placeholder="Digite as palavras Chaves" type="text">
-
-                    </div>
-
-                    <div class="form-group">
-                        {{ form.autor.errors }}
-                        <label for="id_autor">Autor:</label>
-                        <input class="form-control" id="id_autor" maxlength="150" name="autor" placeholder="Digite o nome do Autor" type="text">
-
-                    </div>
-
-                    <div class="form-group">
-                        {{ form.orientador.errors }}
-                        <label for="id_orientador">Orientador:</label>
-                        <input class="form-control" id="id_orientador" maxlength="150" name="orientador" disabled type="text" value="{{ user.name }}">
-                    </div>
-
-                    <div class="form-group">
-                        {{ form.co_orientador.errors }}
-                        <label for="id_co_orientador">Co-Orientador:</label>
-                        <input class="form-control" id="id_co_orientador" maxlength="150" name="co_orientador" placeholder="Digite o nome do Co-Orientador"
-                            type="text">
-
-                    </div>
-
-                    <div class="form-group">
-                        {{ form.resumo.errors }}
-                        <label for="id_resumo">Resumo:</label>
-                        <textarea class="form-control" cols="40" id="id_resumo" name="resumo" placeholder="Digite o Resumo do Trabalho" rows="10"></textarea>
-
-                    </div>
-
-                    <div class="input-field file-field col s12" id="id_pdf_trabalho_container">
-                        <div class="btn">
-                            <span>Arquivo</span>
-                            <input type="file" name="pdf_trabalho">
-                        </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path form-control" id="id_pdf_trabalho" placeholder="Filer" type="text">
-                        </div>
-
-                    </div>
-
+                {% form form=form %}{% endform %}
+                <div class="bt-box">
                     <button type="submit" class="btn green btn-success">Salvar</button>
                     <button class="btn blue btn-primary">
                         <a class="voltar" href="{% url 'core:home' %}">Voltar</a>
-                        <a></a>
                     </button>
                 </div>
             </form>
         </div>
     </div>
+</div>
 
 
 {% endblock %}

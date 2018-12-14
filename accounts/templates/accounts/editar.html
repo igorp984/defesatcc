@@ -4,13 +4,13 @@
 {% block content %}
 
 <div id="page-wrapper">
-        <h4>Editar Perfil</h4>
-        <div class="col s12 m2 z-depth-4">
+        <h3 class="titulo-box">Editar Perfil</h3>
+        <div class="col s12 m2 z-depth-2">
             <div class="container">
-                <form action="{% url 'accounts:editar_api' user.id %}" id="edit-form-usuario" method="put">
+                <form method="post">
                     {% csrf_token %}
                     {% form form=form %}{% endform %}
-                    <div class="row">
+                    <div class="bt-box">
                         <button type="submit" class="btn green btn-success">Salvar</button>
                         <button class="btn blue btn-primary"><a class="voltar" href="{% url 'core:home' %}">Voltar</button>
                     </div>

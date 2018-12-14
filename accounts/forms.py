@@ -30,9 +30,9 @@ class CadastroForm(forms.ModelForm):
 		widget=forms.Select(attrs={'class':'form-control', 'placeholder':'Selecione'})
 	)
 	perfil = forms.ModelChoiceField(
-		label='Perfil', 
-		queryset=Perfil.objects.order_by('descricao'), 
-		widget=forms.Select(attrs={'class':'form-control', 'placeholder':'Selecione'})
+		label='Perfil',
+		queryset=Perfil.objects.order_by('descricao'),
+		widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Selecione'})
 	)
 	email = forms.EmailField(label='E-mail', widget=forms.TextInput(attrs={'class':'form-control'}))
 	password1 = forms.CharField(label='Senha', widget=forms.PasswordInput(attrs={'class':'form-control'}))
@@ -76,6 +76,7 @@ class EditaCadastroForm(forms.ModelForm):
 	# 	if queryset.exists():
 	# 		raise forms.ValidationError('Já existe usuario com este E-mail')
 	# 	return email
+
 
 	class Meta:
 		model = Usuario
