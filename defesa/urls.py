@@ -12,7 +12,6 @@ urlpatterns = [
     url(r'^trabalhos/', include('trabalhos.urls', namespace='trabalhos')),
     url(r'^email/', include('mensagem.urls', namespace='mensagem')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^select2/', include('django_select2.urls')),
 ]
 
 if settings.DEBUG:
