@@ -290,7 +290,7 @@ def banca_trabalho(request, pk):
                         else:
                             subject = 'Convite para compor a banca avaliadora do trabalho ' + trabalho.titulo
                         envia_email(trabalho, user, template_name_email, subject)
-
+                        mensage = 'O convite foi enviado com sucesso'
 
                 for avaliador_negado in banca_avaliador_excluido:
                     avaliador_negado.status = 'negado_pelo_orientador'
@@ -325,8 +325,9 @@ def banca_trabalho(request, pk):
                     context = {'trabalho': trabalho, 'base_url': base_url, 'key': key}
 
                     send_mail_template(subject, template_name, context, [usuario_email])
+                    mensage = 'O convite foi enviado com sucesso'
 
-            messages.success(request,'O convite foi enviado com sucesso')
+            messages.success(request,mensage)
             return redirect('core:home')
         if banca:
             form = TrabalhoBancaForm(initial={'banca': banca.filter(status__contains='aceito').values_list('usuario', flat=True)},prefix='banca')
