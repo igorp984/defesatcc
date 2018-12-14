@@ -30,7 +30,10 @@ def cadastrar_trabalho(request):
         form = TrabalhoForm(request.POST, request.FILES)
         if form.is_valid():
             context['is_valid'] = True
-            form.save()
+            trabalho = form.save(commit=False)
+            trabalho.save()
+            banca = BancaTrabalho.objects.create(usuario=request.user, trabalho=trabalho, status='aceito_pelo_orientador')
+            banca.save()
             messages.success(request, 'Tcc cadastrado com sucesso')
             return redirect('core:home')
     else:
