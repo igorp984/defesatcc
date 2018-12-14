@@ -273,6 +273,7 @@ def banca_trabalho(request, pk):
     banca = BancaTrabalho.objects.filter(trabalho_id=pk).exclude(status__contains='negado')
     if trabalho.orientador == request.user:
         if request.method == 'POST':
+            mensage = ''
             usuario_nao_cadastrado = request.POST['tags'].split(',')
             form = TrabalhoBancaForm(request.POST, prefix='banca')
             if form.is_valid():
