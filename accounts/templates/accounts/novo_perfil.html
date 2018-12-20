@@ -12,7 +12,7 @@
                 {% csrf_token %}
                 {% form form=form %}{% endform %}
                 <button type="submit" class="btn green btn-success">Salvar</button>
-                 <a class="waves-effect waves-light blue btn" href"{% url 'core:home' %}">Voltar</a>
+                 <a class="waves-effect waves-light blue btn" href="{% url 'core:home' %}">Voltar</a>
             </form>
         </div>
     </div>
