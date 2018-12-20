@@ -119,7 +119,16 @@ if(DEBUG):
         #    'PORT': '5432',
        # }
     #}
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'defesa_db',
+        'USER': 'tcc_user',
+        'PASSWORD': 'd3fes@',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        }
+    }
 DATABASES['default'].update(db_from_env)
 
 # Internationalization
