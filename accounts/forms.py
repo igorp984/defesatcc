@@ -31,7 +31,7 @@ class CadastroForm(forms.ModelForm):
 	)
 	perfil = forms.ModelChoiceField(
 		label='Perfil',
-		queryset=Perfil.objects.order_by('descricao'),
+		queryset=Perfil.objects.exclude(descricao='Coordenador').order_by('descricao'),
 		widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Selecione'})
 	)
 	email = forms.EmailField(label='E-mail', widget=forms.TextInput(attrs={'class':'form-control'}))

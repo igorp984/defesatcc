@@ -1,5 +1,5 @@
 {% extends 'core/base.html' %}
-
+{% load static %}
 {% block content %}
     <div id="page-wrapper">
         <div>
@@ -53,7 +53,7 @@
                                                              data-position="top"
                                                              data-tooltip="candidata-se a banca"
                                                              id="enviar-email-banca"
-                                                             src="../static/images/icon red.png">
+                                                             src="{% static 'core/images/icon-red.png' %}">
                                                     </a>
                                                 {% endif %}
                                                 {% if user.id == trabalho.orientador.id %}
