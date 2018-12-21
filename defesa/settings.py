@@ -27,7 +27,7 @@ db_from_env = dj_database_url.config(conn_max_age=500)
 SECRET_KEY = 'p6=t8vrl#g(5t&azpuxf5nsssz0&g@4^5j-^ws2+h#in#rr66$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 ALLOWED_HOSTS = ['*']
@@ -112,10 +112,10 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'de4aej1ljkb4aq',
-            'USER': 'jiwokugwulnqxr',
-            'PASSWORD': 'edb395481c5ce3f63af2b7b4e8914c4ea8e52b5c7d0009578458e224bf62bc65',
-            'HOST': 'ec2-54-221-225-11.compute-1.amazonaws.com',
+            'NAME': 'defesa_db',
+            'USER': 'tcc_user',
+            'PASSWORD': 'd3fes@',
+            'HOST': 'localhost',
             'PORT': '5432',
         }
     }
