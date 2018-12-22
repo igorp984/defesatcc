@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'easy_pdf',
 
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
