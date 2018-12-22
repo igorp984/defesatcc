@@ -97,10 +97,7 @@ def confirmada_participacao_banca(request, key):
             participacao_banca.save()
             avaliadores = BancaTrabalho.objects.filter(trabalho=participacao_banca.trabalho).exclude(status__contains='negado')
             defesa = DefesaTrabalho.objects.filter(trabalho=participacao_banca.trabalho)
-            print(defesa[0].status)
-            status = 'pendentes_banca_avaliadora'
-            print(type(status))
-            print(defesa[0].status == 'pendente_banca_avaliadora')
+
             if defesa and defesa[0].status == 'pendente_banca_avaliadora' and avaliadores.count() == avaliadores.filter(status__contains='aceito').count():
                 defesa.update(status='agendado')
                 if (settings.DEV):
