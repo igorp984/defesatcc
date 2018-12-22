@@ -34,7 +34,7 @@ class EnviaEmailParticipacaoBanca(APIView):
         base_url = request.scheme + "://" + request.get_host()
         email_participacao_banca.save()
         template_name = 'mensagem/banca/pedido_participacao_banca.html'
-        if (settings.DEBUG):
+        if (settings.DEV):
             subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(trabalho.titulo)
         else:
             subject = 'Convite para compor a banca avaliadora do trabalho ' + trabalho.titulo
@@ -58,7 +58,7 @@ def confirmada_participacao_banca(request, key):
                 )
                 template_name = 'mensagem/banca/solicitacao_aceita.html'
                 template_name_render = 'mensagem/banca/resposta_solicitacao.html'
-                if (settings.DEBUG):
+                if (settings.DEV):
                     subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(participacao_banca.trabalho.titulo)
                 else:
                     subject = 'Convite para compor a banca avaliadora do trabalho ' + participacao_banca.trabalho.titulo
@@ -75,7 +75,7 @@ def confirmada_participacao_banca(request, key):
                     banca.update(status='aceito_pelo_avaliador')
                 template_name = 'mensagem/banca/convite_aceito.html'
                 template_name_render = 'mensagem/banca/resposta_convite.html'
-                if (settings.DEBUG):
+                if (settings.DEV):
                     subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(participacao_banca.trabalho.titulo)
                 else:
                     subject = 'Convite para compor a banca avaliadora do trabalho ' + participacao_banca.trabalho.titulo
@@ -97,9 +97,13 @@ def confirmada_participacao_banca(request, key):
             participacao_banca.save()
             avaliadores = BancaTrabalho.objects.filter(trabalho=participacao_banca.trabalho).exclude(status__contains='negado')
             defesa = DefesaTrabalho.objects.filter(trabalho=participacao_banca.trabalho)
-            if defesa and defesa[0].status == 'pendente_banca_avaliadora' and avaliadores.count() == avaliadores.filter(status__contains='aceito'):
+            print(defesa[0].status)
+            status = 'pendentes_banca_avaliadora'
+            print(type(status))
+            print(defesa[0].status == 'pendente_banca_avaliadora')
+            if defesa and defesa[0].status == 'pendente_banca_avaliadora' and avaliadores.count() == avaliadores.filter(status__contains='aceito').count():
                 defesa.update(status='agendado')
-                if (settings.DEBUG):
+                if (settings.DEV):
                     subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(defesa[0].trabalho.titulo)
                 else:
                     subject = 'Convite para compor a banca avaliadora do trabalho ' + defesa[0].trabalho.titulo
@@ -134,7 +138,7 @@ def rejeitada_participacao_banca(request, key):
             banca.status = 'negado_pelo_orientador'
             template_name = 'mensagem/banca/solicitacao_rejeitado.html'
             template_name_render = 'mensagem/banca/resposta_solicitacao.html'
-            if (settings.DEBUG):
+            if (settings.DEV):
                 subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(participacao_banca.trabalho.titulo)
             else:
                 subject = 'Convite para compor a banca avaliadora do trabalho ' + participacao_banca.trabalho.titulo
@@ -144,7 +148,7 @@ def rejeitada_participacao_banca(request, key):
             banca.status = 'negado_pelo_avaliador'
             template_name = 'mensagem/banca/convite_rejeitado.html'
             template_name_render = 'mensagem/banca/resposta_convite.html'
-            if (settings.DEBUG):
+            if (settings.DEV):
                 subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(participacao_banca.trabalho.titulo)
             else:
                 subject = 'Convite para compor a banca avaliadora do trabalho ' + participacao_banca.trabalho.titulo
