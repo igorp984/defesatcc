@@ -27,8 +27,8 @@ db_from_env = dj_database_url.config(conn_max_age=500)
 SECRET_KEY = 'p6=t8vrl#g(5t&azpuxf5nsssz0&g@4^5j-^ws2+h#in#rr66$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
+DEBUG = True
+DEV = False
 
 ALLOWED_HOSTS = ['*']
 
