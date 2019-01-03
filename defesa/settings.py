@@ -151,11 +151,11 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #E-MAIL
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'Nome <defesatccdcc@gmail.com>'
+DEFAULT_FROM_EMAIL = 'TCC DCC UFBA <finisdcc@gmail.com>'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'defesatccdcc@gmail.com'
-EMAIL_HOST_PASSWORD = 'Tccd3fes@'
+EMAIL_HOST_USER = 'finisdcc@gmail.com'
+EMAIL_HOST_PASSWORD = 'Fin1$dCC'
 EMAIL_PORT = 587
 
 # Auth
