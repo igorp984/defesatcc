@@ -98,7 +98,7 @@ def confirmada_participacao_banca(request, key):
             avaliadores = BancaTrabalho.objects.filter(trabalho=participacao_banca.trabalho).exclude(status__contains='negado')
             defesa = DefesaTrabalho.objects.filter(trabalho=participacao_banca.trabalho)
 
-            if defesa and defesa[0].status == 'pendente_banca_avaliadora' and avaliadores.count() == avaliadores.filter(status__contains='aceito').count():
+            if defesa and defesa[0].status == 'pendente_banca_avaliadora' and avaliadores.filter(status__contains='aceito').count() >= 3 :
                 defesa.update(status='agendado')
                 if (settings.DEV):
                     subject = 'Convite para compor a banca avaliadora do trabalho ' + unicode(defesa[0].trabalho.titulo)

@@ -204,7 +204,7 @@ def defesatrabalho(request, pk):
                     envia_email(defesa, user)
 
             banca = BancaTrabalho.objects.filter(trabalho=pk).exclude(status__contains='negado')
-            if usuario_nao_cadastrado[0] == '' and banca.filter(status__contains='aceito').count() == banca.count():
+            if usuario_nao_cadastrado[0] == '' and banca.filter(status__contains='aceito').count() >= 3:
                 defesa.status = 'agendado'
                 banca = banca.filter(status__contains='aceito')
                 if (settings.DEV):
