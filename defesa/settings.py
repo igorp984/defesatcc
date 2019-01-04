@@ -18,7 +18,7 @@ from django.core.urlresolvers import reverse_lazy
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 
-
+from google.oauth2 import service_account
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -188,18 +188,9 @@ MEDIA_URL = '/media/'
 
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 
-GOOGLE_APPLICATION_CREDENTIALS = "Finis-Project-9f04b284fcb1.json"
-
-# GCS_PROJECT = "Finis"
-# GCS_BUCKET = "finis"
-# GCS_CREDENTIALS_FILE_PATH = "Finis-Project-9f04b284fcb1.json"
-
-#
-# LIBCLOUD_PROVIDERS = {
-#     'default': {
-#         'type': 'libcloud.storage.types.Provider.GOOGLE_STORAGE',
-#         'user': os.getenv('GOOGLE_STORAGE_ACCESS_KEY'),
-#         'key': os.getenv('GOOGLE_STORAGE_SECRET_ACCESS_KEY'),
-#         'bucket': os.getenv('GOOGLE_STORAGE_BUCKET_NAME'),
-#     },
-# }
+GS_BUCKET_NAME = "finis"
+GS_AUTO_CREATE_BUCKET = True
+GCS_PROJECT_ID = "lively-transit-227516"
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+    BASE_DIR + "/defesa/Finis-Project-9f04b284fcb1.json"
+)
