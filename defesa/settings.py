@@ -27,7 +27,7 @@ db_from_env = dj_database_url.config(conn_max_age=500)
 SECRET_KEY = 'p6=t8vrl#g(5t&azpuxf5nsssz0&g@4^5j-^ws2+h#in#rr66$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 DEV = False
 
 ALLOWED_HOSTS = ['*']
@@ -185,3 +185,21 @@ REST_FRAMEWORK = {
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'defesatcc', 'media')
 MEDIA_URL = '/media/'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+
+GOOGLE_APPLICATION_CREDENTIALS = "Finis-Project-9f04b284fcb1.json"
+
+# GCS_PROJECT = "Finis"
+# GCS_BUCKET = "finis"
+# GCS_CREDENTIALS_FILE_PATH = "Finis-Project-9f04b284fcb1.json"
+
+#
+# LIBCLOUD_PROVIDERS = {
+#     'default': {
+#         'type': 'libcloud.storage.types.Provider.GOOGLE_STORAGE',
+#         'user': os.getenv('GOOGLE_STORAGE_ACCESS_KEY'),
+#         'key': os.getenv('GOOGLE_STORAGE_SECRET_ACCESS_KEY'),
+#         'bucket': os.getenv('GOOGLE_STORAGE_BUCKET_NAME'),
+#     },
+# }
