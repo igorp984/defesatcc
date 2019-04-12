@@ -25,7 +25,7 @@ def home(request):
 		list.append(defesas_dic)
 		context = {"trabalhos": trabalhos, "defesas": list}
 	
-	template_name = 'core/home.html'
+		template_name = 'core/home.html'
 	return render(request, template_name,context)
 
 def banca_pendente(request):
