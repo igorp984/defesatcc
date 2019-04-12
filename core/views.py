@@ -4,29 +4,8 @@ from trabalhos.models import Trabalhos, DefesaTrabalho
 
 @login_required
 def home(request):
-	trabalhos = Trabalhos.objects.all().filter(defesatrabalho__isnull=True)
-	defesas = DefesaTrabalho.objects.all()
-	list = []
-	for defesa in defesas:
-		avaliadores = defesa.trabalho.banca.all().exclude(bancatrabalho__status__contains='negado')
-		lista = []
-		for avaliador in avaliadores:
-			lista.append(avaliador.name)
-
-		defesas_dic = {
-			'id': defesa.id,
-			'local': defesa.local,
-			'data': defesa.data,
-			'hora': defesa.hora,
-			'trabalho': defesa.trabalho,
-			'banca': lista,
-			'status': defesa.status,
-		}
-		list.append(defesas_dic)
-		context1 = {"trabalhos": trabalhos, "defesas": list}
-	
-		template_name = 'core/home.html'
-	return render(request, template_name,context1)
+	template_nameHome = 'core/home.html'
+	return render(request, template_nameHome)
 
 def banca_pendente(request):
 	trabalhos = Trabalhos.objects.all().filter(defesatrabalho__isnull=True)
@@ -48,9 +27,9 @@ def banca_pendente(request):
 			'status': defesa.status,
 		}
 		list.append(defesas_dic)
-		context = {"trabalhos": trabalhos, "defesas": list}
-		template_name = 'core/banca_pendente.html'
-	return  render(request, template_name, context)
+		contextBanca = {"trabalhos": trabalhos, "defesas": list}
+		template_nameBanca = 'core/banca_pendente.html'
+	return  render(request, template_nameBanca, contextBanca)
 
 def agendamento_pendente(request):
 	trabalhos = Trabalhos.objects.all().filter(defesatrabalho__isnull=True)
@@ -72,9 +51,9 @@ def agendamento_pendente(request):
 			'status': defesa.status,
 		}
 		list.append(defesas_dic)
-		context = {"trabalhos": trabalhos, "defesas": list}
-		template_name = 'core/agendamento_pendente.html'
-	return  render(request, template_name, context)
+		contextAgendamento = {"trabalhos": trabalhos, "defesas": list}
+		template_nameAgendamento = 'core/agendamento_pendente.html'
+	return  render(request, template_nameAgendamento, contextAgendamento)
 
 def defesas_confirmadas(request):
 	trabalhos = Trabalhos.objects.all().filter(defesatrabalho__isnull=True)
@@ -96,6 +75,6 @@ def defesas_confirmadas(request):
 			'status': defesa.status,
 		}
 		list.append(defesas_dic)
-		context = {"trabalhos": trabalhos, "defesas": list}
-		template_name = 'core/defesas_confirmadas.html'
-	return  render(request, template_name, context)
+		contextDefesas = {"trabalhos": trabalhos, "defesas": list}
+		template_nameDefesas = 'core/defesas_confirmadas.html'
+	return  render(request, template_nameDefesas, contextDefesas)
