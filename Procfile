@@ -1,0 +1,1 @@
+web: gunicorn defesa.wsgi --log-file -

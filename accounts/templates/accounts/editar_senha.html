@@ -1,0 +1,21 @@
+{% extends 'core/base.html' %}
+{% load material_form %}
+
+{% block content %}
+
+<div id="page-wrapper">
+    <h3 class="titulo-box">Alterar Senha</h3>
+    <div class="col s12 m2 z-depth-2">
+        <div style="padding: 15px;" class="container">
+            <form method="POST">
+                {% csrf_token %}
+                {% form form=form %}{% endform %}
+                <div class="bt-box">
+                    <button type="submit" class="btn green btn-success">Salvar</button>
+                    <a class="waves-effect waves-light blue btn" href="{% url 'core:home' %}">Voltar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

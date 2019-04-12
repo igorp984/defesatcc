@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+{% load widget_tweaks %}
+{% load material_form %}
+
+{% block content %}
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-md-6">
+
+            <form method="post">
+                {% csrf_token %}
+                {% form form=form %}{% endform %}
+                <button type="submit" class="btn green btn-success">Salvar</button>
+                <a class="waves-effect waves-light blue btn" href="{% url 'core:home' %}">Voltar</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

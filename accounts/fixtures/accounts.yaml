@@ -1,0 +1,127 @@
+-   model: accounts.titulo
+    pk: 1
+    fields: {descricao: Graduado}
+-   model: accounts.titulo
+    pk: 2
+    fields: {descricao: Mestre}
+-   model: accounts.perfil
+    pk: 1
+    fields: {descricao: Coordenador, nivel_acesso: Alto}
+-   model: accounts.perfil
+    pk: 2
+    fields: {descricao: Professor, nivel_acesso: medio}
+-   model: accounts.perfil
+    pk: 3
+    fields: {descricao: Avaliador, nivel_acesso: baixo}
+-   model: accounts.usuario
+    pk: 6
+    fields:
+        password: pbkdf2_sha256$36000$wv0t1Vi8LaGJ$uxStNy0s+H/gB4pUqUOT2COESjBoVBt+JzX2aaVnJcc=
+        last_login: 2018-10-16 04:00:20.067960+00:00
+        is_superuser: false
+        username: Red
+        titulo: 1
+        perfil: 1
+        email: 666.redfield@gmail.com
+        name: Igor Teixeira Paim
+        is_active: true
+        is_staff: false
+        date_joined: 2018-08-06 22:39:55.221490+00:00
+        groups: []
+        user_permissions: []
+-   model: accounts.usuario
+    pk: 7
+    fields:
+        password: pbkdf2_sha256$36000$Ldb768m0vHHX$1+n53yaSlPvbp04cHEZR0E4SKRapPT/JqJBKTmPcIGw=
+        last_login: 2018-10-16 01:38:43.965785+00:00
+        is_superuser: false
+        username: igorpaim
+        titulo: 2
+        perfil: 2
+        email: igorp984@gmail.com
+        name: Igor Paim
+        is_active: true
+        is_staff: false
+        date_joined: 2018-08-08 19:53:44.351669+00:00
+        groups: []
+        user_permissions: []
+-   model: accounts.usuario
+    pk: 8
+    fields:
+        password: teste
+        last_login: null
+        is_superuser: false
+        username: teste
+        titulo: 1
+        perfil: 1
+        email: teste@gamil.com
+        name: teste
+        is_active: true
+        is_staff: false
+        date_joined: 2018-09-27 06:13:57.358457+00:00
+        groups: []
+        user_permissions: []
+-   model: accounts.usuario
+    pk: 9
+    fields:
+        password: pbkdf2_sha256$36000$DIrXIiy2jfgA$pv2ceEBQxWtrLrqccxRdkP6JWTW3YfKAgB+g+x0Tjrw=
+        last_login: 2018-10-12 22:00:20.359651+00:00
+        is_superuser: false
+        username: ivanmachado
+        titulo: 2
+        perfil: 1
+        email: ivanmachado@gmail.com
+        name: Ivan Machado
+        is_active: true
+        is_staff: false
+        date_joined: 2018-09-30 14:36:43.972139+00:00
+        groups: []
+        user_permissions: []
+-   model: accounts.usuario
+    pk: 10
+    fields:
+        password: pbkdf2_sha256$36000$nFEDvwn4xPoY$ecLsI2xSId7uXAM3CEU8L1e5CGPoJk+QJU3o2hlbM1A=
+        last_login: 2018-10-16 03:55:46.828957+00:00
+        is_superuser: false
+        username: Amanda
+        titulo: 1
+        perfil: 3
+        email: amanda.rejane@gmail.com
+        name: Amanda Silva
+        is_active: true
+        is_staff: false
+        date_joined: 2018-10-16 03:55:46.355010+00:00
+        groups: []
+        user_permissions: []
+-   model: accounts.usuario
+    pk: 11
+    fields:
+        password: pbkdf2_sha256$36000$CLdXJjpQ0hXP$Km+B0WsPWD1ASsbEEp+ViLEObm41OwNlTTuWYa+2a0s=
+        last_login: null
+        is_superuser: false
+        username: Cleyde
+        titulo: 1
+        perfil: 3
+        email: teste@gmail.com
+        name: Cleyde Paim
+        is_active: true
+        is_staff: false
+        date_joined: 2018-10-16 04:01:29.810313+00:00
+        groups: []
+        user_permissions: []
+-   model: accounts.usuario
+    pk: 12
+    fields:
+        password: pbkdf2_sha256$36000$0Jy6ObJFeZfx$bZapdVt1Lh8Y5JGZlFSg0iwLvxdfz57PnKhMfRusU1M=
+        last_login: null
+        is_superuser: false
+        username: Augusto
+        titulo: 1
+        perfil: 2
+        email: luiz@gmail.com
+        name: Augusto Bastos
+        is_active: true
+        is_staff: false
+        date_joined: 2018-10-16 04:03:16.151417+00:00
+        groups: []
+        user_permissions: []

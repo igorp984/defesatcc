@@ -1,0 +1,9 @@
+<h3>Prezada(o), {{ usuario.name }}</h3>
+<p>
+    {{ trabalho.orientador.name }} o convida para participar da banca avaliadora do trabalho
+    {{trabalho.titulo }}
+</p>
+<p>para aceitar ao convite click no link a baixo:</p>
+<a href="{{ base_url }}{% url 'mensagem:confirmada_participacao_banca' key %}">Aceitar a solicitação</a>
+<p>para recusar o convite click no link a baixo:</p>
+<a href="{{ base_url }}{% url 'mensagem:rejeitada_participacao_banca' key %}">Rejeita a solicitação</a>
