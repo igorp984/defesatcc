@@ -76,5 +76,5 @@ def defesas_confirmadas(request):
 		}
 		list.append(defesas_dic)
 		contextDefesas = {"trabalhos": trabalhos, "defesas": list}
-		template_nameDefesas = 'core/defesas_confirmadas.html'
-	return  render(request, template_nameDefesas, contextDefesas)
+		template_nameDefesa = 'core/defesas_confirmadas.html'
+	return  render(request, template_nameDefesa, contextDefesas)
