@@ -1,78 +1,80 @@
 {% extends "easy_pdf/base.html" %}
 {% load static %}
 {% block extra_style %}
-    <style type="text/css">
-        body {
-            font-family: "Helvetica", "sans-serif";
-            color: #333333;
-        }
-        .cabecalho{
-            font-size: 20px;
-        }
-        .endereco {
-            margin-bottom: 0px;
-            margin-top: -12px;
-        }
-    </style>
+<style type="text/css">
+    body {
+        font-family: "Helvetica", "sans-serif";
+        color: #333333;
+    }
+
+    .cabecalho {
+        font-size: 20px;
+    }
+
+    .endereco {
+        margin-bottom: 0px;
+        margin-top: -12px;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
-    <div id="content">
-        <div class="row">
-            <div class="col-md-4">
-                <img src="{% static 'accounts/images/Brasão_da_UFBA.png' %}" alt="My image">
-            </div>
-            <div class="col-md-8">
-                <h1  align="center">
-                    MINIST&EacuteRIO DA EDUCA&Ccedil&AtildeO
+<div id="content">
+    <div class="row">
+        <div class="col-md-4">
+            <img src="{% static 'accounts/images/Brasão_da_UFBA.png' %}" alt="My image">
+        </div>
+        <div class="col-md-8">
+            <h1 align="center">
+                MINIST&EacuteRIO DA EDUCA&Ccedil&AtildeO
                 <br>
-                    UNIVERSIDADE FEDERAL DA BAHIA
+                UNIVERSIDADE FEDERAL DA BAHIA
                 <br>
-                    INSTITUTO DE MATEM&AacuteTICA E ESTAT&IacuteSTICA
-                    <br>
-                    Av. Ademar de Barros s/n - Campus Universit&aacuterio de Ondina - Salvador Bahia
-                    <br>
-                    CEP 40170-101 Tel: (071) 3283-6340/6341/6337  Fax: 3283-6336
-                </h1>
-            </div>
-            <br><br><br><br>
-            <br><br><br><br>
-            <br><br><br><br>
+                INSTITUTO DE MATEM&AacuteTICA E ESTAT&IacuteSTICA
+                <br>
+                Av. Ademar de Barros s/n - Campus Universit&aacuterio de Ondina - Salvador Bahia
+                <br>
+                CEP 40170-101 Tel: (071) 3283-6340/6341/6337 Fax: 3283-6336
+            </h1>
+        </div>
+        <br><br><br><br>
+        <br><br><br><br>
+        <br><br><br><br>
 
-            <div class="col-md-12" style="font-size: 20px;" align="center">
-                <b>DECLARA&Ccedil&AtildeO</b>
-            </div>
-            <div class="col-md-12">
-                <p style="font-size: 14px;">
-                    Declaro, para os devidos fins, que o professor(a) {{ avaliador.usuario.name }} participou como
-                    membro da Banca de Avalia&ccedil&atildeo do Projeto Final de {{ trabalho.autor }},
-                    aluno(a) do curso de Bacharelado em Ci&ecirccia da Computa&ccedil&atildeo da UFBA, intitulado
-                    {{ trabalho.titulo }}, apresentado no {{ defesa.data }}, no Instituto
-                    de Matem&aacutetica e Estat&iacutestica da UFBA.
+        <div class="col-md-12" style="font-size: 20px;" align="center">
+            <b>DECLARA&Ccedil&AtildeO</b>
+        </div>
+        <div class="col-md-12">
+            <p style="font-size: 14px;">
+                Declaro, para os devidos fins, que o professor(a) {{ avaliador.usuario.name }} participou como
+                membro da Banca de Avalia&ccedil&atildeo do Projeto Final de {{ trabalho.autor }},
+                aluno(a) do curso de Bacharelado em Ci&ecirccia da Computa&ccedil&atildeo da UFBA, intitulado
+                {{ trabalho.titulo }}, apresentado no {{ defesa.data }}, no Instituto
+                de Matem&aacutetica e Estat&iacutestica da UFBA.
 
-                </p>
-            </div>
+            </p>
+        </div>
 
-            <br><br><br><br>
-            <br><br><br><br>
-            <br><br><br><br>
+        <br><br><br><br>
+        <br><br><br><br>
+        <br><br><br><br>
 
-            <div class="col-md-8">
-                <h1  align="center">
-                    Salvador, {{ data }}.
-                </h1>
+        <div class="col-md-8">
+            <h1 align="center">
+                Salvador, {{ data }}.
+            </h1>
 
             <br><br><br>
-                <br><br><br>
+            <br><br><br>
 
-                <h1 align="center">
-                     Coordenador do Curso de Bacharelado
-                    <br>
-                    em Ci&ecircncias da Computa&ccedil&atildeo
-                    <br>
-                    UFBA
-                </h1>
-            </div>
+            <h1 align="center">
+                Coordenador do Curso de Bacharelado
+                <br>
+                em Ci&ecircncias da Computa&ccedil&atildeo
+                <br>
+                UFBA
+            </h1>
         </div>
     </div>
+</div>
 {% endblock %}

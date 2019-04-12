@@ -21,22 +21,23 @@ class LoginForm(forms.ModelForm):
 		fields = ['username', 'password1']
 
 class CadastroForm(forms.ModelForm):
-
-	username = forms.CharField(label='Usuário', widget=forms.TextInput(attrs={'class':'form-control'}))
-	name = forms.CharField(label='Nome', widget=forms.TextInput(attrs={'class':'form-control'}))
+	username = forms.CharField(label='Usuário',widget=forms.TextInput(attrs={'class':'form-control form-control-user','placeholder':'Usuário'}))
+	name = forms.CharField(label='Nome',widget=forms.TextInput(attrs={'class':'form-control form-control-user','placeholder':'Nome'}))
 	titulo = forms.ModelChoiceField(
 		label='Titulação', 
 		queryset=Titulo.objects.order_by('descricao'), 
-		widget=forms.Select(attrs={'class':'form-control', 'placeholder':'Selecione'})
+		widget=forms.Select(attrs={'class':'form-control form-control-user', 'placeholder':'Selecione'})
 	)
 	perfil = forms.ModelChoiceField(
 		label='Perfil',
 		queryset=Perfil.objects.exclude(descricao='Coordenador').order_by('descricao'),
-		widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Selecione'})
+		widget=forms.Select(attrs={'class': 'form-control form-control-user', 'placeholder': 'Selecione'})
 	)
-	email = forms.EmailField(label='E-mail', widget=forms.TextInput(attrs={'class':'form-control'}))
-	password1 = forms.CharField(label='Senha', widget=forms.PasswordInput(attrs={'class':'form-control'}))
-	password2 = forms.CharField(label='Confirmação de Senha', widget=forms.PasswordInput(attrs={'class':'form-control'}))
+	email = forms.EmailField(label='E-mail', widget=forms.TextInput(attrs={'class':'form-control  form-control-user','placeholder':'E-mail'}))
+
+	password1 = forms.CharField(label='Senha', widget=forms.PasswordInput(attrs={'class':'form-control form-control-user', 'placeholder': 'Senha'}))
+
+	password2 = forms.CharField(label='Confirmar senha', widget=forms.PasswordInput(attrs={'class':'form-control form-control-user','placeholder': 'Confirmar senha'}))
 	# def clean_email(self):
 	# 	email = self.cleaned_data['email']
 	# 	if User.objects.filter(email=email).exists():kk
@@ -85,7 +86,7 @@ class EditaCadastroForm(forms.ModelForm):
 
 class ResetSenhaForm(forms.Form):
 
-	email = forms.EmailField(label='E-mail', widget=forms.EmailInput(attrs={'class':'form-control'}))
+	email = forms.EmailField(label='E-mail', widget=forms.EmailInput(attrs={'class':'form-control form-control-user'}))
 
 	def clean_email(self):
 		email = self.cleaned_data['email']
