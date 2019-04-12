@@ -23,10 +23,10 @@ def home(request):
 			'status': defesa.status,
 		}
 		list.append(defesas_dic)
-		context = {"trabalhos": trabalhos, "defesas": list}
+		context1 = {"trabalhos": trabalhos, "defesas": list}
 	
 		template_name = 'core/home.html'
-	return render(request, template_name,context)
+	return render(request, template_name,context1)
 
 def banca_pendente(request):
 	trabalhos = Trabalhos.objects.all().filter(defesatrabalho__isnull=True)
