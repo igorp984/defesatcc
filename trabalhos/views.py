@@ -21,7 +21,7 @@ from .forms import TrabalhoForm, DefesaTrabalhoForm, TrabalhoBancaForm
 
 from mensagem.models import EmailParticipacaoBanca
 
-def cadastrar_trabalho(request):
+def cadastrar_trabalho(request, key=None):
     template_name = 'trabalhos/forms.html'
     context = {}
     if request.method == 'POST':

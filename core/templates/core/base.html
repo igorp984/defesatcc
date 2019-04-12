@@ -5,66 +5,66 @@
 {% load widget_tweaks %}
 
 <html lang="pt-br">
-<head>
-    <meta charset="utf-8">
+    <head>
+        <meta charset="utf-8">
 
-    <title>Defesas Ufba</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    {{ form.media.css }}
+        <title>Defesas Ufba</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        {{ form.media.css }}
 
-    {% include 'material/includes/material_css.html' %}
+        {% include 'material/includes/material_css.html' %}
 
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.material.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'core/font-awesome/css/font-awesome.min.css' %}" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'core/css/local.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'core/css/jquery.tagsinput.css' %}" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.material.min.css">
+        <link rel="stylesheet" type="text/css" href="{% static 'core/font-awesome/css/font-awesome.min.css' %}" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css">
+        <link rel="stylesheet" type="text/css" href="{% static 'core/css/local.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'core/css/jquery.tagsinput.css' %}" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 
+        {% csrf_token %}
 
+    </head>
+    <body>
+        <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
+            <header  class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+                <div class="mdl-layout__header-row">
+                    <a href="{% url 'core:home' %}">
+                        <span class="mdl-layout-title">Home</span>
+                    </a>
+                    <div class="mdl-layout-spacer"></div>
+                </div>
+            </header>
+            {% if request.user.is_authenticated %}
+            {% include 'core/sidebar.html' %}
+            {% endif %}
 
-    {% csrf_token %}
+            <main class="mdl-layout__content mdl-color--white-100">
+            {% block container %}
+                <div id="content" class="container">
+                    {% endblock %}
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </main>
 
-</head>
-<body>
-<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-    <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
-        <div class="mdl-layout__header-row">
-            <a href="{% url 'core:home' %}">
-                <span class="mdl-layout-title">Home</span>
-            </a>
-            <div class="mdl-layout-spacer"></div>
         </div>
-    </header>
-    {% if request.user.is_authenticated %}
-    {% include 'core/sidebar.html' %}
-    {% endif %}
-
-    <main class="mdl-layout__content mdl-color--white-100">
-        {% block container %}<div id="content" class="container">{% endblock %}
-        {% block content %}
-        {% endblock %}
-    </div>
-    </main>
-
-</div>
 
 
-    <!-- /#wrapper -->
-    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <script type="text/javascript" src="{% static 'core/js/jquery-1.10.2.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'core/js/local.js' %}"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="{% static 'material/js/jquery.js' %}"></script>
-    {% include 'material/includes/material_js.html' %}
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.material.min.js"></script>
-    <script type="text/javascript" src="{% static 'core/js/jquery.tagsinput.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-    <script>
+        <!-- /#wrapper -->
+        <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+        <script type="text/javascript" src="{% static 'core/js/jquery-1.10.2.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'core/js/local.js' %}"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script src="{% static 'material/js/jquery.js' %}"></script>
+        {% include 'material/includes/material_js.html' %}
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.material.min.js"></script>
+        <script type="text/javascript" src="{% static 'core/js/jquery.tagsinput.js' %}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+        <script>
             (function($){
                 $(".dropdown-trigger").dropdown();
                 $(function() {
@@ -78,7 +78,7 @@
                 });
 
             })(jQuery);
-    </script>
-{{ form.media.js }}
-</body>
+        </script>
+    {{ form.media.js }}
+    </body>
 </html>
